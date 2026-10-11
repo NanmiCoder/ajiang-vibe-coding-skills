@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="200" viewBox="0 0 1200 200" role="img" aria-labelledby="title desc">
+  <title id="title">阿江的证据驱动协作闭环</title>
+  <desc id="desc">三个核心环节：建立证据、最小改动与原流程验收。</desc>
+  <rect width="1200" height="200" rx="16" fill="#F2EEE5"/>
+  <text x="46" y="45" font-family="ui-monospace,Menlo,monospace" font-size="16" fill="#64716E">THE PRACTICE LOOP</text>
+  <path d="M200 82H1000" fill="none" stroke="#C9C8BF" stroke-width="2"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,sans-serif" text-anchor="middle">
+    <circle cx="200" cy="82" r="7" fill="#18262F"/>
+    <circle cx="600" cy="82" r="7" fill="#C3683D"/>
+    <circle cx="1000" cy="82" r="7" fill="#7D9386"/>
+    <g fill="#18262F" font-size="52" font-weight="600">
+      <text x="200" y="153">建立证据</text><text x="600" y="153">最小改动</text><text x="1000" y="153">原流程验收</text>
+    </g>
+  </g>
+</svg>
