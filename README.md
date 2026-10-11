@@ -9,8 +9,8 @@
 <p align="center">
   <a href="#快速开始">安装</a> ·
   <a href="#按问题选-skill">Skill 目录</a> ·
+  <a href="#我常用的其他-skills">其他常用 Skills</a> ·
   <a href="#这些-skill-从哪里来">来源</a> ·
-  <a href="./evals/README.md">动手演练</a> ·
   <a href="./LICENSE">MIT</a>
 </p>
 
@@ -65,6 +65,20 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill '*' --agent codex
 
 只选当前问题需要的 skill。一次小改动不必启动所有流程；独立审查不必固定开四个 agent，内部逻辑测试也不必每次调用真实模型。
 
+## 我常用的其他 Skills
+
+点击名称查看项目与安装方式。
+
+| Skill | 用途 | 来源 |
+|---|---|---|
+| [design-taste-frontend](https://github.com/Leonxlnx/taste-skill) | 提升 UI 设计品味，改善布局、字体与动效 | Leonxlnx |
+| [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | 搜索配色、字体组合、设计风格与 UX 规则 | nextlevelbuilder |
+| [ego-browser](https://lite.ego.app/) | 操作真实浏览器，截图、提取数据、验证网站 | Ego Lite |
+| [voice-clone-tts](https://github.com/NanmiCoder/creator-pipeline/tree/main/skills/voice-clone-tts) | 用自己的声音生成配音与字幕 | 阿江改造维护 |
+| [web-video-presentation](https://github.com/NanmiCoder/creator-pipeline/tree/main/skills/web-video-presentation) | 把口播与字幕做成网页视频演示，导出 MP4 | 阿江改造维护 |
+
+后两个可以配合使用：先生成配音与字幕，再按声音节奏制作画面。
+
 ## 这些 Skill 从哪里来
 
 我是[程序员阿江 / Relakkes](https://github.com/NanmiCoder)。这套 skill 来自最近几个月我和 AI 一起开发、迭代和维护软件的日常实践。
@@ -74,56 +88,3 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill '*' --agent codex
 这些问题和有效的解决方法，来自桌面 Agent、VoxAgent、TodoCue、MediaCrawler / MediaCrawlerPro，以及 DeepSeek Harness 插件等开发场景。我把其中可以迁移的习惯整理成独立 skill，补上输入、操作方法、证据、验收和工具不足时的处理方式，让别人在自己的项目里也能用。
 
 开源的是重新编写的协作方法和原创练习。原始私密对话、账号凭证、作者本机配置不随仓库分发。部分方法的来源是历史会话整理材料；具体技术事实仍要在目标项目与版本中核验。详见[来源与整理边界](docs/ORIGIN.md)。
-
-## 在一次迭代里怎么组合
-
-<p align="center">
-  <img src="./assets/readme/workflow.svg" width="100%" alt="协作中的三个关键点：建立证据、最小改动、原流程验收；审查和交付按任务需要执行">
-</p>
-
-例如修一个 provider 问题，可以先用 `ajiang_debugging` 建立失败证据，再用 `ajiang_contract_audit` 跟踪实际配置和执行值；需要独立审查时加 `ajiang_adversarial_review`，已授权提交或发版时再使用对应交付 skill。
-
-**每一步都以实际结果为依据。** 显示配置保存、进程仍在运行、AI 回复“已完成”，都不能单独代替用户任务成功。
-
-## 没有同样的工具，也能开始
-
-- 没有多 agent：可以用新会话或人工独立审查；单 agent 分视角自检会明确说明没有独立审查。
-- 没有浏览器或桌面控制：先完成 CLI/协议层验收，再提供具体人工步骤，GUI 层保留未验证状态。
-- 没有真实 API：内部流程可做确定性测试，真实服务行为单独标为未验证。
-
-使用者需要具备目标项目本来要求的环境与资源。skill 不会替代模型、执行工具或权限，也不会因为安装而获得额外外部操作授权。
-
-## 跑一次无 API Key 演练
-
-仓库附带一个原创 Taskboard CLI：设置显示 `csv`，真实导出却没有遵循设置。它故意保留故障，用于练习复现、契约检查和原流程验收。
-
-在一次性仓库副本中，让 agent 使用 `ajiang_debugging` 修复 `examples/taskboard`，再运行：
-
-```sh
-python3 evals/check_taskboard.py --project examples/taskboard
-```
-
-分发夹具预期 **3 项通过、2 项失败**；正确修复后应 **5 项通过**。检查读取实际导出文件，覆盖配置、环境变量、命令行优先级和数据内容。它是教学夹具，不是生产级可靠性证明。
-
-[完整演练提示与评估方式](evals/README.md) · [已验证范围](docs/VALIDATION.md)
-
-<details>
-<summary>仓库维护与贡献</summary>
-
-每个 skill 位于 `skills/ajiang_xxx/`，包含 `SKILL.md`、本地模板及许可证，可独立安装。格式采用 Vercel Skills CLI 可发现的 Markdown + YAML frontmatter 布局；`ajiang_` 名称以实际 CLI 安装测试为依据。
-
-修改后运行离线检查：
-
-```sh
-python3 scripts/validate_skills.py
-```
-
-贡献时附一个可复现的任务、目标环境、修前修后结果和方法差异。优先窄修复，不把一次失败变成所有任务的永久规则。不要提交凭证、用户日志或个人绝对路径。
-
-安装文件验证和 agent 实际任务效果分别记录；目前不宣称所有宿主、模型与平台均已通过行为测试。
-
-</details>
-
-## License
-
-[MIT](LICENSE) · 每个 skill 目录都保留许可，便于独立复制与分发。
