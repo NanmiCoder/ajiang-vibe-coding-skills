@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 EXPECTED = {
-    "ajiang-debug", "ajiang-review", "ajiang-feature", "ajiang-ablation", "ajiang-git",
+    "ajiang-debug", "ajiang-review", "ajiang-feature", "ajiang-ablation", "ajiang-git-commit-pr",
 }
 
 
@@ -38,8 +38,8 @@ def validate_skill(folder):
         else:
             fields[item.group(1)] = item.group(2)
     name = fields.get("name", "")
-    if not re.fullmatch(r"ajiang-[a-z]+", name) or name != folder.name or len(name) > 64:
-        errors.append(folder.name + ": invalid short ajiang name or folder mismatch")
+    if not re.fullmatch(r"ajiang-[a-z]+(?:-[a-z]+)*", name) or name != folder.name or len(name) > 64:
+        errors.append(folder.name + ": invalid ajiang name or folder mismatch")
     if not 1 <= len(fields.get("description", "")) <= 1024:
         errors.append(folder.name + ": description must be 1..1024 characters")
     if fields.get("license") != "MIT" or not (folder / "LICENSE").is_file():

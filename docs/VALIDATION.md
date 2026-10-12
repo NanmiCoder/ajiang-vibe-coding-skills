@@ -2,7 +2,7 @@
 
 ## 当前五个 Skills
 
-2026-10-12 将技能收敛为 `ajiang-debug`、`ajiang-review`、`ajiang-feature`、`ajiang-ablation`、`ajiang-git`，同步修改描述、README 与引用。
+2026-10-12 将技能收敛为 `ajiang-debug`、`ajiang-review`、`ajiang-feature`、`ajiang-ablation`、`ajiang-git-commit-pr`，同步修改描述、README 与引用。
 
 | 检查 | 结果 |
 |---|---|
@@ -14,6 +14,14 @@
 | 仓库资源与链接 | validate_skills.py 通过；旧名称引用已更新，删除的 skill 不再列入目录 |
 
 安装测试未修改用户级 skill 配置。新版本尚未做模型执行任务的行为评估，也未验证远程发布后的安装；本地安装通过不代表这些项目通过。
+
+### Git PR 同步流程检查
+
+2026-10-12 改写 `ajiang-git-commit-pr` 的 commit / PR 模式，并增加创建 PR 前的强制上游同步说明。格式与本地资源检查通过。
+
+在临时 Git 仓库中分别验证普通 checkout，以及 worktree + fork：来源分支开发后让目标分支前进；fetch 正确目标并无文本冲突地合并；用金额单位变化构造业务回归，实际验收失败；修复后通过。目标再次前进时，发布前第二次 fetch 能发现变化，重新同步后的最终 HEAD 与推送结果一致。
+
+此项验证 Git 操作与验收案例，不是模型遵循该技能的行为评估。
 
 ## 旧版记录
 
