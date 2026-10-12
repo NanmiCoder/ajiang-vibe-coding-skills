@@ -5,7 +5,7 @@
 先复制仓库到一次性工作区，再把下列提示给 coding agent。启动新的任务，提供 skill 与项目即可；不要提供预先推导的根因或解法。
 
 ```text
-读取 skills/ajiang_debugging/SKILL.md。跨配置到执行的问题按该文件要求调查。
+读取 skills/ajiang-debug/SKILL.md。跨配置到执行的问题按该文件要求调查。
 目标是 examples/taskboard，这个仓库里的 skill 是方法来源。
 
 问题：README 说配置里的 export_format 控制导出格式。

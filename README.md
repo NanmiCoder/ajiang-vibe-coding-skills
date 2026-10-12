@@ -4,7 +4,7 @@
 
 # Ajiang Vibe Coding Skills
 
-**程序员阿江日常 vibe coding 习惯的蒸馏。八个独立 skill，帮你把 AI 协作开发做得更有依据、更容易验收。**
+**程序员阿江日常 vibe coding 习惯的蒸馏。五个常用 skill：排查 bug、审查代码、开发功能、消融实验、提交代码。**
 
 <p align="center">
   <a href="#快速开始">安装</a> ·
@@ -18,15 +18,15 @@
 
 你让 AI 修一个 bug，它改了代码、跑了检查。换回用户原来的环境，问题还在。
 
-`ajiang_debugging` 会把这次协作拉回可验证的结果：区分现象和归因，先建立失败证据，找到原因后最小修复，再从原入口、原条件复测。
+`ajiang-debug` 会把这次协作拉回可验证的结果：区分现象和归因，先建立失败证据，找到原因后最小修复，再从原入口、原条件复测。
 
 ```text
-使用 ajiang_debugging 调查这个 issue。
+使用 ajiang-debug 调查这个 issue。
 先核验报告里的现象和归因，修复后按原用户流程验证。
 告诉我：原因是什么、什么证据支持它、哪些环境仍未验证。
 ```
 
-同样的思路延伸到新功能、外部集成、代码审查、重构、上手和发版。每个 skill 都能单独使用，必要的方法和模板随它一起安装。
+每个 skill 都可以单独安装、单独使用，按当前任务选择即可。
 
 ## 快速开始
 
@@ -39,7 +39,7 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills
 交互选择需要的 skill 和 coding agent。也可以只装排障：
 
 ```sh
-npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill ajiang_debugging
+npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill ajiang-debug
 ```
 
 全部安装到指定 agent：
@@ -50,20 +50,17 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill '*' --agent codex
 
 默认安装到当前项目；添加 `--global` 可安装到用户范围。需要 Node.js/npm 和能访问仓库的网络。技能内容本身不要求模型 API Key、MCP 或作者的其他 skill。
 
-安装后，在 Codex 中可用 `$ajiang_debugging`，在 Claude Code 中可用 `/ajiang_debugging`；也可以在任务中直接写“使用 ajiang_debugging”。实际调用遵循你所用客户端的配置与权限。
+安装后，在 Codex 中可用 `$ajiang-debug`，在 Claude Code 中可用 `/ajiang-debug`；也可以在任务中直接写“使用 ajiang-debug”。实际调用遵循你所用客户端的配置与权限。
 
 ## 按问题选 Skill
 
-- [ajiang_feature_iteration](skills/ajiang_feature_iteration/SKILL.md) — 做新功能、迭代已有功能，完成最小用户路径与验收。
-- [ajiang_debugging](skills/ajiang_debugging/SKILL.md) — 排查原因不明或修后仍复现的 bug，留下失败证据与原流程复测。
-- [ajiang_contract_audit](skills/ajiang_contract_audit/SKILL.md) — 检查接口、配置、插件和同步，追到实际消费者与负向验证。
-- [ajiang_adversarial_review](skills/ajiang_adversarial_review/SKILL.md) — 独立审查高影响改动，给出有触发条件的发现并逐条核验。
-- [ajiang_ablation_refactor](skills/ajiang_ablation_refactor/SKILL.md) — 对膨胀代码做消融，用证据决定删、合并或保留。
-- [ajiang_newcomer_acceptance](skills/ajiang_newcomer_acceptance/SKILL.md) — 按 README 和普通安装入口，验收新用户第一项真实成果。
-- [ajiang_git_delivery](skills/ajiang_git_delivery/SKILL.md) — 明确范围提交、集成或创建 PR，在最新目标状态下验证。
-- [ajiang_release_verification](skills/ajiang_release_verification/SKILL.md) — 核对版本、CI 和实际发布产物，确认用户拿到的结果。
-
-只选当前问题需要的 skill。一次小改动不必启动所有流程；独立审查不必固定开四个 agent，内部逻辑测试也不必每次调用真实模型。
+| Skill | 用途 |
+|---|---|
+| [ajiang-debug](skills/ajiang-debug/SKILL.md) | 排查和修复 bug：先复现、验证原因，修复后按原操作流程复测 |
+| [ajiang-review](skills/ajiang-review/SKILL.md) | 审查代码：找出真实缺陷和回归风险，给出位置、触发条件与证据 |
+| [ajiang-feature](skills/ajiang-feature/SKILL.md) | 开发新功能：实现用户要完成的操作，从实际入口验证结果 |
+| [ajiang-ablation](skills/ajiang-ablation/SKILL.md) | 做消融实验：每次移除或替换一个机制，对比效果与成本，判断是否保留 |
+| [ajiang-git](skills/ajiang-git/SKILL.md) | 提交代码或创建 PR：检查改动范围与验证结果，完成所需的 Git 操作 |
 
 ## 我常用的其他 Skills
 

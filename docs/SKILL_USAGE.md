@@ -101,7 +101,7 @@
 | [ui-ux-pro-max](https://skills.sh/nextlevelbuilder/ui-ux-pro-max-skill/ui-ux-pro-max) | 391.0K |
 | [systematic-debugging](https://skills.sh/obra/superpowers/systematic-debugging) | 286.9K |
 
-这些数值为社区参考提供依据；个人使用数字来自本机日志，两套统计独立。README 的五个推荐链接第三方来源或作者单独维护的 creator-pipeline，不把它们纳入本仓库的八个原创 skill。这里保留其他历史项目的统计，供来源核对，不表示全部都列为 README 推荐。
+这些数值为社区参考提供依据；个人使用数字来自本机日志，两套统计独立。README 的五个推荐链接第三方来源或作者单独维护的 creator-pipeline，不把它们纳入本仓库的五个 skill。这里保留其他历史项目的统计，供来源核对，不表示全部都列为 README 推荐。
 
 ## 在自己的机器上复查
 

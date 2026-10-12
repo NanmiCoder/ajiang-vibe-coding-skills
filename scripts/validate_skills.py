@@ -1,4 +1,4 @@
-"""Validate this repository's Vercel-CLI-compatible ajiang_ skills offline.
+"""Validate this repository's five independently installable ajiang skills offline.
 
 Python 3.9+, standard library only. Validates our single-line metadata subset,
 local resource boundaries and README assets; not a general YAML/secret scanner.
@@ -10,9 +10,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 EXPECTED = {
-    "ajiang_feature_iteration", "ajiang_debugging", "ajiang_contract_audit",
-    "ajiang_adversarial_review", "ajiang_ablation_refactor",
-    "ajiang_newcomer_acceptance", "ajiang_git_delivery", "ajiang_release_verification",
+    "ajiang-debug", "ajiang-review", "ajiang-feature", "ajiang-ablation", "ajiang-git",
 }
 
 
@@ -40,8 +38,8 @@ def validate_skill(folder):
         else:
             fields[item.group(1)] = item.group(2)
     name = fields.get("name", "")
-    if not re.fullmatch(r"ajiang_[a-z]+(?:_[a-z]+)*", name) or name != folder.name or len(name) > 64:
-        errors.append(folder.name + ": invalid ajiang_ name or folder mismatch")
+    if not re.fullmatch(r"ajiang-[a-z]+", name) or name != folder.name or len(name) > 64:
+        errors.append(folder.name + ": invalid short ajiang name or folder mismatch")
     if not 1 <= len(fields.get("description", "")) <= 1024:
         errors.append(folder.name + ": description must be 1..1024 characters")
     if fields.get("license") != "MIT" or not (folder / "LICENSE").is_file():
@@ -104,7 +102,7 @@ def main():
         print("FAIL: " + error)
     if errors:
         return 1
-    print("PASS: ajiang_ metadata, standalone resources, local links and README assets")
+    print("PASS: five ajiang skills, metadata, standalone resources, local links and README assets")
     print("Actual CLI install and model behavior are separate verification layers.")
     return 0
 

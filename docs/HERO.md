@@ -2,8 +2,8 @@
 
 Audience: developers who maintain open-source projects and use coding agents.
 One-sentence value: reusable engineering habits distilled from Ajiang's daily vibe-coding practice.
-Primary proof: eight independently installable method files and an outcome-checked exercise.
-First successful action: install ajiang_debugging and run a real failure investigation.
+Primary proof: five independently installable method files and an outcome-checked exercise.
+First successful action: install ajiang-debug and run a real failure investigation.
 Visual theme: lived-in engineering notes distilled into clear reusable method cards.
 
 Palette: warm ivory #F2EEE5 / ink navy #18262F / burnt orange #C3683D / sage #7D9386.
@@ -12,7 +12,7 @@ Shape: tactile paper specimen cards, thin diff/branch marks, calm editorial spac
 Motif: observations becoming reproducible engineering recipes.
 Generation: built-in image_gen; static raster. Conceptual illustration, not an actual screenshot.
 
-## Final generation prompt
+## Original generation prompt (before the five-skill revision)
 
 ```text
 Use case: ads-marketing.

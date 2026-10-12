@@ -8,14 +8,11 @@
 
 | 实际协作中反复出现的要求 | 独立 Skill |
 |---|---|
-| 先围绕我真正要完成的动作做实现 | ajiang_feature_iteration |
-| 先复现，不要直接信 issue 的归因；按原条件验证 | ajiang_debugging |
-| 配置显示正确，实际执行为什么不同？写入成功，后续读取呢？ | ajiang_contract_audit |
-| 给独立背景做审查；你自己也要核实它的发现 | ajiang_adversarial_review |
-| 先做实验，证明哪些复杂度有用，再重构 | ajiang_ablation_refactor |
-| 当成第一次用项目的人，只按 README 跑一遍 | ajiang_newcomer_acceptance |
-| 只提交本次范围；最新目标集成之后再验证 | ajiang_git_delivery |
-| 不要 push 完就结束；看 CI，也看实际发布产物 | ajiang_release_verification |
+| 先复现，不要直接信 issue 的归因；按原条件验证 | ajiang-debug |
+| 审查代码，给出触发条件与证据；核实发现是否成立 | ajiang-review |
+| 先围绕我真正要完成的动作做实现 | ajiang-feature |
+| 先做实验，证明哪些机制有用，再决定是否删除 | ajiang-ablation |
+| 只提交本次范围；提交或创建 PR 后核对结果 | ajiang-git |
 
 转为公开 skill 时，为这些要求补齐目标范围、可执行方法、验收、证据分级、结束条件和缺少工具时的交接。个人项目的固定参数、精确平台行为和本机路径没有提升为所有项目必须遵循的规则。
 
