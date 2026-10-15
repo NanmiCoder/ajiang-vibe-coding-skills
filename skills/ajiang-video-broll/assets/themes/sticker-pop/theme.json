@@ -1,0 +1,203 @@
+{
+ "id": "sticker-pop",
+ "name": "贴纸波普",
+ "en": "Sticker Pop",
+ "group": "kept",
+ "rank": 1,
+ "status": "prompt-motion.com #2 改编（Celld job ownership explainer），未进成片",
+ "source": {
+  "url": "https://prompt-motion.com/0xnfrith-5be616",
+  "title": "Celld job ownership explainer"
+ },
+ "fits": "适合：讲痛点 → 踩坑 → 方案、工具翻车、Agent 出错、流程对比、轻松吐槽向的教程，画面热闹、有“白板拼贴”的手作感。不适合：严肃的数据结论、发布会式的高级感、需要克制留白的观点段落。",
+ "concept": "白板系统示意图：每个元素都是粗墨色描边、彩色标题栏、硬投影的“窗口贴纸”，用流动虚线相连；清单卡片高低错落地拍上去，星星、警示胶带、放射徽章收边，聚焦页整屏翻绿。",
+ "design": {
+  "w": 1920,
+  "h": 1080,
+  "scale4k": 2,
+  "content": [
+   90,
+   110,
+   1830,
+   920
+  ]
+ },
+ "vars": {
+  "--bg": "#FCFEF3",
+  "--fg": "#1C1624",
+  "--muted": "#4A4452",
+  "--accent": "#F58AE8",
+  "--accent2": "#F2CF63",
+  "--card": "#FFFFFF",
+  "--card-fg": "#1C1624",
+  "--line": "#1C1624",
+  "--shadow": "#1C1624",
+  "--grid": "rgba(28,22,36,.13)",
+  "--grid2": "rgba(0,0,0,0)",
+  "--ok": "#3BC46B",
+  "--invert": "0",
+  "--vign": "rgba(0,0,0,0)",
+  "--c1": "#F58AE8",
+  "--c2": "#BDEBF5",
+  "--c3": "#A6EB9B",
+  "--c4": "#F2CF63",
+  "--flip": "#9CF685",
+  "--ink": "#1C1624",
+  "--paper": "#FFFFFB"
+ },
+ "variants": {
+  "pink": {
+   "name": "粉贴纸",
+   "default": true,
+   "vars": {}
+  },
+  "lime": {
+   "name": "荧光绿底",
+   "vars": {
+    "--bg": "#E9FBD9",
+    "--flip": "#F58AE8",
+    "--grid": "rgba(28,22,36,.16)"
+   }
+  },
+  "mint": {
+   "name": "薄荷",
+   "vars": {
+    "--bg": "#E6FBF6",
+    "--c1": "#FF9A62",
+    "--c2": "#CFE4FF",
+    "--c4": "#FFE36E",
+    "--flip": "#7FE3D0",
+    "--accent": "#FF9A62"
+   }
+  }
+ },
+ "fonts": {
+  "--title": {
+   "family": "Archivo Black",
+   "weights": [
+    400
+   ],
+   "fallback": "\"Noto Sans SC\",sans-serif"
+  },
+  "--sans": {
+   "family": "Space Grotesk",
+   "weights": [
+    500,
+    700
+   ],
+   "fallback": "\"Noto Sans SC\",sans-serif"
+  },
+  "--mono": {
+   "family": "Space Mono",
+   "weights": [
+    400,
+    700
+   ],
+   "fallback": "ui-monospace,monospace"
+  },
+  "--hand": {
+   "family": "Caveat",
+   "weights": [
+    700
+   ],
+   "fallback": "\"Kaiti SC\",\"STKaiti\",cursive"
+  },
+  "--num": {
+   "family": "Archivo Black",
+   "weights": [
+    400
+   ],
+   "fallback": "\"Noto Sans SC\",sans-serif"
+  }
+ },
+ "chrome": "<div class=\"bg-dots\"></div><div class=\"sp-chrome-tag\" data-chrome-label>THE SETUP</div>",
+ "motion": {
+  "summary": "白板上贴贴纸：窗口带倾角弹出再回正，落定后每张窗口错开相位轻轻浮动；虚线连线一段段画出来并持续流动，打勾一格一格跳，徽章“啪”地拍下；聚焦页整屏翻成荧光绿，换页硬切。音效优先保证每张卡片落下都有声，其次才是装饰音。",
+  "ease": "back",
+  "dur": 0.45,
+  "stagger": 0.1,
+  "params": {
+   "up": {
+    "dist": 50,
+    "blur": 0
+   },
+   "slam": {
+    "from": 1.5,
+    "blur": 0
+   },
+   "pop": {
+    "from": 0.4,
+    "overshoot": 2.2
+   },
+   "stamp": {
+    "from": 2.2,
+    "rot": -14
+   },
+   "drop": {
+    "dist": 200
+   },
+   "lift": {
+    "dist": 80
+   }
+  },
+  "signature": [
+   "pop",
+   "stamp",
+   "draw",
+   "flow",
+   "spin"
+  ],
+  "transition": {
+   "type": "cut",
+   "dur": 0.16
+  },
+  "roles": {
+   "title": "up",
+   "card": "pop",
+   "photo": "pop",
+   "number": "slam",
+   "item": "pop"
+  }
+ },
+ "sound": {
+  "summary": "塑料按键和贴纸“啪”、气泡 pop、木鱼轻敲；配弹跳的合成贝斯 lo-fi funk，C 大调 106 BPM。",
+  "sfx": {
+   "draw": "zip",
+   "mark": "zip",
+   "enter": "bubble",
+   "card": "sticker",
+   "deal": "sticker",
+   "stamp": "clap",
+   "type": "typing",
+   "count": "counter",
+   "transition": "swoosh",
+   "slide": "air",
+   "hit": "clap",
+   "key": "glock",
+   "reveal": "pluck-up",
+   "scan": "zip",
+   "shot": "shutter",
+   "warn": "honk-soft",
+   "check": "pop"
+  },
+  "bgm": {
+   "style": "funk-pluck",
+   "bpm": 106,
+   "key": "C",
+   "progression": [
+    "Cmaj7",
+    "Am7",
+    "Dm7",
+    "G7"
+   ],
+   "energy": 0.55,
+   "drums": "clap"
+  },
+  "levels": {
+   "bgm_lufs": -24,
+   "sfx_lufs": -20.5,
+   "below_voice_db": 16,
+   "ceiling_dbfs": -14
+  }
+ }
+}

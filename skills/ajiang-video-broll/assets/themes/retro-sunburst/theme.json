@@ -1,0 +1,198 @@
+{
+  "id": "retro-sunburst",
+  "name": "复古旭日",
+  "en": "Retro Sunburst",
+  "group": "kept",
+  "rank": 8,
+  "status": "prompt-motion.com #53 改编（Recipe brand 20th anniversary），未进成片",
+  "source": {
+    "url": "https://prompt-motion.com/deebeeeff-50fcd0",
+    "title": "Recipe brand 20th anniversary"
+  },
+  "fits": "适合：里程碑、破纪录、版本发布、年度榜单、感谢粉丝、欢庆向的结尾，内容是“几个成果 + 一个大数字”。不适合：严肃观点、技术细节拆解、负面翻车或需要冷静对比的段落（满屏纸屑会显得轻佻）。",
+  "concept": "居中对称的庆典包装海报：满屏旭日放射条一直慢转，主体永远居中（橙色厚描边大字 / 金边白卡），条目卡片排成中间大两端小的一把扇，锯齿金徽章盖在卡角，纸屑炸开后持续飘落；奶油场和可可深场交替。",
+  "design": {
+    "w": 1920,
+    "h": 1080,
+    "scale4k": 2,
+    "content": [
+      90,
+      110,
+      1830,
+      920
+    ]
+  },
+  "vars": {
+    "--bg": "#F8E9C8",
+    "--fg": "#4F2E16",
+    "--muted": "#895525",
+    "--accent": "#F28C28",
+    "--accent2": "#F6C453",
+    "--card": "#FEFEFE",
+    "--card-fg": "#4F2E16",
+    "--line": "rgba(79,46,22,.18)",
+    "--shadow": "rgba(79,46,22,.28)",
+    "--grid": "#F7D6A7",
+    "--grid2": "rgba(0,0,0,0)",
+    "--ok": "#5E8C3A",
+    "--invert": "0",
+    "--vign": "rgba(110,60,20,.18)",
+    "--ray1": "#FBEFD6",
+    "--ray2": "#F3D6A2",
+    "--dray1": "#714522",
+    "--dray2": "#4E2D13"
+  },
+  "variants": {
+    "cream": {
+      "name": "奶油",
+      "default": true,
+      "vars": {}
+    },
+    "cocoa": {
+      "name": "可可深场",
+      "vars": {
+        "--bg": "#513017",
+        "--fg": "#FBEBD0",
+        "--muted": "#C9A178",
+        "--card": "#FBEBD0",
+        "--grid": "#6C441F",
+        "--line": "rgba(251,235,208,.2)",
+        "--invert": "1",
+        "--vign": "rgba(20,8,0,.4)",
+        "--ray1": "#6A4020",
+        "--ray2": "#4E2D13"
+      }
+    }
+  },
+  "fonts": {
+    "--title": {
+      "family": "Rubik",
+      "weights": [
+        800,
+        900
+      ],
+      "fallback": "\"Noto Sans SC\",sans-serif"
+    },
+    "--sans": {
+      "family": "Noto Sans SC",
+      "weights": [
+        400,
+        500,
+        700
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--mono": {
+      "family": "DM Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "fallback": "ui-monospace,monospace"
+    },
+    "--hand": {
+      "family": "ZCOOL KuaiLe",
+      "weights": [
+        400
+      ],
+      "fallback": "\"Kaiti SC\",cursive"
+    },
+    "--num": {
+      "family": "Rubik",
+      "weights": [
+        900
+      ],
+      "fallback": "\"Noto Sans SC\",sans-serif"
+    }
+  },
+  "chrome": "<div class=\"bg-burst\"></div>",
+  "motion": {
+    "summary": "欢庆：旭日条一直慢转；大字带回弹弹出同时中心炸纸屑、金色光圈扩散；白卡从大且歪的状态依次荡回扇形位置，序号章旋转盖上；落定后卡片轻轻浮动、整把扇子呼吸，结论缎带轻摆；换页是圆形光圈。",
+    "ease": "back",
+    "dur": 0.6,
+    "stagger": 0.12,
+    "params": {
+      "up": {
+        "dist": 50,
+        "blur": 0
+      },
+      "slam": {
+        "from": 1.7,
+        "blur": 0
+      },
+      "pop": {
+        "from": 0.3,
+        "overshoot": 2.0
+      },
+      "stamp": {
+        "from": 1.9,
+        "rot": -12
+      },
+      "drop": {
+        "dist": 180
+      },
+      "lift": {
+        "dist": 90
+      }
+    },
+    "signature": [
+      "sunburst-spin",
+      "confetti-burst",
+      "pop",
+      "badge-spin",
+      "card-swing"
+    ],
+    "transition": {
+      "type": "iris",
+      "dur": 0.5
+    },
+    "roles": {
+      "title": "slam",
+      "card": "lift",
+      "photo": "lift",
+      "number": "slam",
+      "item": "pop"
+    }
+  },
+  "sound": {
+    "summary": "木质“铛”、礼炮“噗”、尤克里里拨弦和纸屑沙沙；配复古 swing 尤克里里，G 大调 120 BPM。",
+    "sfx": {
+      "draw": "tick",
+      "mark": "tick",
+      "enter": "pluck",
+      "card": "card",
+      "deal": "card",
+      "stamp": "confetti",
+      "type": "typing",
+      "count": "counter",
+      "transition": "swoosh",
+      "slide": "air",
+      "hit": "clap",
+      "key": "glock",
+      "reveal": "cascade",
+      "scan": "air",
+      "shot": "shutter",
+      "warn": "alert",
+      "check": "chime"
+    },
+    "bgm": {
+      "style": "swing-uke",
+      "bpm": 120,
+      "key": "G",
+      "progression": [
+        "G",
+        "Em7",
+        "Am7",
+        "D7"
+      ],
+      "energy": 0.6,
+      "drums": "brush"
+    },
+    "levels": {
+      "bgm_lufs": -24,
+      "sfx_lufs": -20.5,
+      "below_voice_db": 16,
+      "ceiling_dbfs": -14
+    }
+  }
+}

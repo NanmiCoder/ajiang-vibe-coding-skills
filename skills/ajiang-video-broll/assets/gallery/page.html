@@ -1,0 +1,184 @@
+<title>B-roll 主题库</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Geist+Mono:wght@400;500&family=Geist:wght@600;700&family=Instrument+Serif:ital@0;1&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@900&display=swap">
+<style>
+/* 工作台外壳：中性冷灰桌面（刻意单一浅色外观，不跟随系统深浅色，因为画框里的五套主题本身有深有浅，外壳要中立）。
+   布局：上面是 16:9 播放器 + 当前主题说明，下面一排五张缩略图，再下面是配色/动效/音效三栏和“你的选择”。 */
+:root{
+  --desk:#E3E3E0; --desk-2:#EDEDEA; --desk-fg:#17181A; --desk-muted:#62646A; --desk-line:#CDCDC8; --desk-card:#F7F7F5; --desk-hot:#17181A;
+  --ui:"Noto Sans SC","PingFang SC",system-ui,sans-serif; --ui-mono:"Geist Mono",ui-monospace,monospace; --ui-title:"Noto Sans SC","PingFang SC",sans-serif;
+  color-scheme: light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--desk);color:var(--desk-fg);font-family:var(--ui);-webkit-font-smoothing:antialiased;line-height:1.55;padding-inline:18px;padding-block:28px 80px}
+.wrap{max-width:1320px;margin:0 auto;display:grid;gap:30px;grid-template-columns:minmax(0,1fr)}
+.player,.info,.panel,.choice,.th{grid-template-columns:minmax(0,1fr)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--desk-hot);outline-offset:2px}
+.k{font:500 12px var(--ui-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--desk-muted)}
+header{display:grid;gap:8px;max-width:80ch}
+h1{font-family:var(--ui-title);font-weight:900;font-size:clamp(28px,4vw,44px);letter-spacing:-.03em;line-height:1.08;text-wrap:balance}
+.lead{color:var(--desk-muted);font-size:15px}
+h2{font-weight:900;font-size:19px;letter-spacing:-.01em}
+
+.top{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:940px){.top{grid-template-columns:minmax(0,1fr)}}
+.player{display:grid;gap:10px;min-width:0}
+.vp{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;box-shadow:0 26px 50px -30px rgba(0,0,0,.5),0 0 0 1px rgba(0,0,0,.08);background:#000}
+.transport{display:flex;gap:12px;align-items:center}
+.pbtn{all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;background:var(--desk-hot);color:var(--desk-card);display:grid;place-items:center;flex:none}
+.pbtn svg{width:16px;height:16px;fill:currentColor}
+.scrub{flex:1;min-width:0;position:relative;height:44px}
+.scrub input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer;margin:0}
+.track{position:absolute;left:0;right:0;top:19px;height:6px;border-radius:3px;background:var(--desk-line)}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--desk-hot)}
+.tick{position:absolute;top:-5px;width:2px;height:16px;background:var(--desk-muted)}
+.time{font:500 13px var(--ui-mono);color:var(--desk-muted);min-width:96px;text-align:right;font-variant-numeric:tabular-nums}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.seg{display:flex;gap:4px;background:var(--desk-card);padding:4px;border-radius:999px;border:1px solid var(--desk-line);flex-wrap:wrap}
+.seg button{all:unset;cursor:pointer;font-size:13px;padding:6px 13px;border-radius:999px;color:var(--desk-muted);display:inline-flex;gap:7px;align-items:center}
+.seg button[aria-pressed="true"]{background:var(--desk-hot);color:var(--desk-card)}
+.seg i{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.2)}
+.chk{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--desk-muted);cursor:pointer;margin-left:auto}
+
+.info{background:var(--desk-card);border:1px solid var(--desk-line);border-radius:12px;padding:20px;display:grid;gap:12px;min-width:0}
+.info .nm{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.info .nm b{font-family:var(--ui-title);font-weight:900;font-size:28px;letter-spacing:-.02em}
+.info p{font-size:14px}
+.info dl{display:grid;grid-template-columns:4.5em minmax(0,1fr);gap:6px 10px;font-size:13.5px}
+.info dt{color:var(--desk-muted)}
+.badge{font:500 11px var(--ui-mono);padding:3px 8px;border-radius:999px;border:1px solid var(--desk-line);color:var(--desk-muted)}
+.badge.ok{border-color:#2E7D4F;color:#2E7D4F}
+.pick{all:unset;cursor:pointer;text-align:center;padding:12px 16px;border-radius:10px;background:var(--desk-hot);color:var(--desk-card);font-weight:700}
+.pick[aria-pressed="true"]{background:#2E7D4F}
+
+.thumbs{display:grid;gap:22px}
+.tgroup{display:grid;gap:10px}
+.tgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+@media (max-width:940px){.tgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.th.kept .mini{box-shadow:0 0 0 3px #2E7D4F}
+.th[aria-pressed="true"].kept .mini{box-shadow:0 0 0 3px var(--desk-hot),0 0 0 6px #2E7D4F}
+.badge.new{border-color:#B4561E;color:#B4561E}
+.cnt.ok{color:#2E7D4F}.cnt.over{color:#B4231E}
+.info a{color:inherit}
+.pick:disabled{cursor:default;background:#2E7D4F}
+.th{all:unset;cursor:pointer;display:grid;gap:8px;min-width:0}
+.th .mini{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
+.th[aria-pressed="true"] .mini{box-shadow:0 0 0 3px var(--desk-hot)}
+.th>span{font-size:13.5px;font-weight:700;display:flex;justify-content:space-between;gap:6px}
+.th>small{font:500 11px var(--ui-mono);color:var(--desk-muted)}
+.th>span .star{color:#2E7D4F}
+
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:1040px){.cols{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--desk-card);border:1px solid var(--desk-line);border-radius:12px;padding:18px;display:grid;gap:14px;align-content:start;min-width:0}
+.panel p{font-size:13.5px;color:var(--desk-muted)}
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.sw div{display:grid;gap:4px;font:500 11px var(--ui-mono);color:var(--desk-muted);min-width:0}
+.sw i{height:40px;border-radius:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.sw code{overflow-wrap:anywhere}
+.fonts{display:grid;gap:8px}
+.fonts div{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:10px;align-items:baseline;font-size:12px}
+.fonts span{font-size:22px;color:var(--desk-fg);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fonts code{font:500 11px var(--ui-mono);color:var(--desk-muted)}
+.spec{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.1)}
+.anims{display:flex;flex-wrap:wrap;gap:6px}
+.anims button{all:unset;cursor:pointer;font:500 12px var(--ui-mono);padding:5px 10px;border-radius:6px;border:1px solid var(--desk-line);background:var(--desk-2)}
+.anims button.sig{border-color:var(--desk-hot);font-weight:700}
+.anims button[aria-pressed="true"]{background:var(--desk-hot);color:var(--desk-card)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+td{padding:5px 0;border-top:1px solid var(--desk-line);vertical-align:top}
+td:first-child{color:var(--desk-muted);width:7em}
+td code{font:500 12px var(--ui-mono)}
+.sfx{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.sfx button{all:unset;cursor:pointer;display:grid;gap:1px;padding:8px 10px;border-radius:8px;border:1px solid var(--desk-line);background:var(--desk-2);min-width:0}
+.sfx button b{font-size:13px}
+.sfx button small{font:500 11px var(--ui-mono);color:var(--desk-muted)}
+.sfx button:disabled{opacity:.45;cursor:not-allowed}
+.sfx button.on{border-color:var(--desk-hot);background:var(--desk-card)}
+.bgm{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bgm button{all:unset;cursor:pointer;padding:8px 14px;border-radius:999px;background:var(--desk-hot);color:var(--desk-card);font-size:13px;font-weight:700}
+.bgm button:disabled{opacity:.45;cursor:not-allowed}
+
+.choice[hidden],body:has(.choice[hidden]) #pickBtn{display:none}
+.choice{background:var(--desk-card);border:1px solid var(--desk-line);border-radius:12px;padding:20px;display:grid;gap:14px}
+.choice .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.choice label{display:flex;gap:8px;align-items:center;font-size:13.5px;padding:8px 10px;border:1px solid var(--desk-line);border-radius:8px;background:var(--desk-2);cursor:pointer}
+textarea{font:inherit;font-size:14px;width:100%;min-height:84px;padding:10px 12px;border-radius:8px;border:1px solid var(--desk-line);background:#fff;color:var(--desk-fg);resize:vertical}
+.save{all:unset;cursor:pointer;padding:11px 18px;border-radius:10px;background:var(--desk-hot);color:var(--desk-card);font-weight:700}
+.save:disabled{opacity:.5;cursor:not-allowed}
+.status{font-size:13px;color:var(--desk-muted)}
+.summary{font-size:15px}
+.summary b{font-weight:900}
+@media (prefers-reduced-motion:reduce){.vp,.spec{scroll-behavior:auto}}
+
+/*BASE_CSS*/
+/*THEME_CSS*/
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="k">B-roll 模板库 · 10 套</div>
+    <h1>B-roll 主题库</h1>
+    <p class="lead">每套模板都有自己的版式、构图、动效编排、配色和音效。下面播放的是同一段 12 秒内容（三个功能 / 只重拍最后 5 秒 / 88% 完成度），每套模板用自己的方式把它做成一支 B-roll。纸白信号橙是默认主选，另外 9 套参考 prompt-motion.com 上的片子改编。</p>
+  </header>
+
+  <section class="top" aria-label="播放器">
+    <div class="player">
+      <div class="vp" id="vp"></div>
+      <div class="transport">
+        <button class="pbtn" id="play" aria-label="播放（带声音）"><svg viewBox="0 0 16 16" id="playIcon"><path d="M4 2l10 6-10 6z"/></svg></button>
+        <div class="scrub"><div class="track" id="track"><div class="fill" id="fill"></div></div><input id="scrub" type="range" min="0" max="1000" value="0" aria-label="时间"></div>
+        <span class="time" id="time">0.0 / 12.0s</span>
+      </div>
+      <div class="row">
+        <span class="k">变体</span>
+        <div class="seg" id="variants" role="group" aria-label="变体"></div>
+        <label class="chk"><input type="checkbox" id="safe"> 叠上头像和字幕看看</label>
+      </div>
+    </div>
+    <aside class="info" id="info" aria-live="polite"></aside>
+  </section>
+
+  <section aria-label="全部主题">
+    <div class="thumbs" id="thumbs"></div>
+  </section>
+
+  <section class="cols" aria-label="主题细节">
+    <div class="panel">
+      <h2>配色与字体</h2>
+      <div class="sw" id="swatches"></div>
+      <div class="fonts" id="fonts"></div>
+    </div>
+    <div class="panel">
+      <h2>动效</h2>
+      <p id="motionSum"></p>
+      <div class="spec" id="spec"></div>
+      <div class="anims" id="anims" role="group" aria-label="单独看某个动效"></div>
+      <table id="motionTbl"></table>
+    </div>
+    <div class="panel">
+      <h2>音效与配乐</h2>
+      <p id="soundSum"></p>
+      <div class="bgm"><button id="bgmBtn">听配乐 16 秒</button><span class="status" id="bgmInfo"></span></div>
+      <div class="sfx" id="sfx"></div>
+      <p class="status">试听音量调到了正常听感（约 -20 LUFS）。成片里配乐和音效会比口播低 16 dB，峰值不超过 -14 dBFS。</p>
+    </div>
+  </section>
+
+  <section class="choice" aria-label="修改意见">
+    <h2>修改意见</h2>
+    <p class="summary" id="summary"></p>
+    <div class="row"><label for="fbTheme" class="k">模板</label><select id="fbTheme" style="font:inherit;padding:8px 10px;border-radius:8px;border:1px solid var(--desk-line);background:#fff;color:var(--desk-fg)"></select></div>
+    <textarea id="fbNote" aria-label="修改意见" placeholder="比如：标题再大一点；这个转场太快；音效换轻一点"></textarea>
+    <div class="row"><button class="save" id="save">保存意见</button><span class="status" id="saveStatus">每套模板单独保存，Claude 能直接读到。</span></div>
+  </section>
+</div>
+
+<audio id="demoAudio" preload="auto"></audio>
+<audio id="oneShot" preload="auto"></audio>
+<script>/*THEMES_JSON*/</script>
+<script src="broll-core.js"></script>
+<script src="layouts.js"></script>
+<script src="demo.js"></script>
+<script>/*APP_JS*/</script>

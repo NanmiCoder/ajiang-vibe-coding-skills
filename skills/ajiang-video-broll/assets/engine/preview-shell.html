@@ -1,0 +1,222 @@
+<meta charset="utf-8">
+<title>__TITLE__</title>
+<!-- 预览页外壳：由 scripts/build_broll.py 填充，不要手改生成后的 preview/index.html。
+     画框内 = broll-core 引擎 + 场景代码（和 Remotion 成片同一份），可切换主题 / 变体；外壳是中性暖灰工作台，只用浅色外观。 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!--__FONTS_LINK__-->
+<style>
+:root{
+  --desk:#DEDBD4; --desk-fg:#1B1A18; --desk-muted:#68645D; --desk-line:#C8C3B9; --desk-card:#F4F2ED; --desk-accent:#C8402A;
+  --ui:"Noto Sans SC","PingFang SC",system-ui,sans-serif; --ui-mono:"Geist Mono",ui-monospace,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--desk);color:var(--desk-fg);font-family:var(--ui);-webkit-font-smoothing:antialiased;line-height:1.55;padding-block:28px 72px}
+.wrap{max-width:1280px;margin:0 auto;padding:0 18px}
+.head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:baseline}
+.head h1{font-weight:900;font-size:clamp(24px,3.2vw,36px);letter-spacing:-.01em;text-wrap:balance}
+.k{font:500 12px var(--ui-mono);color:var(--desk-muted);letter-spacing:.08em}
+.lead{color:var(--desk-muted);max-width:76ch;font-size:15px;margin-top:10px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:18px 0 8px}
+.group{display:flex;gap:4px;background:var(--desk-card);padding:4px;border-radius:999px;border:1px solid var(--desk-line);flex-wrap:wrap}
+.tab{all:unset;cursor:pointer;font-size:13.5px;padding:6px 13px;border-radius:999px;color:var(--desk-muted);display:inline-flex;gap:7px;align-items:center}
+.tab i{width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18)}
+.tab[aria-pressed="true"]{background:var(--desk-fg);color:var(--desk-card)}
+.tab:focus-visible,.pbtn:focus-visible,.cue:focus-visible{outline:2px solid var(--desk-accent);outline-offset:2px}
+.chk{display:inline-flex;gap:6px;align-items:center;font-size:13px;color:var(--desk-muted);cursor:pointer}
+.spacer{flex:1}
+.viewport{position:relative;width:100%;aspect-ratio:16/9;max-width:100%;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.06)}
+.overlay{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;pointer-events:none}
+.transport{display:flex;gap:12px;align-items:center;margin-top:14px}
+.pbtn{all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;background:var(--desk-fg);color:var(--desk-card);display:grid;place-items:center;flex:none}
+.pbtn svg{width:16px;height:16px;fill:currentColor}
+.scrub{flex:1;min-width:0;position:relative;height:44px}
+.scrub input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer;margin:0}
+.track{position:absolute;left:0;right:0;top:19px;height:6px;border-radius:3px;background:var(--desk-line)}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--desk-fg)}
+.tick{position:absolute;top:-5px;width:2px;height:16px;background:var(--desk-accent);opacity:.7}
+.time{font:500 13px var(--ui-mono);color:var(--desk-muted);min-width:118px;text-align:right;font-variant-numeric:tabular-nums}
+.now{margin-top:8px;font-size:17px;min-height:1.6em}
+.now small{font:500 12px var(--ui-mono);color:var(--desk-muted);margin-right:10px}
+.about{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:16px}
+.about div{background:var(--desk-card);border:1px solid var(--desk-line);border-radius:10px;padding:10px 14px;font-size:13.5px;color:var(--desk-muted);min-width:0}
+.about b{display:block;color:var(--desk-fg);font-size:12px;font-family:var(--ui-mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:2px}
+.cues{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-top:18px}
+.cue{all:unset;box-sizing:border-box;cursor:pointer;background:var(--desk-card);border:1px solid var(--desk-line);border-radius:10px;padding:10px 12px;display:grid;gap:3px;font-size:13px;min-width:0}
+.cue b{font-size:14.5px;font-weight:900}
+.cue span{color:var(--desk-muted);font-size:12.5px}
+.cue i{font:normal 500 11px var(--ui-mono);color:var(--desk-accent);font-variant-numeric:tabular-nums}
+.cue.on{border-color:var(--desk-fg);box-shadow:inset 0 0 0 1px var(--desk-fg)}
+.notes{margin-top:30px;border-top:1px solid var(--desk-line);padding-top:20px;display:grid;gap:8px;max-width:80ch;font-size:14px;color:var(--desk-muted)}
+.notes b{color:var(--desk-fg)}
+@media (prefers-reduced-motion:reduce){.pbtn{transition:none}}
+/* ── 画框：通用组件 ── */
+/*__BASE_CSS__*/
+/* ── 各主题（按 .th-<id> 作用域） ── */
+/*__THEME_CSS__*/
+</style>
+<div class="wrap">
+  <div class="head"><h1 id="title"></h1><span class="k" id="meta"></span></div>
+  <p class="lead" id="lead"></p>
+  <div class="bar">
+    <div class="group" id="segTabs" role="group" aria-label="段落"></div>
+    <span class="k" id="rangeLab"></span>
+  </div>
+  <div class="bar">
+    <div class="group" id="themeTabs" role="group" aria-label="主题"></div>
+    <div class="group" id="variantTabs" role="group" aria-label="变体"></div>
+    <span class="spacer"></span>
+    <label class="chk"><input type="checkbox" id="mixToggle"> 带上配乐音效</label>
+    <label class="chk"><input type="checkbox" id="safeToggle"> 叠上头像和字幕</label>
+  </div>
+  <div class="viewport" id="vp">
+    <div class="stage" id="stage"></div>
+    <div class="overlay safe" id="safe"><div class="avc" id="avc">头像</div><div class="sub" id="subLine"></div></div>
+  </div>
+  <div class="transport">
+    <button class="pbtn" id="play" aria-label="播放"><svg viewBox="0 0 16 16" id="playIcon"><path d="M4 2l10 6-10 6z"/></svg></button>
+    <div class="scrub"><div class="track" id="track"><div class="fill" id="fill"></div></div><input type="range" id="scrub" min="0" max="1000" value="0" aria-label="进度"></div>
+    <span class="time" id="time">0.0 / 0.0s</span>
+  </div>
+  <div class="now" id="now"></div>
+  <div class="about" id="about"></div>
+  <div class="cues" id="cues"></div>
+  <div class="notes" id="notes"></div>
+</div>
+<div id="audios"></div>
+<script>
+/*__CORE__*/
+</script>
+<script>
+(function(){
+/* ───── 场景代码（和成片同一份） ───── */
+/*__SCENES__*/
+/* ───── 构建时注入的数据 ───── */
+var DATA = /*__DATA__*/{};
+var THEMES = DATA.themes, FPS = DATA.fps || 30, KEYS = Object.keys(SEGS);
+KEYS.forEach(function(k){ BrollCore.resolve(SEGS[k], DATA.segdata[k], FPS); });
+
+var $ = function(id){ return document.getElementById(id); };
+var stage = $('stage'), vp = $('vp');
+var state = { key: KEYS[0], theme: DATA.lock.theme, variant: DATA.lock.variant, T: 1, playing: false };
+var eng = null, last = performance.now();
+
+$('title').textContent = DATA.title || 'B-roll 预览';
+$('lead').textContent = DATA.lead || '';
+$('meta').textContent = KEYS.length + ' 段 · ' + (DATA.size || '4K') + FPS + ' · 主题 ' + DATA.lock.theme + ':' + DATA.lock.variant + '（已锁定）';
+if (DATA.notes) $('notes').innerHTML = DATA.notes; else $('notes').hidden = true;
+
+/* 头像圆 + 一行字幕（实测位置，1920 坐标） */
+var OV = DATA.overlay;
+(function(){ var a = $('avc').style; a.left = OV.avatar.x + 'px'; a.top = OV.avatar.y + 'px'; a.width = OV.avatar.w + 'px'; a.height = OV.avatar.h + 'px';
+  var s = $('subLine').style; s.top = OV.subtitle.y + 'px'; s.height = OV.subtitle.h + 'px'; })();
+
+/* 音频：每段口播 + 可选的配乐音效混音 */
+var AU = {};
+KEYS.forEach(function(k){
+  var a = DATA.audio[k] || {}; AU[k] = {};
+  ['voice','mix'].forEach(function(kind){ if (!a[kind]) return; var el = document.createElement('audio'); el.src = a[kind]; el.preload = 'auto'; $('audios').appendChild(el); AU[k][kind] = el; });
+});
+if (!KEYS.some(function(k){ return AU[k].mix; })) $('mixToggle').parentNode.hidden = true;
+function voice(){ return AU[state.key].voice; }
+function mix(){ return $('mixToggle').checked ? AU[state.key].mix : null; }
+
+function seg(){ return SEGS[state.key]; }
+function themeObj(){ return THEMES[state.theme]; }
+function build(){
+  var th = themeObj();
+  if (!th.variants[state.variant]) state.variant = Object.keys(th.variants).filter(function(v){ return th.variants[v]['default']; })[0] || Object.keys(th.variants)[0];
+  vp.className = 'viewport th-' + th.id + ($('safeToggle').checked ? ' show-safe' : '');
+  stage.style.cssText = BrollCore.themeVars(th, state.variant);
+  vp.style.background = getComputedStyle(stage).getPropertyValue('--bg');
+  eng = BrollCore.create(stage, seg(), { base: 'assets/', mode: 'preview', fps: FPS, theme: th });
+  stage.querySelectorAll('video').forEach(function(v){ v.addEventListener('loadedmetadata', function(){ render(); }); });
+  renderTabs(); renderAbout(); renderCues(); drawTicks(); render();
+}
+function render(){
+  var s = seg(), T = state.T;
+  eng.setPlaying(state.playing); eng.render(T);
+  $('fill').style.width = (T / s.dur * 100) + '%';
+  $('scrub').value = Math.round(T / s.dur * 1000);
+  $('time').textContent = T.toFixed(1) + ' / ' + s.dur.toFixed(1) + 's';
+  var c = null; s.cues.forEach(function(q){ if (T >= q[0]) c = q; });
+  var sc = null; s.scenes.forEach(function(x){ if (T >= x.from && T < x.to) sc = x; });
+  $('now').innerHTML = ''; if (sc) { var sm = document.createElement('small'); sm.textContent = sc.name; $('now').appendChild(sm); }
+  $('now').appendChild(document.createTextNode(c ? c[1] : ''));
+  $('subLine').textContent = c ? c[1] : '';
+  document.querySelectorAll('.cue').forEach(function(b){ b.classList.toggle('on', !!sc && +b.dataset.from === sc.from); });
+}
+function pills(host, items, cur, onPick){
+  host.innerHTML = '';
+  items.forEach(function(it){
+    var b = document.createElement('button'); b.className = 'tab'; b.setAttribute('aria-pressed', it.id === cur ? 'true' : 'false');
+    if (it.dot) { var i = document.createElement('i'); i.style.background = it.dot2 ? 'linear-gradient(135deg,' + it.dot + ' 50%,' + it.dot2 + ' 50%)' : it.dot; b.appendChild(i); }
+    b.appendChild(document.createTextNode(it.label)); b.addEventListener('click', function(){ onPick(it.id); }); host.appendChild(b);
+  });
+}
+function renderTabs(){
+  pills($('segTabs'), KEYS.map(function(k){ return { id: k, label: (SEGS[k].label || k) + ' · ' + SEGS[k].dur.toFixed(1) + 's' }; }), state.key, function(k){ setPlaying(false); state.key = k; state.T = .5; build(); });
+  pills($('themeTabs'), Object.keys(THEMES).sort(function(a, b){ return (b === DATA.lock.theme) - (a === DATA.lock.theme); }).map(function(id){ var t = THEMES[id]; return { id: id, label: t.name + (id === DATA.lock.theme ? ' ✓' : ''), dot: t.vars['--bg'], dot2: t.vars['--accent'] }; }), state.theme, function(id){ state.theme = id; state.variant = id === DATA.lock.theme ? DATA.lock.variant : ''; build(); });
+  var th = themeObj();
+  pills($('variantTabs'), Object.keys(th.variants).map(function(v){ var vv = th.variants[v].vars; return { id: v, label: th.variants[v].name, dot: vv['--bg'] || th.vars['--bg'], dot2: vv['--accent'] || th.vars['--accent'] }; }), state.variant, function(v){ state.variant = v; build(); });
+  var d = DATA.segdata[state.key]; $('rangeLab').textContent = d ? '母版区间 ' + d.srt[0] + ' → ' + d.srt[1] + ' · ' + d.frames + ' 帧' : '';
+}
+function renderAbout(){
+  var th = themeObj(), host = $('about'); host.innerHTML = '';
+  [['画面', th.concept], ['动效', th.motion.summary], ['声音', th.sound.summary]].forEach(function(r){
+    var d = document.createElement('div'), b = document.createElement('b'); b.textContent = r[0]; d.appendChild(b); d.appendChild(document.createTextNode(r[1] || '')); host.appendChild(d);
+  });
+}
+function renderCues(){
+  var s = seg(), host = $('cues'); host.innerHTML = '';
+  s.scenes.forEach(function(sc){
+    var lines = s.cues.filter(function(q){ return q[0] >= sc.from - .01 && q[0] < sc.to - .01; }).map(function(q){ return q[1]; }).join(' / ');
+    var b = document.createElement('button'); b.className = 'cue'; b.dataset.from = sc.from;
+    var i = document.createElement('i'); i.textContent = sc.from.toFixed(1) + 's – ' + sc.to.toFixed(1) + 's' + ((sc.sfx || []).length ? ' · ♪' + sc.sfx.map(function(e){ return e[1]; }).join(' ') : '');
+    var bb = document.createElement('b'); bb.textContent = sc.name; var sp = document.createElement('span'); sp.textContent = lines;
+    b.appendChild(i); b.appendChild(bb); b.appendChild(sp); b.addEventListener('click', function(){ seek(sc.from + .01); }); host.appendChild(b);
+  });
+}
+function drawTicks(){
+  var tr = $('track'); tr.querySelectorAll('.tick').forEach(function(m){ m.remove(); });
+  seg().scenes.forEach(function(sc){ if (!sc.from) return; var m = document.createElement('i'); m.className = 'tick'; m.style.left = (sc.from / seg().dur * 100) + '%'; tr.appendChild(m); });
+}
+function eachAudio(fn){ [voice(), mix()].forEach(function(a){ if (a) fn(a); }); }
+function seek(t){ state.T = Math.max(0, Math.min(seg().dur, t)); eachAudio(function(a){ try { a.currentTime = state.T; } catch(e){} }); render(); }
+function setPlaying(p){
+  state.playing = p;
+  $('playIcon').innerHTML = p ? '<path d="M3 2h4v12H3zM9 2h4v12H9z"/>' : '<path d="M4 2l10 6-10 6z"/>';
+  $('play').setAttribute('aria-label', p ? '暂停' : '播放');
+  KEYS.forEach(function(k){ ['voice','mix'].forEach(function(kind){ var a = AU[k][kind]; if (a && !a.paused) a.pause(); }); });
+  if (p) { if (state.T >= seg().dur - .05) state.T = 0; eachAudio(function(a){ try { a.currentTime = state.T; } catch(e){} a.play().catch(function(){}); }); last = performance.now(); }
+  render();
+}
+function loop(now){
+  if (state.playing) {
+    var a = voice();
+    if (a && !a.paused && a.currentTime > 0) state.T = a.currentTime; else state.T += (now - last) / 1000;
+    if (state.T >= seg().dur) { state.T = seg().dur; setPlaying(false); }
+    render();
+  }
+  last = now; requestAnimationFrame(loop);
+}
+$('play').addEventListener('click', function(){ setPlaying(!state.playing); });
+$('scrub').addEventListener('input', function(e){ seek(+e.target.value / 1000 * seg().dur); });
+$('mixToggle').addEventListener('change', function(){ if (state.playing) setPlaying(true); });
+$('safeToggle').addEventListener('change', function(e){ vp.classList.toggle('show-safe', e.target.checked); document.body.classList.toggle('show-safe', e.target.checked); });
+
+function fit(){ var k = vp.clientWidth / 1920; stage.style.transform = 'scale(' + k + ')'; $('safe').style.transform = 'scale(' + k + ')'; }
+window.addEventListener('resize', fit);
+if (window.ResizeObserver) new ResizeObserver(fit).observe(vp);
+
+/* 本地截图用：#s=1&t=12.5&th=riso-print&safe=1 */
+var h = location.hash;
+var qs = (h.match(/s=(\d+)/) || [])[1], qt = (h.match(/t=([\d.]+)/) || [])[1], qth = (h.match(/th=([\w-]+)(?::([\w-]+))?/) || []);
+if (qs && KEYS[+qs]) state.key = KEYS[+qs];
+if (qth[1] && THEMES[qth[1]]) { state.theme = qth[1]; state.variant = qth[2] || ''; }
+if (/safe=1/.test(h)) { $('safeToggle').checked = true; vp.classList.add('show-safe'); }
+build(); fit(); seek(qt ? +qt : Math.min(3, seg().dur / 2));
+requestAnimationFrame(loop);
+})();
+</script>

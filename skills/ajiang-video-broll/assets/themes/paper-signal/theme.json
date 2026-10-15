@@ -1,0 +1,205 @@
+{
+  "id": "paper-signal",
+  "name": "纸白信号橙",
+  "en": "Paper Signal",
+  "group": "chosen",
+  "status": "414 期预览出过（prompt-motion 风），未进成片",
+  "fits": "适合：产品发布、功能清单、步骤流程、数据结论、观点总结这类信息密度高、需要干净利落的口播。不适合：情绪化吐槽、搞笑段子、需要大量手绘或可爱感的内容。",
+  "concept": "瑞士国际主义海报：12 栏细线网格、巨号 Geist 索引数字、中文粗黑大字；唯一的信号橙只给标题重点、扫描条、点亮的格子和结论。内容少时用描边巨号补位，像一页排得很满的杂志版面。",
+  "design": {
+    "w": 1920,
+    "h": 1080,
+    "scale4k": 2,
+    "content": [
+      90,
+      110,
+      1830,
+      920
+    ]
+  },
+  "vars": {
+    "--bg": "#ECEAE4",
+    "--fg": "#12110E",
+    "--muted": "#7A766F",
+    "--accent": "#F2561E",
+    "--accent2": "#12110E",
+    "--card": "#FFFFFF",
+    "--card-fg": "#12110E",
+    "--line": "rgba(18,17,14,.12)",
+    "--shadow": "rgba(18,17,14,.18)",
+    "--grid": "rgba(18,17,14,.07)",
+    "--grid2": "rgba(14,14,14,.0)",
+    "--ok": "#1F8A4C",
+    "--invert": "0",
+    "--vign": "rgba(0,0,0,0)"
+  },
+  "variants": {
+    "signal": {
+      "name": "信号橙",
+      "default": true,
+      "vars": {}
+    },
+    "lime": {
+      "name": "荧光柠",
+      "vars": {
+        "--accent": "#C6F432",
+        "--bg": "#EDEDE8"
+      }
+    },
+    "inkblue": {
+      "name": "墨水蓝",
+      "vars": {
+        "--accent": "#2F49FF"
+      }
+    },
+    "night": {
+      "name": "夜间版",
+      "vars": {
+        "--bg": "#141412",
+        "--fg": "#F2F0EA",
+        "--card": "#1E1E1B",
+        "--card-fg": "#F2F0EA",
+        "--muted": "#8E8A82",
+        "--line": "rgba(242,240,234,.14)",
+        "--grid": "rgba(242,240,234,.06)",
+        "--invert": "1",
+        "--accent2": "#F2F0EA"
+      }
+    }
+  },
+  "fonts": {
+    "--title": {
+      "family": "Noto Sans SC",
+      "weights": [
+        800,
+        900
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--sans": {
+      "family": "Noto Sans SC",
+      "weights": [
+        400,
+        500,
+        700
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--mono": {
+      "family": "Geist Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "fallback": "ui-monospace,monospace"
+    },
+    "--hand": {
+      "family": "Instrument Serif",
+      "weights": [
+        400
+      ],
+      "italic": true,
+      "fallback": "Georgia,serif"
+    },
+    "--num": {
+      "family": "Geist",
+      "weights": [
+        600,
+        700
+      ],
+      "fallback": "system-ui,sans-serif"
+    }
+  },
+  "chrome": "<div class=\"ps-cols\"></div><i class=\"ps-tick a\"></i><i class=\"ps-tick b\"></i><i class=\"ps-tick c\"></i><div class=\"ps-hud tl\"><span data-chrome-label>OIIOII / 414</span></div><div class=\"ps-hud bl\" data-chrome-tc>00:00:00:00</div><div class=\"ps-hud br\">SIGNAL / <b data-chrome-index>01</b></div>",
+  "motion": {
+    "summary": "瑞士海报式的利落：大字从遮罩里升起，图版被橙色扫描条 / 信号板揭开，数字带刻度尺逐格点亮（非百分比按好读的满格值走），落定后图版慢推、扫描线循环、光标闪烁；换页是一道橙色竖条从左推过去，把旧画面切掉。适合讲清楚“是什么、有几步、多少”，不适合需要俏皮感的段落。",
+    "ease": "expo",
+    "dur": 0.5,
+    "stagger": 0.08,
+    "params": {
+      "up": {
+        "dist": 44,
+        "blur": 0
+      },
+      "slam": {
+        "from": 1.35,
+        "blur": 12
+      },
+      "pop": {
+        "from": 0.7,
+        "overshoot": 0.8
+      },
+      "stamp": {
+        "from": 1.4,
+        "rot": 0
+      },
+      "drop": {
+        "dist": 120
+      },
+      "lift": {
+        "dist": 48
+      }
+    },
+    "signature": [
+      "mask",
+      "wipe",
+      "scan",
+      "count",
+      "bar"
+    ],
+    "transition": {
+      "type": "wipe",
+      "dur": 0.5
+    },
+    "roles": {
+      "title": "mask",
+      "text": "up",
+      "card": "up",
+      "photo": "wipe",
+      "number": "mask",
+      "item": "up",
+      "line": "bar"
+    }
+  },
+  "sound": {
+    "summary": "干净的 UI 点击（木琴式 pluck、纸张翻动、软 snap），配 marimba + 软电钢，C 大调 112 BPM，偏明亮。",
+    "sfx": {
+      "draw": "tick",
+      "mark": "tick",
+      "enter": "pluck",
+      "card": "snap",
+      "deal": "snap",
+      "stamp": "thock",
+      "type": "typing",
+      "count": "counter",
+      "transition": "swipe",
+      "slide": "air",
+      "hit": "thock",
+      "key": "ding",
+      "reveal": "pluck-up",
+      "scan": "air",
+      "shot": "shutter",
+      "warn": "alert",
+      "check": "chime"
+    },
+    "bgm": {
+      "style": "marimba-pluck",
+      "bpm": 112,
+      "key": "C",
+      "progression": [
+        "Cmaj9",
+        "Am9",
+        "Fmaj7",
+        "G6"
+      ],
+      "energy": 0.5,
+      "drums": "click"
+    },
+    "levels": {
+      "bgm_lufs": -24,
+      "sfx_lufs": -20.5,
+      "below_voice_db": 16,
+      "ceiling_dbfs": -14
+    }
+  }
+}

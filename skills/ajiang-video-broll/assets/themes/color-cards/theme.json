@@ -1,0 +1,212 @@
+{
+  "id": "color-cards",
+  "name": "彩卡拼贴",
+  "en": "Color Cards",
+  "group": "kept",
+  "rank": 11,
+  "status": "prompt-motion.com #190 改编（Claude self-promo spot），未进成片",
+  "source": {
+    "url": "https://prompt-motion.com/slvdev-64c45a",
+    "title": "Claude self-promo spot"
+  },
+  "fits": "适合“它能做什么”式的盘点：功能枚举、案例墙、一个工具出几种成果（2–5 个条目最好，每条一句短名 + 一张截图）。不适合抽象论证、长段落解释、对比打分和严肃数据（色块太糖果，压不住严肃话题）。",
+  "concept": "轻快的作品集翻牌：每个条目一张满屏饱和色卡（蓝 / 黄 / 绿 / 橙 / 粉）从右推进，卡上一个作品窗口 + 一句粗黑短语；最后全部缩成深色桌面上的倾斜拼贴，中间米白主卡点题。片头是米白底 + 漂浮几何 + 橙色胶囊高亮；聚焦是深色窗口 + 胶囊清单；数字是米白主卡托起大数。",
+  "design": {
+    "w": 1920,
+    "h": 1080,
+    "scale4k": 2,
+    "content": [
+      90,
+      110,
+      1830,
+      920
+    ]
+  },
+  "vars": {
+    "--bg": "#13120D",
+    "--fg": "#F3EFE4",
+    "--muted": "#8F8A7A",
+    "--accent": "#EDD456",
+    "--accent2": "#D9603B",
+    "--card": "#1F1B14",
+    "--card-fg": "#F3EFE4",
+    "--line": "rgba(243,239,228,.12)",
+    "--shadow": "rgba(12,9,4,.5)",
+    "--grid": "rgba(243,239,228,.06)",
+    "--grid2": "rgba(0,0,0,0)",
+    "--ok": "#4CB27A",
+    "--invert": "1",
+    "--vign": "rgba(12,9,4,.3)",
+    "--cc-blue": "#2F4BDB",
+    "--cc-yellow": "#EDD456",
+    "--cc-green": "#1F6B4A",
+    "--cc-orange": "#D9603B",
+    "--cc-pink": "#F2B6A8",
+    "--cc-cream": "#EEEAE2",
+    "--cc-black": "#13120D",
+    "--cc-table": "#1A1712",
+    "--cc-ok": "#3FA66E"
+  },
+  "variants": {
+    "cocoa": {
+      "name": "深咖",
+      "default": true,
+      "vars": {}
+    },
+    "ember": {
+      "name": "焦橙",
+      "vars": {
+        "--cc-table": "#3A1D13"
+      }
+    },
+    "cobalt": {
+      "name": "钴蓝",
+      "vars": {
+        "--cc-table": "#10183D"
+      }
+    },
+    "forest": {
+      "name": "森绿",
+      "vars": {
+        "--cc-table": "#0F2A1E"
+      }
+    }
+  },
+  "fonts": {
+    "--title": {
+      "family": "Noto Sans SC",
+      "weights": [
+        900
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--sans": {
+      "family": "Noto Sans SC",
+      "weights": [
+        500,
+        700
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--mono": {
+      "family": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "fallback": "ui-monospace,monospace"
+    },
+    "--hand": {
+      "family": "Instrument Serif",
+      "weights": [
+        400
+      ],
+      "fallback": "\"Noto Serif SC\",serif",
+      "italic": true
+    },
+    "--num": {
+      "family": "Archivo Black",
+      "weights": [
+        400
+      ],
+      "fallback": "\"Noto Sans SC\",sans-serif"
+    },
+    "--disp": {
+      "family": "Bricolage Grotesque",
+      "weights": [
+        800
+      ],
+      "fallback": "\"Noto Sans SC\",sans-serif"
+    }
+  },
+  "chrome": "",
+  "motion": {
+    "summary": "像翻作品集：色卡整屏从右推进、上一张被压到底下，作品窗口晚一拍浮上来；所有卡一起缩小散成拼贴（右上让出头像圆），主卡回弹弹出；清单先灰后亮逐个打勾，标题跟在清单后；数字页主卡从下面托起、光标点按钮。落定后几何和卡片保持轻微漂浮。",
+    "ease": "back",
+    "dur": 0.55,
+    "stagger": 0.1,
+    "params": {
+      "up": {
+        "dist": 50,
+        "blur": 0
+      },
+      "slam": {
+        "from": 1.4,
+        "blur": 0
+      },
+      "pop": {
+        "from": 0.4,
+        "overshoot": 1.8
+      },
+      "stamp": {
+        "from": 1.8,
+        "rot": -10
+      },
+      "drop": {
+        "dist": 220
+      },
+      "lift": {
+        "dist": 100
+      }
+    },
+    "signature": [
+      "card-push",
+      "collage-zoom-out",
+      "lift",
+      "check-toggle",
+      "cursor-click"
+    ],
+    "transition": {
+      "type": "push",
+      "dur": 0.4
+    },
+    "roles": {
+      "title": "slam",
+      "card": "drop",
+      "photo": "lift",
+      "number": "slam",
+      "item": "pop"
+    }
+  },
+  "sound": {
+    "summary": "糖果感的 pop、发牌 whoosh、轻快 click、玻璃叮；配 playful nu-disco 拨弦，F 大调 118 BPM。",
+    "sfx": {
+      "draw": "zip",
+      "mark": "zip",
+      "enter": "bubble",
+      "card": "sticker",
+      "deal": "sticker",
+      "stamp": "clap",
+      "type": "typing",
+      "count": "counter",
+      "transition": "swoosh",
+      "slide": "air",
+      "hit": "clap",
+      "key": "glock",
+      "reveal": "cascade",
+      "scan": "zip",
+      "shot": "shutter",
+      "warn": "honk-soft",
+      "check": "chime"
+    },
+    "bgm": {
+      "style": "funk-pluck",
+      "bpm": 118,
+      "key": "F",
+      "progression": [
+        "Fmaj7",
+        "Am7",
+        "Bbmaj7",
+        "C7"
+      ],
+      "energy": 0.6,
+      "drums": "clap"
+    },
+    "levels": {
+      "bgm_lufs": -24,
+      "sfx_lufs": -20.5,
+      "below_voice_db": 16,
+      "ceiling_dbfs": -14
+    }
+  }
+}

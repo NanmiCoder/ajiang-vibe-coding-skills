@@ -1,0 +1,34 @@
+/* 暖雾：镜头在超大产品界面上漫游——居中大标题滑到左上，白色界面面板由虚变实抬起并被画面裁切，图片从骨架闪光中显影，底部深色药丸字幕。
+   参考 https://prompt-motion.com/justincooperman-e7bbc4 */
+.bg-haze i{position:absolute;border-radius:50%;filter:blur(110px)}
+.bg-haze i:nth-child(1){left:-260px;top:520px;width:1000px;height:760px;background:var(--grid2);opacity:.55}
+.bg-haze i:nth-child(2){left:1100px;top:-300px;width:1100px;height:820px;background:var(--grid);opacity:.8}
+.bg-haze i:nth-child(3){left:300px;top:-380px;width:900px;height:600px;background:var(--grid);opacity:.35}
+.stage .ttl{font-family:var(--title);font-weight:900;letter-spacing:-.02em;color:var(--fg)}
+.stage .hl{color:var(--accent)}
+.stage .num{font-weight:700;letter-spacing:-.05em}
+.wh-kick{text-align:center;font:500 22px var(--sans);letter-spacing:.06em;color:var(--muted)}
+.wh-panel{background:var(--card);border-radius:22px;box-shadow:0 50px 90px -40px var(--shadow),0 0 0 1px var(--line);padding:30px 32px;overflow:hidden}
+.wh-bar{display:block;height:14px;border-radius:7px;background:color-mix(in srgb,var(--fg) 8%,transparent);margin:16px 0}
+.wh-brand{display:flex;align-items:center;gap:14px;font:700 26px var(--sans);color:var(--fg)}
+.wh-input{position:absolute;left:24px;right:24px;bottom:24px;height:220px;border-radius:16px;background:color-mix(in srgb,var(--bg) 70%,var(--card));box-shadow:inset 0 0 0 1px var(--line);padding:22px 24px}
+.wh-typed{font:500 34px var(--sans);color:var(--fg);line-height:1.4}
+.wh-plus{position:absolute;left:22px;bottom:16px;width:34px;height:34px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center;font:400 24px var(--sans);color:var(--muted)}
+.wh-send{position:absolute;right:20px;bottom:16px;width:46px;height:46px;border-radius:50%;display:grid;place-items:center}
+.wh-skel{border-radius:12px;background:linear-gradient(100deg,color-mix(in srgb,var(--fg) 6%,var(--card)) 30%,color-mix(in srgb,var(--fg) 2%,var(--card)) 50%,color-mix(in srgb,var(--fg) 6%,var(--card)) 70%);background-size:1400px 100%}
+.wh-img{border-radius:12px;overflow:hidden}
+.wh-img img,.wh-img video,.wh-img .clip{width:100%;height:100%;object-fit:cover;display:block}
+.wh-tag{font:500 22px var(--mono);color:var(--accent);margin-top:8px}
+.wh-chk{display:flex;align-items:center;gap:20px;background:var(--card);border-radius:18px;padding:0 26px;box-shadow:0 30px 60px -36px var(--shadow),0 0 0 1px var(--line)}
+.wh-chk span{font:800 36px var(--title);color:var(--fg);white-space:nowrap}
+.wh-tc{font:500 22px var(--mono);color:var(--muted);white-space:nowrap}
+.wh-pillrow{display:flex;justify-content:center;align-items:center}
+.wh-pill{display:inline-flex;align-items:center;height:60px;padding:0 34px;border-radius:999px;background:#1C1C1A;color:#fff;font:700 34px var(--sans);white-space:nowrap;box-shadow:0 20px 40px -20px rgba(60,40,20,.4)}
+.wh-pill b{color:#8FCB92;font-weight:800;margin-left:.3em}
+.wh-pill small{font:500 20px var(--mono);color:#B9B5AA;margin-left:18px;letter-spacing:.06em}
+.wh-num{font-size:340px;line-height:1;color:var(--fg)}
+.wh-suf{font-size:.42em;color:var(--accent);margin-left:.06em}
+.stage .stamp{border:none;background:#1A1A18;color:#fff;border-radius:999px;font-family:var(--sans);font-weight:700;padding:14px 30px}
+.stage .chip{background:#1A1A18;color:#fff}.stage .chip.on{background:var(--accent);color:#fff}
+.stage .hand{color:var(--accent);font-weight:700}
+.stage .mark{background:linear-gradient(transparent 60%,color-mix(in srgb,var(--accent2) 45%,transparent) 60%)}

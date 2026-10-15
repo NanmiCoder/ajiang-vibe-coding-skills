@@ -1,0 +1,203 @@
+{
+ "id": "mint-switch",
+ "name": "黑白薄荷",
+ "en": "Mint Switch",
+ "group": "kept",
+ "rank": 10,
+ "status": "prompt-motion.com #89 改编（Sherwood agentic hedge fund explainer），未进成片",
+ "source": {
+  "url": "https://prompt-motion.com/imthatcarlos-e04bfe",
+  "title": "Sherwood agentic hedge fund explainer"
+ },
+ "fits": "适合：工作原理、几步走、流程拆解、Agent / 自动化 / 开发工具类讲解，节奏偏冷静、偏“产品说明书”。不适合：吐槽、情绪段落、需要大量并列对比的内容（同一时间只聚焦一个步骤）。",
+ "concept": "Sherwood 式协议讲解：近黑柔光舞台和骨白步骤页整屏硬切；步骤条 + 巨大薄荷编号（4–5 步时改成竖排索引逐个聚焦）+ 薄荷底板上的白卡，重点词逐字上薄荷底，结尾整屏照片压暗出大字。",
+ "design": {
+  "w": 1920,
+  "h": 1080,
+  "scale4k": 2,
+  "content": [
+   90,
+   110,
+   1830,
+   920
+  ]
+ },
+ "vars": {
+  "--bg": "#0B0D0C",
+  "--fg": "#F3F5EF",
+  "--muted": "#8A8F86",
+  "--accent": "#4DEB9F",
+  "--accent2": "#1FB872",
+  "--card": "#141816",
+  "--card-fg": "#F5F6F0",
+  "--line": "rgba(245,246,240,.12)",
+  "--shadow": "rgba(4,10,7,.6)",
+  "--grid": "rgba(77,235,159,.05)",
+  "--grid2": "rgba(0,0,0,0)",
+  "--ok": "#4DEB9F",
+  "--invert": "1",
+  "--vign": "rgba(4,10,7,.4)",
+  "--dk": "#0B0D0C",
+  "--dk-fg": "#F3F5EF",
+  "--pp": "#F3F3EE",
+  "--pp-fg": "#101311",
+  "--slab": "#DDF2E4",
+  "--ink": "#0B1A12"
+ },
+ "variants": {
+  "black": {
+   "name": "黑白薄荷",
+   "default": true,
+   "vars": {}
+  },
+  "white": {
+   "name": "全白场",
+   "vars": {
+    "--dk": "#F3F3EE",
+    "--dk-fg": "#101311",
+    "--accent": "#2BE38A",
+    "--accent2": "#16A463",
+    "--muted": "#6B6E68",
+    "--ink": "#0B1A12"
+   }
+  },
+  "cyan": {
+   "name": "冰蓝",
+   "vars": {
+    "--accent": "#46E3FF",
+    "--accent2": "#0E9FC0",
+    "--slab": "#DCEFF5"
+   }
+  }
+ },
+ "fonts": {
+  "--title": {
+   "family": "Inter Tight",
+   "weights": [
+    700,
+    800
+   ],
+   "fallback": "\"Noto Sans SC\",sans-serif"
+  },
+  "--sans": {
+   "family": "Noto Sans SC",
+   "weights": [
+    400,
+    500
+   ],
+   "fallback": "\"PingFang SC\",sans-serif"
+  },
+  "--mono": {
+   "family": "JetBrains Mono",
+   "weights": [
+    400,
+    700
+   ],
+   "fallback": "ui-monospace,monospace"
+  },
+  "--hand": {
+   "family": "JetBrains Mono",
+   "weights": [
+    700
+   ],
+   "fallback": "ui-monospace,monospace"
+  },
+  "--num": {
+   "family": "JetBrains Mono",
+   "weights": [
+    700
+   ],
+   "fallback": "ui-monospace,monospace"
+  }
+ },
+ "chrome": "<div class=\"mt-chrome\"><i></i><span data-chrome-label>HOW IT WORKS</span></div>",
+ "motion": {
+  "summary": "干净的协议讲解：黑场白场硬切；步骤条一格格走满，编号像里程表滚到下一步、白卡跟着换，每步停留时间按场景时长平均分配（不少于 0.5 秒，长场景每步最多 1.8 秒）；重点词逐字被薄荷底擦出；终端卡里命令行打字、检查项逐个亮点；落定后背景骨架胶囊缓慢漂浮、图片慢推。",
+  "ease": "quart",
+  "dur": 0.5,
+  "stagger": 0.08,
+  "params": {
+   "up": {
+    "dist": 28,
+    "blur": 6
+   },
+   "slam": {
+    "from": 1.15,
+    "blur": 4
+   },
+   "pop": {
+    "from": 0.8,
+    "overshoot": 0.6
+   },
+   "stamp": {
+    "from": 1.3,
+    "rot": 0
+   },
+   "drop": {
+    "dist": 80
+   },
+   "lift": {
+    "dist": 36
+   }
+  },
+  "signature": [
+   "highlight",
+   "odometer",
+   "type",
+   "cut",
+   "split"
+  ],
+  "transition": {
+   "type": "cut",
+   "dur": 0.14
+  },
+  "roles": {
+   "title": "up",
+   "card": "up",
+   "photo": "fade",
+   "number": "up",
+   "item": "up"
+  }
+ },
+ "sound": {
+  "summary": "干净的 sub 低频轻点、数字 blip、确认音；配极简 IDM 电子，A 小调 122 BPM。",
+  "sfx": {
+   "draw": "scan",
+   "mark": "blip",
+   "enter": "blip",
+   "card": "lock",
+   "deal": "lock",
+   "stamp": "lock",
+   "type": "keys-soft",
+   "count": "data",
+   "transition": "glitch-soft",
+   "slide": "air",
+   "hit": "sub-tick",
+   "key": "ping",
+   "reveal": "arp-up",
+   "scan": "scan",
+   "shot": "shutter",
+   "warn": "alert",
+   "check": "confirm"
+  },
+  "bgm": {
+   "style": "soft-house",
+   "bpm": 122,
+   "key": "Am",
+   "progression": [
+    "Am7",
+    "Fmaj7",
+    "Dm7",
+    "Em7"
+   ],
+   "energy": 0.5,
+   "drums": "tick"
+  },
+  "levels": {
+   "bgm_lufs": -24,
+   "sfx_lufs": -20.5,
+   "below_voice_db": 16,
+   "ceiling_dbfs": -14
+  }
+ }
+}

@@ -1,4 +1,4 @@
-"""Validate this repository's five independently installable ajiang skills offline.
+"""Validate this repository's independently installable ajiang skills offline.
 
 Python 3.9+, standard library only. Validates our single-line metadata subset,
 local resource boundaries and README assets; not a general YAML/secret scanner.
@@ -11,6 +11,7 @@ from pathlib import Path
 
 EXPECTED = {
     "ajiang-debug", "ajiang-review", "ajiang-feature", "ajiang-ablation", "ajiang-git-commit-pr",
+    "ajiang-video-broll",
 }
 
 
@@ -102,7 +103,7 @@ def main():
         print("FAIL: " + error)
     if errors:
         return 1
-    print("PASS: five ajiang skills, metadata, standalone resources, local links and README assets")
+    print("PASS: " + str(len(EXPECTED)) + " ajiang skills, metadata, standalone resources, local links and README assets")
     print("Actual CLI install and model behavior are separate verification layers.")
     return 0
 

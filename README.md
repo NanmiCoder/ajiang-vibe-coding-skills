@@ -4,11 +4,12 @@
 
 # Ajiang Vibe Coding Skills
 
-**程序员阿江日常 vibe coding 习惯的蒸馏。五个常用 skill：排查 bug、审查代码、开发功能、消融实验、提交代码。**
+**程序员阿江日常 vibe coding 习惯的蒸馏。五个常用 skill：排查 bug、审查代码、开发功能、消融实验、提交代码；另附一个做口播视频 B-roll 的 skill，带 10 套动画模板。**
 
 <p align="center">
   <a href="#快速开始">安装</a> ·
   <a href="#按问题选-skill">Skill 目录</a> ·
+  <a href="#视频-b-roll-模板">B-roll 模板</a> ·
   <a href="#我常用的其他-skills">其他常用 Skills</a> ·
   <a href="#这些-skill-从哪里来">来源</a> ·
   <a href="./LICENSE">MIT</a>
@@ -61,6 +62,50 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill '*' --agent codex
 | [ajiang-feature](skills/ajiang-feature/SKILL.md) | 开发新功能：实现用户要完成的操作，从实际入口验证结果 |
 | [ajiang-ablation](skills/ajiang-ablation/SKILL.md) | 做消融实验：每次移除或替换一个机制，对比效果与成本，判断是否保留 |
 | [ajiang-git-commit-pr](skills/ajiang-git-commit-pr/SKILL.md) | 提交代码、创建 PR；创建前同步最新上游，检查文本与业务冲突 |
+| [ajiang-video-broll](skills/ajiang-video-broll/SKILL.md) | 给口播视频做整屏 B-roll / MG 包装：按字幕选段，套 10 套模板之一，预览确认后用 Remotion 渲染 4K |
+
+## 视频 B-roll 模板
+
+`ajiang-video-broll` 给初剪好的口播视频做整屏 B-roll / MG 包装：读 SRT 选出要包装的段落，选一套模板写场景；先出一个和成片同一套引擎的预览页，确认后再用 Remotion 渲染 4K，配上这套模板的音效和配乐，按字幕时间命名交付，直接替换剪辑时间线上的视频轨。
+
+10 套模板的版式、构图、动效编排、配色和声音各不相同，换模板不只是换颜色。下面每张图都是同一段演示内容在各套模板里的样子。
+
+### 本地预览全部模板
+
+```sh
+git clone https://github.com/NanmiCoder/ajiang-vibe-coding-skills.git
+cd ajiang-vibe-coding-skills
+python3 skills/ajiang-video-broll/assets/gallery/serve.py
+```
+
+浏览器会打开 http://127.0.0.1:8765/ 。在页面上可以切换模板和配色变体、拖动时间轴、单独回放每个动效、试听音效和配乐；`?id=riso-print&t=6` 这样的参数可以直接定位到某套模板的某一秒。
+
+需要 Python 3 和 Node.js，字体从 Google Fonts 加载。试听音频要额外装 `pip install numpy scipy soundfile pyloudnorm` 和 ffmpeg，第一次启动时自动生成，大约 30 秒；不装也能看动画。端口被占用时加 `--port 9000`。
+
+### 10 套模板
+
+<table>
+<tr>
+<td width="50%" valign="top"><img src="./assets/readme/broll/paper-signal.jpg" width="100%" alt="纸白信号橙（paper-signal）模板的一帧画面"><br><b>纸白信号橙</b> <code>paper-signal</code><br>默认主选。瑞士海报网格、巨号索引数字、橙色扫描条<br><sub>适合：产品发布、功能清单、观点</sub></td>
+<td width="50%" valign="top"><img src="./assets/readme/broll/sticker-pop.jpg" width="100%" alt="贴纸波普（sticker-pop）模板的一帧画面"><br><b>贴纸波普</b> <code>sticker-pop</code><br>粗描边彩色窗口 + 流动虚线连线<br><sub>适合：痛点到方案、吐槽式教程</sub></td>
+</tr>
+<tr>
+<td width="50%" valign="top"><img src="./assets/readme/broll/mint-switch.jpg" width="100%" alt="黑白薄荷（mint-switch）模板的一帧画面"><br><b>黑白薄荷</b> <code>mint-switch</code><br>黑白整屏硬切，只用一个薄荷绿<br><sub>适合：原理讲解、分步骤、Agent 演示</sub></td>
+<td width="50%" valign="top"><img src="./assets/readme/broll/warm-haze.jpg" width="100%" alt="暖雾（warm-haze）模板的一帧画面"><br><b>暖雾</b> <code>warm-haze</code><br>镜头在大号产品界面上漂移，暖色雾团<br><sub>适合：产品 demo、上手教程</sub></td>
+</tr>
+<tr>
+<td width="50%" valign="top"><img src="./assets/readme/broll/sticky-audit.jpg" width="100%" alt="便签复盘（sticky-audit）模板的一帧画面"><br><b>便签复盘</b> <code>sticky-audit</code><br>证据墙：碎片被扫描线逐个对焦、编号、连线<br><sub>适合：工作流、排查、从乱到有序</sub></td>
+<td width="50%" valign="top"><img src="./assets/readme/broll/riso-print.jpg" width="100%" alt="孔版印刷（riso-print）模板的一帧画面"><br><b>孔版印刷</b> <code>riso-print</code><br>错位套印色带、印版换页、维恩叠色<br><sub>适合：三个要点、A 对 B、轻松介绍</sub></td>
+</tr>
+<tr>
+<td width="50%" valign="top"><img src="./assets/readme/broll/showa-poster.jpg" width="100%" alt="昭和海报（showa-poster）模板的一帧画面"><br><b>昭和海报</b> <code>showa-poster</code><br>特摄标题卡：巨字硬切、放射线、竖排、红幅<br><sub>适合：单字点题、重磅消息、翻车开场</sub></td>
+<td width="50%" valign="top"><img src="./assets/readme/broll/retro-sunburst.jpg" width="100%" alt="复古旭日（retro-sunburst）模板的一帧画面"><br><b>复古旭日</b> <code>retro-sunburst</code><br>对称庆典海报：旋转光芒、锯齿徽章、撒花<br><sub>适合：里程碑、榜单、致谢</sub></td>
+</tr>
+<tr>
+<td width="50%" valign="top"><img src="./assets/readme/broll/color-cards.jpg" width="100%" alt="彩卡拼贴（color-cards）模板的一帧画面"><br><b>彩卡拼贴</b> <code>color-cards</code><br>饱和色卡逐张推进，最后收成倾斜拼贴<br><sub>适合：功能枚举、案例墙</sub></td>
+<td width="50%" valign="top"><img src="./assets/readme/broll/bauhaus-grid.jpg" width="100%" alt="包豪斯几何（bauhaus-grid）模板的一帧画面"><br><b>包豪斯几何</b> <code>bauhaus-grid</code><br>几何形网格，图片裁成几何形<br><sub>适合：结构、模块、架构设计</sub></td>
+</tr>
+</table>
 
 ## 我常用的其他 Skills
 

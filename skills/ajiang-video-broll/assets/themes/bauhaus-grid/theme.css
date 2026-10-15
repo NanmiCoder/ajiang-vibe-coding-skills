@@ -1,0 +1,54 @@
+/* 包豪斯几何：设计学院作品集取景器 —— 米白纸 + 细网格 + 四角十字 + 刻度尺；蓝黄红黑的几何形填满格子并按节拍 90° 翻转；履历卡与整屏橙红立体衬线数字。
+   参考 https://prompt-motion.com/web3wesley-7bb108 */
+.bh-paper{position:absolute;inset:0;background:var(--bh-cream)}
+.bh-grid line{stroke:var(--bh-line);stroke-width:1.5}
+.bh-cell{transform-origin:center;opacity:0}
+.bh-cell i{position:absolute;inset:0;display:block}
+.bh-ring{border-radius:50%;border:26px solid color-mix(in srgb,var(--bh-red) 14%,transparent)}
+.bh-frame{position:absolute;inset:0;pointer-events:none;color:var(--bh-black);z-index:10}
+.bh-frame.dark,.bh-frame.light{color:var(--bh-cream)}
+.bh-frame line{stroke:currentColor;stroke-width:2}
+.bh-frame .bh-ticks line{stroke-width:1;opacity:.5}
+.bh-frame .bh-head{stroke:var(--bh-red);stroke-width:3;opacity:1}
+.bh-frame.light .bh-head{stroke:var(--bh-black)}
+.bh-lab{position:absolute;font:500 16px var(--mono);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;opacity:.8}
+.bh-kick{font:500 20px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--bh-red);white-space:nowrap}
+.bh-hcol{display:flex;flex-direction:column;justify-content:center;gap:14px}
+.bh-ttl{font-family:var(--num),"Noto Sans SC",sans-serif;font-weight:900;color:var(--bh-black);line-height:1.04;letter-spacing:-.02em}
+.bh-ttl .hl{color:var(--bh-red)}
+.bh-dot{display:inline-block;width:.2em;height:.2em;border-radius:50%;background:var(--bh-red);margin-left:.06em;vertical-align:baseline}
+.bh-serif{font-family:var(--hand),"Noto Serif SC",serif;font-style:italic;color:var(--bh-black);line-height:1.25}
+.bh-shot{overflow:hidden;transform-origin:center;background:var(--bh-black)}
+.bh-shot img{width:100%;height:100%;object-fit:cover;display:block}
+.bh-name{display:flex;flex-direction:column;justify-content:center;padding:0 6px;gap:4px}
+.bh-name b{font-family:var(--num),"Noto Sans SC",sans-serif;font-weight:900;color:var(--bh-black);line-height:1.1;white-space:nowrap}
+.bh-no{font:500 16px var(--mono);letter-spacing:.12em;color:var(--bh-red);white-space:nowrap}
+.bh-aside{background:var(--bh-black);padding:26px 30px;display:flex;flex-direction:column;justify-content:space-between}
+.bh-aside b{font-family:var(--num);font-weight:400;font-size:150px;line-height:.9;color:var(--bh-yellow)}
+.bh-aside b small{font-size:.4em;margin-left:6px}
+.bh-cv{background:var(--bh-cream);box-shadow:0 50px 100px -30px rgba(14,10,8,.7);opacity:0}
+.bh-cv>*{position:absolute}
+.bh-mono{position:absolute;font:500 16px var(--mono);letter-spacing:.12em;color:var(--bh-black);text-transform:uppercase;white-space:nowrap;opacity:.75}
+.bh-rule{background:var(--bh-black)}
+.bh-rule.thin{opacity:.35}
+.bh-shot2{overflow:hidden;background:var(--bh-black)}
+.bh-shot2 img,.bh-shot2 .clip{width:100%;height:100%;object-fit:cover;display:block}
+.bh-ruler i{position:absolute;top:0;width:1px;background:var(--bh-black);opacity:.5}
+.bh-cvt{font-family:var(--serifsc),"Noto Serif SC",serif;font-weight:900;color:var(--bh-black);line-height:1.1;letter-spacing:-.02em}
+.bh-row{font-family:var(--num),"Noto Sans SC",sans-serif;font-weight:900;color:var(--bh-black);white-space:nowrap;line-height:1.2}
+.bh-seal{border-radius:50%;background:var(--bh-red);display:grid;place-items:center;opacity:0;box-shadow:0 20px 40px -14px rgba(14,10,8,.5)}
+.bh-seal.dark{background:var(--bh-black)}
+.bh-seal b{font:900 44px var(--title),"Noto Serif SC",serif;color:var(--bh-cream);white-space:nowrap;position:relative;z-index:1}
+.bh-sealring{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.bh-sealring text{font:500 17px var(--mono);letter-spacing:.18em;fill:var(--bh-cream)}
+.bh-mq{font-family:var(--num),"Noto Sans SC",sans-serif;font-weight:900;font-size:260px;line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:1.5px color-mix(in srgb,var(--bh-cream) 24%,transparent)}
+.bh-big{font-family:var(--title),"Noto Serif SC",serif;font-style:italic;font-weight:400;color:var(--bh-cream);line-height:1;letter-spacing:-.02em}
+.bh-cap{font-family:var(--num),"Noto Sans SC",sans-serif;font-weight:900;color:var(--bh-cream);line-height:1.15}
+.bh-capmark{background:var(--bh-black);color:var(--bh-cream);padding:0 .14em}
+.bh-mk{display:flex;align-items:center;justify-content:center;gap:24px;font:700 34px var(--sans),"Noto Sans SC",sans-serif;letter-spacing:.24em;color:var(--bh-cream);white-space:nowrap}
+.bh-mk i{display:block;width:72px;height:3px;background:var(--bh-cream);opacity:.7}
+.bh-spec{font:500 18px var(--mono);letter-spacing:.12em;color:var(--bh-cream);line-height:1.7;text-transform:uppercase}
+.bh-spec span{display:inline-block;width:96px;opacity:.65}
+.bh-pic{border:8px solid var(--bh-cream);background:var(--bh-cream);box-shadow:0 20px 40px -14px rgba(14,10,8,.4)}
+.bh-pic img{width:100%;height:100%;object-fit:cover;display:block}
+.stage .hl{color:var(--bh-red)}
