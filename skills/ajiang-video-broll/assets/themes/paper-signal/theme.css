@@ -1,0 +1,67 @@
+/* 纸白信号橙：瑞士国际主义海报。暖纸白 + 12 栏细线网格 + 四角 HUD 标签；黑色粗线做骨架，橙色只给信号。 */
+.ps-cols{position:absolute;inset:0;background-image:linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:145px 100%;background-position:90px 0}
+.ps-base{position:absolute;left:0;right:0;top:92px;height:1px;background:var(--grid)}
+.ps-hud{position:absolute;font:500 15px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--fg);white-space:nowrap}
+.ps-hud.tl{left:90px;top:44px}
+.ps-hud.bl{left:90px;bottom:40px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ps-hud.br{right:90px;bottom:40px}
+.ps-hud.br b{color:var(--accent);font-weight:500}
+.ps-hud.tl::before{content:"";display:inline-block;width:12px;height:12px;background:var(--accent);margin-right:12px;vertical-align:0}
+.ps-tick{position:absolute;width:18px;height:18px;border-color:var(--fg);border-style:solid;opacity:.55}
+.ps-tick.a{left:40px;top:36px;border-width:2px 0 0 2px}
+.ps-tick.b{left:40px;bottom:36px;border-width:0 0 2px 2px}
+.ps-tick.c{right:40px;bottom:36px;border-width:0 2px 2px 0}
+
+.stage .ttl{font-family:var(--title);font-weight:900;letter-spacing:-.045em;line-height:1.04;color:var(--fg)}
+.stage .kick{color:var(--fg);font:500 17px var(--mono);letter-spacing:.18em}
+.stage .kick::before{content:"";display:inline-block;width:12px;height:12px;background:var(--accent);margin-right:12px;vertical-align:0}
+.stage .num{font-family:var(--num);font-weight:700;letter-spacing:-.06em;line-height:.82;color:var(--fg)}
+.stage .ttl .hl{color:var(--fg);background-image:linear-gradient(var(--accent),var(--accent));background-repeat:no-repeat;background-position:0 0;background-size:0% 100%;padding:0 .06em;margin:0 -.02em}
+.stage .ph{border-radius:0;box-shadow:none;background:var(--fg)}
+.stage .ph img{display:block;width:100%;height:100%;object-fit:cover}
+.stage .card{border-radius:0;box-shadow:0 0 0 2px var(--fg)}
+.stage .stamp{border:none;background:var(--accent);color:var(--fg);border-radius:0;padding:12px 26px}
+.stage .chip{border-radius:0;background:var(--fg);color:var(--bg)}
+.stage .chip.on{background:var(--accent);color:var(--fg)}
+.stage .hand{font-family:var(--title);font-style:normal;font-weight:800;color:var(--fg)}
+
+.ps-sig{position:absolute;left:0;top:0;width:70px;height:1080px;background:var(--accent);opacity:0;z-index:20}
+.ps-rule{background:var(--fg)}
+.ps-rule.thin{background:var(--fg);opacity:.85}
+.ps-vrule{background:var(--fg)}
+.ps-idx{color:var(--bg);-webkit-text-stroke:4px var(--fg);paint-order:stroke fill;white-space:nowrap}
+.ps-sub{font-family:var(--sans);font-weight:500;color:var(--fg);opacity:.86;color:var(--fg);line-height:1.4}
+.ps-lab{font:500 16px var(--mono),"Noto Sans SC";letter-spacing:.16em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.ps-tag{font:500 15px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--fg)}
+.ps-colnum{white-space:nowrap}
+.ps-name{line-height:1.08;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ps-unit{font-family:var(--title);font-weight:900;font-size:.3em;letter-spacing:0;margin-left:.12em;color:var(--fg)}
+.ps-suf{font-size:.36em;letter-spacing:0;margin-left:.06em;color:var(--muted)}
+.ps-cell{position:absolute;background:var(--fg);opacity:.1}
+.ps-cell.on{background:var(--accent);opacity:1}
+.ps-cn{position:absolute;border-style:solid;border-color:var(--fg);border-width:0}
+.ps-scan{background:var(--accent);opacity:0}
+.ps-panel{background:var(--accent);clip-path:inset(0 100% 0 0)}
+.ps-scanh{position:absolute;left:0;right:0;top:0;height:2px;background:var(--accent);opacity:0}
+.ps-rec{position:absolute;left:24px;top:24px;font:500 16px var(--mono),"Noto Sans SC";letter-spacing:.12em;color:#F4F2EC;background:rgba(18,17,14,.74);padding:6px 14px;white-space:nowrap;display:flex;align-items:center;gap:10px}
+.ps-rec i{width:10px;height:10px;background:var(--accent)}
+.ps-arrow{display:inline-block;margin:0 .22em;color:var(--muted);vertical-align:.16em}
+.ps-arrow svg{display:block}
+.ps-ruler{border-top:2px solid var(--fg)}
+.ps-ruler i{position:absolute;top:0;width:2px;background:var(--fg)}
+.ps-range{background:var(--accent)}
+.ps-row{display:flex;align-items:center;gap:26px}
+.ps-ri{font:500 18px var(--mono);letter-spacing:.1em;color:var(--muted);width:24px}
+.ps-rt{flex:1;font-family:var(--title);font-weight:800;letter-spacing:-.02em;color:var(--fg);white-space:nowrap;line-height:1}
+.ps-ck{width:32px;height:32px;background:var(--fg);color:var(--bg);transform:scale(0)}
+.ps-ck svg{display:block;width:100%;height:100%}
+.ps-stamp{background:var(--accent);color:var(--fg);font-family:var(--title);font-weight:900;font-size:64px;letter-spacing:-.02em;line-height:1;padding:24px 30px 20px;white-space:nowrap}
+.ps-stamp small{display:block;font:500 15px var(--mono);letter-spacing:.2em;margin-top:12px}
+.ps-big{white-space:nowrap;letter-spacing:-.065em}
+.ps-pct{color:var(--accent);font-size:.5em;letter-spacing:-.02em;margin-left:.1em}
+.ps-tickbg{background-image:linear-gradient(90deg,var(--fg) 0 20%,transparent 20%);opacity:.26}
+.ps-tickon{background-image:linear-gradient(90deg,var(--accent) 0 72%,transparent 72%)}
+.ps-cur{background:var(--fg)}
+.ps-note{font-family:var(--title);font-weight:900;font-size:48px;letter-spacing:-.02em;color:var(--fg);white-space:nowrap;display:flex;align-items:center;gap:18px;line-height:1}
+.ps-note b{display:inline-block;width:48px;height:4px;background:var(--fg)}
+.stage .logo-ink{filter:brightness(0) invert(var(--invert))}

@@ -1,0 +1,200 @@
+{
+  "id": "warm-haze",
+  "name": "暖雾",
+  "en": "Warm Haze",
+  "group": "kept",
+  "rank": 2,
+  "status": "prompt-motion.com #103 改编（Tented image gen product video），未进成片",
+  "source": {
+    "url": "https://prompt-motion.com/justincooperman-e7bbc4",
+    "title": "Tented image gen product video"
+  },
+  "fits": "适合：产品演示、功能讲解、上手教程这类温和、讲“好用”的口播，画面像在真实产品界面里漫游。不适合：快节奏盘点、强对比、需要情绪冲击的段落，动效慢而柔，压不住快剪。",
+  "concept": "镜头在一张超大的产品界面上漫游：居中大标题（关键词变绿）滑到左上角，白色对话面板和预览文档由虚变实抬起、被画面边缘裁切，图片从骨架闪光里显影，底部一颗深色药丸字幕；内容少时用界面面板补位。",
+  "design": {
+    "w": 1920,
+    "h": 1080,
+    "scale4k": 2,
+    "content": [
+      90,
+      110,
+      1830,
+      920
+    ]
+  },
+  "vars": {
+    "--bg": "#F8F5EE",
+    "--fg": "#1E1E1C",
+    "--muted": "#8A877E",
+    "--accent": "#4E7D54",
+    "--accent2": "#E4A86C",
+    "--card": "#FFFFFF",
+    "--card-fg": "#1E1E1C",
+    "--line": "rgba(30,30,28,.10)",
+    "--shadow": "rgba(60,40,20,.20)",
+    "--grid": "rgba(228,168,108,.55)",
+    "--grid2": "rgba(78,125,84,.45)",
+    "--ok": "#4E7D54",
+    "--invert": "0",
+    "--vign": "rgba(0,0,0,0)"
+  },
+  "variants": {
+    "peach": {
+      "name": "桃雾",
+      "default": true,
+      "vars": {}
+    },
+    "lilac": {
+      "name": "丁香雾",
+      "vars": {
+        "--accent": "#6E5BC4",
+        "--grid": "rgba(190,170,240,.6)",
+        "--grid2": "rgba(240,180,200,.5)"
+      }
+    },
+    "dusk": {
+      "name": "暮色",
+      "vars": {
+        "--bg": "#1B1A18",
+        "--fg": "#F4F0E8",
+        "--card": "#26241F",
+        "--card-fg": "#F4F0E8",
+        "--muted": "#9A958A",
+        "--line": "rgba(244,240,232,.12)",
+        "--invert": "1",
+        "--accent": "#8DC58F"
+      }
+    }
+  },
+  "fonts": {
+    "--title": {
+      "family": "Noto Sans SC",
+      "weights": [
+        700,
+        900
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--sans": {
+      "family": "Noto Sans SC",
+      "weights": [
+        400,
+        500
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--mono": {
+      "family": "JetBrains Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "fallback": "ui-monospace,monospace"
+    },
+    "--hand": {
+      "family": "LXGW WenKai TC",
+      "weights": [
+        400,
+        700
+      ],
+      "fallback": "\"Kaiti SC\",cursive"
+    },
+    "--num": {
+      "family": "Inter Tight",
+      "weights": [
+        700
+      ],
+      "fallback": "\"Noto Sans SC\",sans-serif"
+    }
+  },
+  "chrome": "<div class=\"bg-haze\"><i></i><i></i><i></i></div>",
+  "motion": {
+    "summary": "慢、柔、有景深：标题先居中再滑到左上，界面面板由虚到实抬起，输入框逐字打出、发送键变绿，图片从骨架闪光显影（条目多时节奏自动压缩，3.6 秒内全部到位），整场一直极慢推镜。",
+    "ease": "cubic",
+    "dur": 0.8,
+    "stagger": 0.14,
+    "params": {
+      "up": {
+        "dist": 30,
+        "blur": 10
+      },
+      "slam": {
+        "from": 1.1,
+        "blur": 10
+      },
+      "pop": {
+        "from": 0.85,
+        "overshoot": 0.8
+      },
+      "stamp": {
+        "from": 1.2,
+        "rot": 0
+      },
+      "drop": {
+        "dist": 60
+      },
+      "lift": {
+        "dist": 50
+      }
+    },
+    "signature": [
+      "focus",
+      "lift",
+      "up",
+      "mask",
+      "count"
+    ],
+    "transition": {
+      "type": "blur",
+      "dur": 0.5
+    },
+    "roles": {
+      "title": "focus",
+      "card": "lift",
+      "photo": "focus",
+      "number": "focus",
+      "item": "up"
+    }
+  },
+  "sound": {
+    "summary": "柔和木琴、轻 UI tick、软 whoosh、玻璃轻碰；配原声吉他 acoustic pop，G 大调 96 BPM。",
+    "sfx": {
+      "draw": "tick",
+      "mark": "tick",
+      "enter": "pluck",
+      "card": "snap",
+      "deal": "snap",
+      "stamp": "glass",
+      "type": "typing",
+      "count": "counter",
+      "transition": "air",
+      "slide": "air",
+      "hit": "thock",
+      "key": "ding",
+      "reveal": "pluck-up",
+      "scan": "air",
+      "shot": "shutter",
+      "warn": "alert",
+      "check": "chime"
+    },
+    "bgm": {
+      "style": "lofi-keys",
+      "bpm": 96,
+      "key": "G",
+      "progression": [
+        "Gmaj7",
+        "Em7",
+        "Cmaj7",
+        "D6"
+      ],
+      "energy": 0.45,
+      "drums": "brush"
+    },
+    "levels": {
+      "bgm_lufs": -24,
+      "sfx_lufs": -20.5,
+      "below_voice_db": 16,
+      "ceiling_dbfs": -14
+    }
+  }
+}

@@ -1,0 +1,77 @@
+/* 昭和海报：特摄标题卡。满屏单字卡硬切 → 慢转红色放射线 + 竖排标题直角框 / 倾斜红幅 / 方框判子；黑页与奶白页反色交替。
+   参考 https://prompt-motion.com/majin-appsheet-2d3c1a */
+.chrome-showa{position:absolute;left:90px;top:52px;font:800 15px var(--mono);letter-spacing:.24em;color:var(--fg);text-transform:uppercase}
+.chrome-showa i{display:block;width:200px;height:2px;background:var(--accent);margin-top:8px}
+.chrome-showa2{position:absolute;right:90px;bottom:40px;font:800 15px var(--mono);letter-spacing:.24em;color:var(--muted);text-transform:uppercase}
+.stage .ttl{font-weight:900;letter-spacing:.02em;line-height:1.05}
+.stage .kick{color:var(--accent);font-family:var(--mono);font-weight:800;letter-spacing:.24em}
+.stage .hl{color:var(--accent)}
+.stage .mark{background:var(--accent);color:var(--paper);padding:0 .1em}
+.stage .hand{color:var(--accent);font-family:var(--hand);font-weight:800}
+
+.sp-rays{position:absolute;width:3400px;height:3400px;margin:-1700px 0 0 -1700px;background:repeating-conic-gradient(from 0deg,var(--ray) 0deg 3.2deg,transparent 3.2deg 11.25deg);opacity:.55}
+.sp-rays.strong{opacity:1}
+.sp-core{position:absolute;width:2600px;height:2600px;margin:-1300px 0 0 -1300px;background:radial-gradient(circle,var(--bg) 0,color-mix(in srgb,var(--bg) 70%,transparent) 12%,transparent 40%,transparent 60%,color-mix(in srgb,var(--bg) 55%,transparent) 75%)}
+
+.sp-card{position:absolute;inset:0;z-index:20;background:radial-gradient(ellipse 70% 70% at 50% 50%,var(--paper) 45%,color-mix(in srgb,var(--paper) 72%,var(--ink)) 100%);display:grid;place-items:center}
+.sp-card.ink{background:radial-gradient(ellipse 70% 70% at 50% 50%,#1C1D1A 30%,#0B0C0A 100%)}
+.sp-big{font:900 560px/1 var(--title);color:var(--ink);letter-spacing:-.02em;white-space:nowrap}
+.sp-card.ink .sp-big{color:var(--paper)}
+
+.sp-paper{position:absolute;inset:0;background:radial-gradient(ellipse 75% 75% at 45% 50%,var(--fg) 55%,color-mix(in srgb,var(--fg) 82%,#4A4436) 100%)}
+.sp-kick{font:800 16px var(--mono);letter-spacing:.3em;color:var(--accent);text-transform:uppercase}
+.sp-kick i{display:block;width:220px;height:2px;background:var(--accent);margin-top:8px}
+.sp-kick.ink{color:var(--accent)}
+.sp-ttl.ink{color:var(--bg)}
+.sp-vt{font-family:var(--title);font-weight:900;color:var(--fg);writing-mode:vertical-rl;line-height:1.08;letter-spacing:.04em}
+
+.sp-ban{position:absolute;transform-origin:50% 50%}
+.sp-bar{position:absolute;left:0;right:0;top:0;bottom:0;background:var(--accent);box-shadow:0 30px 60px -20px color-mix(in srgb,var(--ink) 70%,transparent)}
+.sp-ban.m .sp-bar{bottom:0}
+.sp-ban-ttl{position:absolute;left:0;right:0;top:0;height:100%;display:flex;align-items:center;justify-content:center;font:900 150px/1 var(--title);color:var(--paper);letter-spacing:.06em;white-space:nowrap}
+.sp-ban.on .hl{color:var(--ink)}
+.sp-ban-sub{position:absolute;left:330px;top:232px;font:800 34px var(--mono);letter-spacing:.32em;color:var(--fg);text-transform:uppercase;white-space:nowrap}
+.sp-ban-rule{position:absolute;left:160px;right:0;top:300px;height:3px;background:var(--fg);opacity:.7}
+.sp-foot{font:800 24px var(--mono);letter-spacing:.24em;color:var(--muted)}
+
+.sp-seal{border:5px solid var(--accent);color:var(--accent);background:color-mix(in srgb,var(--bg) 70%,transparent);font-family:var(--title);font-weight:900;line-height:1;padding:12px 16px;text-align:center;transform-origin:center}
+.sp-seal-in{white-space:nowrap}
+.sp-seal-in.v{writing-mode:vertical-rl;letter-spacing:.04em}
+.sp-seal-g{display:grid;grid-template-columns:1fr 1fr;gap:.04em .08em;line-height:1}
+.sp-seal.lt{background:transparent;box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent)}
+.sp-col{display:block}
+.sp-seal small{display:block;font:800 15px var(--mono);letter-spacing:.2em;margin-top:8px}
+
+.sp-panel{background:color-mix(in srgb,var(--bg) 88%,transparent);border:2px solid var(--fg);overflow:hidden}
+.sp-pimg{position:absolute;left:0;right:0;top:0;height:360px;overflow:hidden;background:color-mix(in srgb,var(--fg) 8%,var(--bg))}
+.sp-pimg img{width:100%;height:100%;object-fit:cover;display:block;filter:contrast(1.08) saturate(.85)}
+.sp-flash{position:absolute;inset:0;background:var(--paper);opacity:0}
+.sp-ptag{position:absolute;left:0;right:0;top:360px;height:44px;background:var(--accent);color:var(--paper);font:800 18px var(--mono);letter-spacing:.2em;display:flex;align-items:center;padding-left:16px;white-space:nowrap}
+.sp-pfoot{position:absolute;left:0;right:0;top:404px;bottom:0;display:flex;justify-content:space-between;padding:20px 18px 18px}
+.sp-pnum{font:900 92px/1 var(--title);color:transparent;-webkit-text-stroke:2px var(--accent)}
+.sp-pname{font-family:var(--title);font-weight:900;color:var(--fg);writing-mode:vertical-rl;line-height:1;letter-spacing:.06em}
+
+.sp-aside{border:4px solid var(--accent);display:flex;flex-direction:row-reverse;justify-content:space-between;padding:22px 18px;background:color-mix(in srgb,var(--bg) 85%,transparent)}
+.sp-aside-l{writing-mode:vertical-rl;font:900 40px/1 var(--title);color:var(--accent);letter-spacing:.1em}
+.sp-aside-v{align-self:flex-end;font:900 150px/.9 var(--num);color:var(--fg)}
+.sp-aside-v small{font-size:44px;color:var(--accent);margin-left:4px}
+
+.sp-ph{border:8px solid var(--bg);box-shadow:none;border-radius:0;overflow:hidden}
+.sp-ph.dark{border-color:var(--fg)}
+.sp-push{position:absolute;inset:0}
+.sp-push img,.sp-push .clip{width:100%;height:100%;object-fit:cover;display:block}
+.sp-shadow{background:var(--accent)}
+.sp-ruler{border-top:3px solid var(--bg)}
+.sp-ruler i{position:absolute;top:0;width:2px;background:var(--bg)}
+.sp-rlab{font:800 16px var(--mono);letter-spacing:.14em;color:var(--bg)}
+.sp-check{display:flex;align-items:center;gap:22px;white-space:nowrap}
+.sp-check b{width:56px;height:56px;background:var(--accent);color:var(--paper);display:grid;place-items:center}
+.sp-check b svg{width:40px;height:40px;display:block}
+.sp-check span{font:900 50px/1 var(--title);color:var(--bg)}
+
+.sp-num{color:var(--fg);letter-spacing:-.03em;line-height:.9;white-space:nowrap}
+.sp-suf{font-size:.36em;color:var(--accent);margin-left:.04em}
+.sp-note{writing-mode:vertical-rl;font:800 60px/1.05 var(--hand);color:var(--fg);letter-spacing:.08em;white-space:nowrap}
+.sp-ghost{font-family:var(--title);font-weight:900;line-height:1;color:transparent;-webkit-text-stroke:3px var(--accent);white-space:nowrap;letter-spacing:.02em;opacity:.9}
+.sp-ghost.v{writing-mode:vertical-rl}
+.sp-paper~.sp-ghost{-webkit-text-stroke-color:var(--accent)}

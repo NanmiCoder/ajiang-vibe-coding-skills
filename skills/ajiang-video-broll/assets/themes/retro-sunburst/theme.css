@@ -1,0 +1,43 @@
+/* 复古旭日：居中对称的庆典包装海报 —— 满屏旭日放射条慢转，橙色厚描边大字，金边白卡，锯齿金徽章，纸屑与星光；奶油场 / 可可深场交替。
+   参考 https://prompt-motion.com/deebeeeff-50fcd0 */
+.bg-burst{position:absolute;left:-640px;top:-1060px;width:3200px;height:3200px;background:repeating-conic-gradient(from 0deg,var(--ray1) 0deg 6deg,var(--ray2) 6deg 12deg)}
+.rs-burst{position:absolute;left:-640px;top:-1060px;width:3200px;height:3200px;background:repeating-conic-gradient(from 0deg,var(--ray1) 0deg 6deg,var(--ray2) 6deg 12deg)}
+.rs-burst.dk{background:repeating-conic-gradient(from 0deg,var(--dray1) 0deg 6deg,var(--dray2) 6deg 12deg)}
+.rs-glow{position:absolute;inset:0;background:radial-gradient(ellipse 55% 60% at 50% 45%,rgba(255,250,236,.75),rgba(255,250,236,0) 70%),radial-gradient(ellipse 90% 90% at 50% 50%,transparent 60%,var(--vign))}
+.rs-glow.dk{background:radial-gradient(ellipse 50% 55% at 50% 45%,rgba(160,96,40,.45),rgba(160,96,40,0) 70%),radial-gradient(ellipse 85% 85% at 50% 50%,transparent 55%,rgba(25,10,0,.55))}
+.rs-cf{position:absolute;left:0;top:0;opacity:0;border-radius:2px}
+.rs-sp{position:absolute;width:30px;height:30px;transform:scale(0)}
+.rs-ttl{font-family:var(--title),"Noto Sans SC",sans-serif;font-weight:900;color:var(--fg);line-height:1.12;letter-spacing:.01em;text-shadow:0 5px 0 rgba(255,255,255,.45)}
+.rs-big{font-family:var(--num),"Noto Sans SC",sans-serif;font-weight:900;color:var(--accent);-webkit-text-stroke:.07em var(--fg);paint-order:stroke fill;text-shadow:0 .06em 0 var(--fg),0 .1em 18px rgba(79,46,22,.35);letter-spacing:-.01em}
+.rs-big.num{line-height:1;-webkit-text-stroke:24px var(--fg);text-shadow:0 22px 0 var(--fg),0 34px 40px rgba(79,46,22,.35)}
+.rs-big.sm{-webkit-text-stroke:.06em #3A2009;text-shadow:0 .06em 0 #3A2009}
+.rs-sub{font:700 40px var(--sans);color:var(--muted)}
+.rs-kick{font:700 30px var(--sans);color:var(--muted);letter-spacing:.08em}
+.rs-pill{display:inline-block;background:var(--accent);color:#FFF8EA;font:800 34px var(--sans);padding:8px 34px;border-radius:999px;box-shadow:0 0 0 5px var(--accent2),0 10px 20px -6px rgba(79,46,22,.4);white-space:nowrap;letter-spacing:.04em}
+.rs-pill.big{font-size:38px;padding:8px 40px}
+.rs-pill b{font-family:var(--num);font-weight:900;font-size:46px}
+.rs-card{background:var(--card);border:8px solid var(--accent2);border-radius:26px;box-shadow:0 22px 40px -14px rgba(40,18,0,.5);padding:15px;transform-origin:center}
+.rs-img{border-radius:14px;overflow:hidden;position:relative}
+.rs-img img,.rs-img .clip{width:100%;height:100%;object-fit:cover;display:block}
+.rs-name{font-family:var(--title),"Noto Sans SC",sans-serif;font-weight:900;color:var(--fg);text-align:center;margin-top:14px;line-height:1.15;white-space:nowrap}
+.rs-tag{margin:8px auto 0;width:max-content;font:700 22px var(--mono);color:var(--fg);border:3px solid var(--fg);border-radius:999px;padding:2px 16px;letter-spacing:.06em}
+.rs-strip{font:600 24px var(--mono);color:var(--fg);text-align:center;margin-top:16px;letter-spacing:.06em;white-space:nowrap;overflow:hidden}
+.rs-badge{background:var(--accent2);clip-path:polygon(50% 0,58% 7%,68% 3%,73% 12%,84% 11%,85% 22%,95% 26%,92% 36%,100% 44%,94% 52%,99% 62%,90% 67%,91% 79%,80% 81%,76% 92%,65% 90%,58% 99%,50% 93%,42% 99%,35% 90%,24% 92%,20% 81%,9% 79%,10% 67%,1% 62%,6% 52%,0 44%,8% 36%,5% 26%,15% 22%,16% 11%,27% 12%,32% 3%,42% 7%);display:grid;place-items:center;opacity:0;filter:drop-shadow(0 6px 8px rgba(40,18,0,.4))}
+.rs-badge-in{width:78%;height:78%;border-radius:50%;border:3px solid var(--fg);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--fg);line-height:1}
+.rs-badge-in b{font-family:var(--num);font-weight:900;font-size:38px}
+.rs-badge-in b.w{font-family:var(--title),"Noto Sans SC",sans-serif;font-size:40px;white-space:nowrap}
+.rs-badge-in b.note{font-family:var(--hand);font-weight:400;font-size:44px;line-height:1.1;white-space:nowrap}
+.rs-badge-in small{font:600 15px var(--mono);letter-spacing:.14em;margin-top:8px}
+.rs-gold{font-family:var(--title),"Noto Sans SC",sans-serif;font-weight:900;color:var(--accent2);line-height:1.12;text-shadow:0 5px 0 #3A2009,0 10px 24px rgba(30,14,2,.35)}
+.rs-checks{display:flex;justify-content:center;gap:46px;font:800 38px var(--sans);color:#FBEBD0}
+.rs-checks span{display:inline-flex;align-items:center;gap:12px;white-space:nowrap}
+.rs-checks svg{width:30px;height:30px}
+.rs-hl{color:var(--accent)}
+.rs-ring{border-radius:50%;border:18px solid var(--accent2);opacity:0}
+.rs-logo{background:#FFFDF6;border:5px solid var(--accent2);border-radius:999px;padding:14px 30px;box-shadow:0 10px 20px -8px rgba(60,30,0,.4)}
+.rs-logo img{width:100%;height:100%;display:block;object-fit:contain}
+.stage .kick{color:var(--accent)}
+.stage .hl{color:var(--accent)}
+.rs-ribbon{display:inline-block;position:relative;background:var(--fg);color:#FFF4DC;font-family:var(--title),"Noto Sans SC",sans-serif;font-weight:900;line-height:1.1;padding:22px 120px 26px;clip-path:polygon(0 0,100% 0,calc(100% - 44px) 50%,100% 100%,0 100%,44px 50%);white-space:nowrap;letter-spacing:.02em}
+.rs-ribbon .rs-hl{color:var(--accent2)}
+.rs-hc{padding:14px}

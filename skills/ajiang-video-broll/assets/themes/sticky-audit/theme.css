@@ -1,0 +1,72 @@
+/* 便签复盘：证据墙——冷白方格底上散着模糊的文档、截图、便签碎片，竖向审计线扫过让它们变清晰、贴编号、连橙线；底部四色阶段轨道推进；交付时收进深色终端逐条亮 PASS。
+   参考 https://prompt-motion.com/theviableedge-9065be */
+.stage .ttl{font-family:var(--title);font-weight:900;letter-spacing:-.02em;color:var(--fg)}
+.stage .hl{color:var(--p1)}
+.sa-ev,.sa-card{background:var(--card);border-radius:4px;box-shadow:0 16px 30px -18px var(--shadow),0 0 0 1px var(--line);padding:14px 16px;transform-origin:center;filter:blur(4px)}
+.sa-ev{opacity:.85}
+.sa-evh{display:flex;align-items:center;gap:8px;height:22px;margin-bottom:10px}
+.sa-evh i{width:9px;height:9px;flex:none}
+.sa-evh b{height:9px;border-radius:2px;background:color-mix(in srgb,var(--fg) 22%,transparent)}
+.sa-evh em{font:500 16px var(--mono);font-style:normal;color:var(--muted);letter-spacing:.06em;white-space:nowrap}
+.sa-ln{display:block;height:9px;margin:10px 0;border-radius:2px;background:color-mix(in srgb,var(--fg) 12%,transparent)}
+.sa-wave{display:flex;align-items:center;gap:4px;height:50px;margin-top:6px}
+.sa-wave s{width:4px;height:60%;background:color-mix(in srgb,var(--fg) 45%,transparent);text-decoration:none}
+.sa-wave s:nth-child(3n){height:30%}.sa-wave s:nth-child(4n+1){height:85%}.sa-wave s:nth-child(5n){height:45%}
+.sa-card{padding:12px 12px 16px}
+.sa-card img{width:100%;height:100%;object-fit:cover;display:block}
+.sa-img{overflow:hidden;border-radius:2px}
+.sa-name{font:900 38px var(--title);color:var(--fg);margin-top:12px;line-height:1.15;text-wrap:balance}
+.sa-flag{position:absolute;right:-12px;top:-14px;font:500 16px var(--mono);color:#fff;padding:3px 9px;letter-spacing:.08em}
+.sa-tag{font:500 16px var(--mono);letter-spacing:.14em;background:var(--p1);color:#fff;padding:4px 10px;text-transform:uppercase}
+.sa-sticky{background:#F6E9A3;box-shadow:0 18px 30px -16px rgba(80,60,0,.35);padding:22px 24px;transform:rotate(var(--r))}
+.sa-sticky>span{display:block;font:700 26px var(--hand);color:#3A3420}
+.sa-sticky b{display:block;font:900 84px var(--title);color:#15141A;line-height:1.05;letter-spacing:-.03em}
+.sa-sticky small{font-size:36px;margin-left:4px}
+.sa-scan{left:0;width:3px;background:var(--fg);opacity:0}
+.sa-band{position:absolute;right:3px;top:0;bottom:0;width:180px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--p1) 16%,transparent))}
+.sa-sc{position:absolute;left:10px;top:-2px;font:500 16px var(--mono);color:#fff;background:var(--fg);padding:3px 8px;white-space:nowrap;letter-spacing:.08em}
+.sa-track{background:var(--line)}
+.sa-prog{position:absolute;inset:0;background:var(--fg);transform-origin:left center;transform:scaleX(0)}
+.sa-node{display:flex;gap:12px;align-items:baseline;font:500 15px var(--mono);letter-spacing:.14em;color:var(--muted);white-space:nowrap}
+.sa-node b{font-weight:500}.sa-node span{font:500 18px var(--sans);letter-spacing:.06em}
+.sa-node.on{color:var(--fg)}.sa-node.on span{font-weight:700}
+.sa-sq{transition:none}
+.sa-sub{text-align:center;font:500 36px var(--sans);color:var(--muted)}
+.sa-kick{font:500 17px var(--mono);letter-spacing:.2em;color:var(--fg);text-transform:uppercase;white-space:nowrap}
+.sa-num{font:900 300px var(--title);line-height:1;letter-spacing:-.05em;color:var(--fg)}
+.sa-num small{font-size:.45em;color:var(--p1);margin-left:.04em}
+.sa-chip{display:flex;align-items:center;gap:20px;height:66px;padding:0 26px;background:#121117;border-radius:4px;box-shadow:0 20px 40px -18px rgba(24,20,40,.45)}
+.sa-chip img{height:24px;filter:brightness(0) invert(1)}
+.sa-chip em{display:grid;place-items:center;width:34px;height:34px;background:var(--p4);border-radius:3px}
+.sa-term{background:#111015;border-radius:10px;box-shadow:0 40px 80px -30px rgba(24,20,40,.5)}
+.sa-tbar{height:44px;display:flex;align-items:center;gap:8px;padding:0 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sa-tbar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.18)}
+.sa-tbar span{margin-left:14px;font:500 15px var(--mono);letter-spacing:.14em;color:#B8B6C4;text-transform:uppercase}
+.sa-tbar em{margin-left:auto;font:500 15px var(--mono);font-style:normal;letter-spacing:.12em;color:var(--p4)}
+.sa-cur{background:rgba(255,255,255,.06);border-left:3px solid var(--p4)}
+.sa-tr{display:flex;align-items:center;gap:18px}
+.sa-tr b{font:500 20px var(--mono)}
+.sa-tr span{font:700 34px var(--title);color:#ECEBF2;flex:1;white-space:nowrap}
+.sa-pass{display:flex;align-items:center;gap:4px;font:700 16px var(--sans);font-style:normal;letter-spacing:.08em;color:#0E1A12;background:var(--p4);padding:4px 10px 4px 6px;white-space:nowrap}
+.sa-prompt{display:flex;align-items:center;gap:22px}
+.sa-gt{font:500 40px var(--mono);color:var(--p4)}
+.sa-prompt .ttl{color:#F4F4F8;font-size:66px;white-space:nowrap}
+.sa-prompt .hl{color:var(--p4)}
+.sa-shot{border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.1)}
+.sa-shot img,.sa-shot video,.sa-shot .clip{width:100%;height:100%;object-fit:cover;display:block}
+.sa-mono{font:500 17px var(--mono);color:#8E8C9A;letter-spacing:.06em;white-space:nowrap}
+.sa-ok{background:var(--p4);color:#0E1A12;font:900 40px var(--title);padding:10px 22px;border-radius:4px;white-space:nowrap;box-shadow:0 14px 30px -10px rgba(10,30,18,.55)}
+.sa-ok small{display:block;font:700 15px var(--mono);letter-spacing:.16em}
+.stage .card,.stage .ph{border-radius:6px;box-shadow:0 14px 30px -14px var(--shadow),0 0 0 1px var(--line)}
+.stage .stamp{border:2px solid var(--accent);color:var(--accent);border-radius:4px;font-family:var(--mono);font-weight:500;letter-spacing:.16em;background:color-mix(in srgb,var(--card) 70%,transparent)}
+.stage .chip{border-radius:4px;background:var(--fg);color:var(--bg);font-weight:500}.stage .chip.on{background:var(--accent);color:#fff}
+.stage .hand{color:var(--accent2);font-weight:700;background:#FFF3A8;padding:6px 14px;box-shadow:0 8px 16px -8px var(--shadow)}
+.stage .mark{background:#FFF3A8;color:#15141A;padding:0 .1em}
+.sa-tick{display:block;flex:none}
+.sa-okt{display:flex;align-items:center;gap:8px}
+.sa-log b{display:block;height:8px;margin:0 0 18px;border-radius:2px;background:rgba(255,255,255,.07)}
+.sa-sum{border-top:1px solid rgba(255,255,255,.1);padding-top:22px}
+.sa-sum span{display:block;font:500 18px var(--sans);letter-spacing:.12em;color:#8E8C9A}
+.sa-sum b{display:block;font:900 96px var(--title);color:#F4F4F8;line-height:1.05;letter-spacing:-.03em}
+.sa-sum small{font-size:.42em;color:#8E8C9A;font-weight:700}
+.sa-sum em{display:flex;align-items:center;gap:8px;font:700 22px var(--sans);font-style:normal;color:var(--p4);margin-top:6px}

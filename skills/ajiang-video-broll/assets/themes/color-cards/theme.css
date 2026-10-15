@@ -1,0 +1,42 @@
+/* 彩卡拼贴：满屏饱和色卡（蓝 / 黄 / 绿 / 橙 / 粉）翻牌推进，卡上一个作品物件 + 一句粗体短语，最后缩成深色桌面上的倾斜拼贴。
+   参考 https://prompt-motion.com/slvdev-64c45a */
+.cc-ttl{text-wrap:balance;font-family:var(--disp),"Noto Sans SC",sans-serif;font-weight:800;color:var(--cc-black);letter-spacing:-.035em;line-height:1.04}
+.cc-ttl .hl{color:var(--cc-orange)}
+.cc-ch{display:inline-block}
+.cc-pill{display:inline-block;background:var(--cc-orange);color:var(--cc-cream);border-radius:999px;padding:0 .32em .06em;margin:0 .08em;transform-origin:left center}
+.cc-serif{text-wrap:balance;font-family:var(--hand),"Noto Serif SC",serif;font-style:italic;font-weight:400;color:var(--cc-black);line-height:1.15}
+.cc-mono{font:500 24px var(--mono);letter-spacing:.06em;color:var(--cc-black)}
+.cc-shape{opacity:0}
+.cc-hcol{display:flex;flex-direction:column;justify-content:center;gap:14px}
+.cc-panel{transform-origin:50% 50%;overflow:hidden;opacity:0}
+.cc-win{background:#FBFAF6;border-radius:28px;overflow:hidden;box-shadow:0 40px 80px -30px rgba(12,9,4,.45)}
+.cc-bar{height:44px;display:flex;gap:10px;align-items:center;padding:0 22px;background:#F1EEE6}
+.cc-bar i{width:14px;height:14px;border-radius:50%;background:#D8D2C4}
+.cc-bar i:first-child{background:var(--cc-orange)}
+.cc-shot{position:absolute;left:0;right:0;top:44px;bottom:0;overflow:hidden}
+.cc-shot img,.cc-shot .clip{width:100%;height:100%;object-fit:cover;display:block}
+.cc-tcard{background:var(--cc-cream);border-radius:36px;padding:44px 56px;display:flex;flex-direction:column;justify-content:center;gap:12px;box-shadow:0 60px 120px -30px rgba(12,9,4,.7);opacity:0}
+.cc-aside{position:absolute;right:40px;bottom:30px;font:500 24px var(--mono);color:var(--cc-black);background:var(--cc-yellow);padding:6px 18px;border-radius:999px}
+.cc-aside b{font-family:var(--disp);font-weight:800;font-size:34px}
+.cc-dotc{position:absolute;border-radius:50%}
+.cc-glyph{font-family:var(--hand),serif;font-style:italic;color:var(--cc-cream);opacity:.05;line-height:1;white-space:nowrap}
+.cc-dwin{background:#24201A;border-radius:22px;box-shadow:0 0 0 1px rgba(243,239,228,.08),0 40px 90px -30px rgba(12,9,4,.8);overflow:hidden}
+.cc-dbar{height:54px;display:flex;align-items:center;gap:10px;padding:0 20px;background:#1E1B16}
+.cc-dbar span{font:500 20px var(--mono);color:rgba(243,239,228,.7);background:#2C2720;padding:6px 16px;border-radius:8px;margin-right:auto;white-space:nowrap;overflow:hidden;max-width:760px}
+.cc-dbar i{width:14px;height:14px;border-radius:50%;background:rgba(243,239,228,.18)}
+.cc-dwin .cc-shot{position:absolute;top:70px;border-radius:10px}
+.cc-chk{display:flex;align-items:center;gap:18px;padding:12px 34px 12px 14px;border-radius:999px;background:#29241D;box-shadow:0 0 0 1px rgba(243,239,228,.08);font:700 40px var(--sans);color:var(--cc-cream);white-space:nowrap;opacity:0}
+.cc-cb{width:46px;height:46px;border-radius:50%;border:3px solid rgba(243,239,228,.3);display:grid;place-items:center}
+.cc-cb svg{width:28px;height:28px;opacity:0}
+.cc-chk.on .cc-cb{background:var(--cc-ok);border-color:var(--cc-ok)}
+.cc-chk.on .cc-cb svg{opacity:1}
+.cc-stamp{background:var(--cc-orange);color:var(--cc-black);font:900 50px var(--title),"Noto Sans SC",sans-serif;padding:14px 40px;border-radius:999px;white-space:nowrap;box-shadow:0 20px 40px -12px rgba(12,9,4,.6)}
+.cc-stamp small{display:block;font:500 18px var(--mono);letter-spacing:.14em;text-align:center}
+.cc-peek{border-radius:30px;box-shadow:0 40px 80px -30px rgba(12,9,4,.7)}
+.cc-main{background:var(--cc-cream);border-radius:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 70px 140px -30px rgba(12,9,4,.8)}
+.cc-big{font-family:var(--disp),"Noto Sans SC",sans-serif;font-weight:800;color:var(--cc-black);letter-spacing:-.05em;line-height:.95}
+.cc-btn{position:relative;margin-top:40px;display:inline-flex;align-items:center;gap:18px;background:var(--cc-black);color:var(--cc-cream);font:700 38px var(--sans);padding:16px 22px 16px 40px;border-radius:999px;white-space:nowrap}
+.cc-btn i{font-style:normal;width:52px;height:52px;border-radius:50%;background:var(--cc-orange);display:grid;place-items:center;font-size:30px}
+.cc-rip{position:absolute;right:4px;top:50%;width:90px;height:90px;margin-top:-45px;border-radius:50%;border:4px solid var(--cc-orange);opacity:0}
+.cc-cur{opacity:0;filter:drop-shadow(0 4px 6px rgba(12,9,4,.4))}
+.stage .hl{color:var(--cc-orange)}

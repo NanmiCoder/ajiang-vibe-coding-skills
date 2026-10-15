@@ -1,0 +1,49 @@
+/* base.css — 舞台和组件的通用结构（只用变量取色）。主题差异写在 themes/<id>/theme.css。
+   舞台按 1920×1080 设计，外层 scale 到预览框或 4K。 */
+.stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;overflow:hidden;
+  background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5}
+.stage *{box-sizing:border-box}
+.stage .chrome,.stage .scenes{position:absolute;inset:0}
+.stage .chrome{pointer-events:none}
+.stage .scene{position:absolute;inset:0;will-change:opacity,transform}
+.stage .abs{position:absolute}
+
+/* 底纹 */
+.bg-grid{position:absolute;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(var(--grid2) 1px,transparent 1px),linear-gradient(90deg,var(--grid2) 1px,transparent 1px);background-size:24px 24px,24px 24px,120px 120px,120px 120px}
+.bg-dots{position:absolute;inset:0;background-image:radial-gradient(var(--grid) 1.6px,transparent 2px);background-size:40px 40px}
+.bg-vign{position:absolute;inset:0;background:radial-gradient(ellipse 80% 75% at 45% 45%,transparent 55%,var(--vign))}
+
+/* 文字 */
+.kick{font:500 17px var(--mono);letter-spacing:.16em;color:var(--accent);text-transform:uppercase}
+.ttl{font-family:var(--title);font-weight:900;color:var(--fg);letter-spacing:-.01em;line-height:1.12;text-wrap:balance}
+.body{font-family:var(--sans);font-size:30px;color:var(--fg);line-height:1.5}
+.muted{color:var(--muted)}
+.hand{font-family:var(--hand);font-weight:700;color:var(--accent);line-height:1}
+.mono{font-family:var(--mono);letter-spacing:.04em}
+.num{font-family:var(--num);line-height:.9;color:var(--fg);font-variant-numeric:tabular-nums}
+.hl{color:var(--accent)}
+.mark{background:linear-gradient(transparent 58%,var(--accent) 58%,var(--accent) 92%,transparent 92%);padding:0 .08em}
+.mask{display:block;overflow:hidden;padding-bottom:.06em}
+.mask>*{display:block}
+
+/* 容器 */
+.ph{position:absolute;background:var(--card);box-shadow:0 18px 40px -18px var(--shadow),0 0 0 1px var(--line);overflow:hidden}
+.ph img,.ph video,.clip,.clip-media{width:100%;height:100%;object-fit:cover;display:block}
+.clip{position:absolute;inset:0}
+.card{position:absolute;background:var(--card);color:var(--card-fg);box-shadow:0 18px 40px -18px var(--shadow),0 0 0 1px var(--line);padding:26px 30px}
+.card .ttl{color:var(--card-fg)}
+.tag{position:absolute;font:500 15px var(--mono);color:var(--muted);white-space:nowrap}
+.chip{display:inline-flex;align-items:center;gap:8px;font:500 16px var(--mono);padding:6px 13px;border-radius:999px;background:var(--fg);color:var(--bg);white-space:nowrap}
+.chip.on{background:var(--accent);color:var(--bg)}
+.stamp{transform-origin:center;padding:10px 22px;border:5px solid var(--accent);border-radius:8px;color:var(--accent);font-family:var(--title);font-weight:900;letter-spacing:.06em;white-space:nowrap}
+.stamp small{display:block;font:500 16px var(--mono);letter-spacing:.14em;margin-top:2px;text-align:center}
+.rule{position:absolute;height:2px;background:var(--fg)}
+.logo-ink{filter:invert(var(--invert))}
+svg.ov{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:visible;pointer-events:none}
+svg.ov *{vector-effect:non-scaling-stroke}
+
+/* 头像圆 + 一行字幕的检查叠层（只在预览里打开） */
+.safe{display:none;position:absolute;inset:0;pointer-events:none;z-index:50}
+.show-safe .safe{display:block}
+.safe .avc{position:absolute;border-radius:50%;background:rgba(0,0,0,.28);border:4px solid #fff;display:grid;place-items:center;font:500 20px ui-monospace,monospace;color:#fff}
+.safe .sub{position:absolute;left:0;right:0;text-align:center;font:600 46px "Noto Serif SC",serif;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.65)}

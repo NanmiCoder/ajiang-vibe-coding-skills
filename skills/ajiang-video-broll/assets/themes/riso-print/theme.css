@@ -1,0 +1,50 @@
+/* 孔版印刷：米纸孔版海报 —— 满屏粉斜纹 / 黄斜纹 / 网点 / 竖细纹色带，字压在纸色标签框里，粉蓝套印错位，满屏颗粒掉墨。
+   参考 https://prompt-motion.com/rneayan-474bcf */
+.bg-grain{position:absolute;inset:0;opacity:.5;background-image:radial-gradient(rgba(32,49,33,.18) .8px,transparent 1.2px);background-size:5px 5px}
+.chrome-riso{position:absolute;left:40px;bottom:30px;font:500 15px var(--mono);letter-spacing:.16em;color:var(--fg);text-transform:uppercase;opacity:.7}
+.ri-paper{position:absolute;inset:0;background:var(--bg)}
+.ri-grain{position:absolute;inset:0;pointer-events:none;z-index:20;opacity:.6;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .93  0 0 0 0 .91  0 0 0 0 .86  3.2 0 0 0 -1.75'/></filter><rect width='320' height='320' filter='url(%23n)'/></svg>")}
+.ri-plate{position:absolute;inset:-2px;z-index:30}
+.ri-stripe-pink{background-color:var(--bg);background-image:repeating-linear-gradient(-45deg,var(--accent) 0 7px,transparent 7px 26px)}
+.ri-stripe-yel{background-color:var(--accent2);background-image:repeating-linear-gradient(-45deg,var(--accent3) 0 7px,transparent 7px 26px)}
+.ri-vlines{background-color:#C9B6DA;background-image:repeating-linear-gradient(90deg,var(--fg) 0 3px,transparent 3px 8px,var(--accent) 8px 10px,transparent 10px 13px)}
+.ri-dots{background-image:radial-gradient(circle,color-mix(in srgb,var(--accent) 80%,transparent) 0 14px,transparent 15px),radial-gradient(circle,color-mix(in srgb,var(--accent) 70%,transparent) 0 7px,transparent 8px);background-size:70px 70px,70px 70px}
+.ri-circ{border-radius:50%;mix-blend-mode:multiply}
+.ri-box{background:var(--bg);color:var(--fg)}
+.ri-box.ri-yel{background:var(--accent2)}
+.ri-kick{font:700 24px var(--sans);letter-spacing:.12em;color:var(--accent);text-transform:uppercase;margin-bottom:6px}
+.ri-label{font-family:var(--sans);font-weight:800;color:var(--fg);letter-spacing:.06em}
+.ri-sub{font:700 34px var(--sans);color:var(--fg);margin-top:14px;opacity:.85}
+.stage .ttl{font-family:var(--title),"Noto Sans SC",sans-serif;font-weight:900;color:var(--fg);letter-spacing:-.01em;line-height:1.1}
+.ri-ttl{color:var(--fg);text-shadow:4px 3px 0 color-mix(in srgb,var(--accent) 65%,transparent)}
+.stage .hl{color:var(--accent);text-shadow:4px 3px 0 color-mix(in srgb,var(--fg) 55%,transparent)}
+.ri-giant{font-family:var(--title),"Noto Sans SC",sans-serif;font-weight:900;line-height:1;color:var(--accent3);mix-blend-mode:multiply;letter-spacing:-.02em;white-space:nowrap}
+.ri-num{font-family:var(--num),"Noto Sans SC",sans-serif;line-height:1;color:var(--accent3);mix-blend-mode:multiply;letter-spacing:-.04em}
+.ri-frame{background:var(--bg);border:12px solid var(--bg);overflow:hidden}
+.ri-frame img,.ri-frame .clip{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.75) contrast(1.08)}
+.ri-tag{font:500 30px var(--mono);color:var(--accent);margin-top:10px;letter-spacing:.04em}
+.ri-chip{display:flex;gap:16px;align-items:center;font:800 34px var(--sans);color:var(--fg);padding:6px 18px;border:3px solid var(--fg);white-space:nowrap;overflow:hidden}
+.ri-chip b{font-family:var(--num);font-weight:400;font-size:26px;color:var(--accent3)}
+.ri-chip.on{background:var(--fg);color:var(--bg)}
+.ri-chip.on b{color:var(--accent2)}
+.ri-chip.cur{background:var(--accent);border-color:var(--accent);color:var(--fg)}
+.ri-chip.cur b{color:var(--fg)}
+.ri-banner{background-color:var(--accent2);background-image:repeating-linear-gradient(-45deg,color-mix(in srgb,var(--accent3) 45%,transparent) 0 5px,transparent 5px 22px);display:flex;align-items:center;padding-left:28px;transform-origin:0 50%;box-shadow:0 8px 0 color-mix(in srgb,var(--accent) 60%,transparent)}
+.ri-banner-t{font:900 40px var(--title),"Noto Sans SC",sans-serif;color:var(--ink);white-space:nowrap;background:var(--accent2);padding:2px 18px}
+.ri-banner-t b{font-family:var(--num);font-weight:400;font-size:58px;color:var(--accent3);margin-left:10px}
+.ri-rd{border-radius:50%;border:3px solid var(--fg);background:var(--bg)}
+.ri-rd.on{background:var(--accent);border-color:var(--accent)}
+.ri-check{display:flex;align-items:center;gap:18px;padding:12px 30px 12px 18px;font:900 54px var(--title),"Noto Sans SC",sans-serif;color:var(--fg);white-space:nowrap}
+.ri-stampc{border-radius:50%;background:var(--accent);mix-blend-mode:multiply;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--fg);opacity:0}
+.ri-stampc b{font:900 58px var(--title),"Noto Sans SC",sans-serif;white-space:nowrap}
+.ri-stampc small{font:500 20px var(--mono);letter-spacing:.16em;margin-top:6px}
+.ri-vc{border-radius:50%;mix-blend-mode:multiply;overflow:hidden}
+.ri-duo{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.15) brightness(1);mix-blend-mode:screen;opacity:.42}
+.ri-vnum{font-family:var(--num),"Noto Sans SC",sans-serif;line-height:1;color:var(--bg);letter-spacing:-.04em;white-space:nowrap}
+.ri-hlbox{background:var(--accent2);padding:0 .14em;color:var(--fg)}
+.ri-note{font:900 48px var(--title),"Noto Sans SC",sans-serif;color:var(--ink);background:var(--accent2);padding:8px 26px;white-space:nowrap;box-shadow:6px 5px 0 color-mix(in srgb,var(--accent) 70%,transparent);opacity:0}
+.stage .kick{color:var(--accent)}
+.stage .num{color:var(--accent);mix-blend-mode:multiply}
+.ri-dots-s{background-size:44px 44px,44px 44px;background-image:radial-gradient(circle,color-mix(in srgb,var(--accent) 85%,transparent) 0 9px,transparent 10px),radial-gradient(circle,color-mix(in srgb,var(--accent3) 60%,transparent) 0 4px,transparent 5px);background-position:0 0,22px 22px}
+.ri-vdots{position:absolute;inset:0;background-image:radial-gradient(circle,color-mix(in srgb,var(--bg) 30%,transparent) 0 6px,transparent 7px);background-size:30px 30px}
+.ri-vkick{position:absolute;left:190px;right:40px;top:0;bottom:0;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--title),"Noto Sans SC",sans-serif;font-weight:900;line-height:1.15;color:var(--bg);opacity:0}

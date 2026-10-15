@@ -1,0 +1,197 @@
+{
+  "id": "sticky-audit",
+  "name": "便签复盘",
+  "en": "Sticky Audit",
+  "group": "kept",
+  "rank": 13,
+  "status": "prompt-motion.com #208 改编（Second brain service promo），未进成片",
+  "source": {
+    "url": "https://prompt-motion.com/theviableedge-9065be",
+    "title": "Second brain service promo"
+  },
+  "fits": "适合：流程拆解、排查复盘、逐项验收、前后对比这类“从乱到有序”的口播，偏理性、工程感。不适合：情绪化、需要大图冲击力的开场或纯氛围段落，画面以小卡片和终端为主，图片不会很大。",
+  "concept": "证据墙：冷白方格底上散着模糊的文档、截图、便签碎片，竖向审计线从左扫到右，扫过的碎片变清晰、贴彩色编号、用橙色虚线串起；底部四色阶段轨道推进；交付时收进深色终端，逐条亮绿色“通过”并给出汇总。",
+  "design": {
+    "w": 1920,
+    "h": 1080,
+    "scale4k": 2,
+    "content": [
+      90,
+      110,
+      1830,
+      920
+    ]
+  },
+  "vars": {
+    "--bg": "#F4F4EC",
+    "--fg": "#15141A",
+    "--muted": "#8E8E86",
+    "--accent": "#E4572E",
+    "--accent2": "#5B4BDB",
+    "--card": "#FAF9F4",
+    "--card-fg": "#15141A",
+    "--line": "rgba(21,20,26,.12)",
+    "--shadow": "rgba(21,20,26,.16)",
+    "--grid": "rgba(21,20,26,.035)",
+    "--grid2": "rgba(21,20,26,.06)",
+    "--ok": "#2FB67C",
+    "--invert": "0",
+    "--vign": "rgba(0,0,0,0)",
+    "--p1": "#E4572E",
+    "--p2": "#7A5AE0",
+    "--p3": "#3461E0",
+    "--p4": "#2FB67C"
+  },
+  "variants": {
+    "paper": {
+      "name": "灰白",
+      "default": true,
+      "vars": {}
+    },
+    "night": {
+      "name": "夜班",
+      "vars": {
+        "--bg": "#15141A",
+        "--fg": "#F4F4EC",
+        "--card": "#1F1E26",
+        "--card-fg": "#F4F4EC",
+        "--muted": "#8E8E9A",
+        "--line": "rgba(244,244,236,.12)",
+        "--grid": "rgba(244,244,236,.04)",
+        "--grid2": "rgba(244,244,236,.07)",
+        "--invert": "1"
+      }
+    }
+  },
+  "fonts": {
+    "--title": {
+      "family": "Noto Sans SC",
+      "weights": [
+        800,
+        900
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--sans": {
+      "family": "Noto Sans SC",
+      "weights": [
+        400,
+        500
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--mono": {
+      "family": "IBM Plex Mono",
+      "weights": [
+        400,
+        500
+      ],
+      "fallback": "ui-monospace,monospace"
+    },
+    "--hand": {
+      "family": "LXGW WenKai TC",
+      "weights": [
+        400,
+        700
+      ],
+      "fallback": "\"Kaiti SC\",cursive"
+    },
+    "--num": {
+      "family": "IBM Plex Mono",
+      "weights": [
+        500
+      ],
+      "fallback": "ui-monospace,monospace"
+    }
+  },
+  "chrome": "<div class=\"bg-grid\"></div>",
+  "motion": {
+    "summary": "从乱到有序：碎片先模糊，审计线横扫，扫过即变清晰并贴编号、连线、计数；便签落下；终端从小窗展开，标题逐字打出，检查项逐条通过、最后出汇总；底部阶段轨道跟着推进。",
+    "ease": "expo",
+    "dur": 0.7,
+    "stagger": 0.1,
+    "params": {
+      "up": {
+        "dist": 30,
+        "blur": 8
+      },
+      "slam": {
+        "from": 1.15,
+        "blur": 8
+      },
+      "pop": {
+        "from": 0.8,
+        "overshoot": 0.8
+      },
+      "stamp": {
+        "from": 1.5,
+        "rot": -4
+      },
+      "drop": {
+        "dist": 110
+      },
+      "lift": {
+        "dist": 50
+      }
+    },
+    "signature": [
+      "focus",
+      "drop",
+      "type",
+      "stamp",
+      "wipe"
+    ],
+    "transition": {
+      "type": "wipe",
+      "dur": 0.5
+    },
+    "roles": {
+      "title": "up",
+      "card": "drop",
+      "photo": "focus",
+      "number": "up",
+      "item": "drop"
+    }
+  },
+  "sound": {
+    "summary": "纸张、便签撕下、键盘、轻 tick、扫描嗡；配极简 ambient + 轻 clap，E 小调 90 BPM。",
+    "sfx": {
+      "draw": "scan",
+      "mark": "marker",
+      "enter": "pluck",
+      "card": "card",
+      "deal": "card",
+      "stamp": "stamp",
+      "type": "typing",
+      "count": "counter",
+      "transition": "page",
+      "slide": "whoosh",
+      "hit": "thock",
+      "key": "ding",
+      "reveal": "cascade",
+      "scan": "scan",
+      "shot": "shutter",
+      "warn": "alert",
+      "check": "tick"
+    },
+    "bgm": {
+      "style": "lofi-keys",
+      "bpm": 90,
+      "key": "Em",
+      "progression": [
+        "Em7",
+        "Cmaj7",
+        "Am7",
+        "B7"
+      ],
+      "energy": 0.45,
+      "drums": "click"
+    },
+    "levels": {
+      "bgm_lufs": -24,
+      "sfx_lufs": -20.5,
+      "below_voice_db": 16,
+      "ceiling_dbfs": -14
+    }
+  }
+}

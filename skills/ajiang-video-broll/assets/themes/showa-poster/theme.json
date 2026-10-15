@@ -1,0 +1,195 @@
+{
+  "id": "showa-poster",
+  "name": "昭和海报",
+  "en": "Showa Poster",
+  "group": "kept",
+  "rank": 7,
+  "status": "prompt-motion.com #130 改编（Shin Majin-shiki promo），未进成片",
+  "source": {
+    "url": "https://prompt-motion.com/majin-appsheet-2d3c1a",
+    "title": "Shin Majin-shiki promo"
+  },
+  "fits": "适合：强观点、重磅发布、“颠覆/翻车/新”这类能用一两个字点题的口播段，节奏要硬、要有仪式感。不适合：轻松闲聊、温和教程、需要大量文字或多张截图并列说明的段落。单字卡的字可用 data.glyph 指定。",
+  "concept": "特摄标题卡：每页先硬切一张满屏单字卡（色差收拢），再切到正片：慢转红色放射线、竖排标题+直角框+阶梯错落的竖幅海报、倾斜红幅、方框判子；黑页与奶白页反色交替。内容少时用巨型描边字补位。",
+  "design": {
+    "w": 1920,
+    "h": 1080,
+    "scale4k": 2,
+    "content": [
+      90,
+      110,
+      1830,
+      920
+    ]
+  },
+  "vars": {
+    "--bg": "#10110F",
+    "--fg": "#F3F3E9",
+    "--muted": "#8A8880",
+    "--accent": "#D4002F",
+    "--accent2": "#F3F3E9",
+    "--card": "#171917",
+    "--card-fg": "#F3F3E9",
+    "--line": "rgba(243,243,233,.3)",
+    "--shadow": "rgba(16,12,10,.6)",
+    "--grid": "rgba(212,0,47,.22)",
+    "--grid2": "rgba(0,0,0,0)",
+    "--ok": "#F3F3E9",
+    "--invert": "1",
+    "--vign": "rgba(14,10,8,.6)",
+    "--paper": "#F3F3E9",
+    "--ink": "#10110F",
+    "--ray": "rgba(175,0,36,.42)"
+  },
+  "variants": {
+    "black": {
+      "name": "黑页",
+      "default": true,
+      "vars": {}
+    },
+    "paper": {
+      "name": "奶白页",
+      "vars": {
+        "--bg": "#F3F3E9",
+        "--fg": "#10110F",
+        "--card": "#E8E8DC",
+        "--card-fg": "#10110F",
+        "--muted": "#6B6A63",
+        "--line": "rgba(16,17,15,.3)",
+        "--grid": "rgba(212,0,47,.16)",
+        "--invert": "0",
+        "--vign": "rgba(40,30,20,.12)",
+        "--ray": "rgba(212,0,47,.2)"
+      }
+    }
+  },
+  "fonts": {
+    "--title": {
+      "family": "Noto Serif SC",
+      "weights": [
+        900
+      ],
+      "fallback": "\"Songti SC\",serif"
+    },
+    "--sans": {
+      "family": "Noto Sans SC",
+      "weights": [
+        500,
+        700
+      ],
+      "fallback": "\"PingFang SC\",sans-serif"
+    },
+    "--mono": {
+      "family": "Archivo",
+      "weights": [
+        700,
+        800
+      ],
+      "fallback": "\"Noto Sans SC\",sans-serif"
+    },
+    "--hand": {
+      "family": "Shippori Mincho",
+      "weights": [
+        800
+      ],
+      "fallback": "\"Noto Serif SC\",serif"
+    },
+    "--num": {
+      "family": "Noto Serif SC",
+      "weights": [
+        900
+      ],
+      "fallback": "\"Songti SC\",serif"
+    }
+  },
+  "chrome": "<div class=\"chrome-showa\"><span data-chrome-label>PROMPT DESIGN SYSTEM</span><i></i></div><div class=\"chrome-showa2\">REBOOT / 2026</div>",
+  "motion": {
+    "summary": "硬切的标题卡节奏：先闪一张满屏单字（自动挑 hl 里的实词，或用 glyph），再切正片；标题砸入，红幅压过来后整体倾斜，判子扣下；竖幅海报逐张白闪硬切、落定后轻微浮动；放射线一直慢转。换页黑白反色硬切。",
+    "ease": "expo",
+    "dur": 0.35,
+    "stagger": 0.08,
+    "params": {
+      "up": {
+        "dist": 24,
+        "blur": 0
+      },
+      "slam": {
+        "from": 1.7,
+        "blur": 0
+      },
+      "pop": {
+        "from": 0.8,
+        "overshoot": 0
+      },
+      "stamp": {
+        "from": 1.8,
+        "rot": -6
+      },
+      "drop": {
+        "dist": 100
+      },
+      "lift": {
+        "dist": 30
+      }
+    },
+    "signature": [
+      "slam",
+      "stamp",
+      "wipe",
+      "flicker",
+      "mask"
+    ],
+    "transition": {
+      "type": "invert",
+      "dur": 0.18
+    },
+    "roles": {
+      "title": "slam",
+      "card": "flicker",
+      "photo": "wipe",
+      "number": "slam",
+      "item": "flicker"
+    }
+  },
+  "sound": {
+    "summary": "太鼓软击（不是爆炸）、老放映机咔哒、木拍子；配稀疏的太鼓 + 低弦 pad，D 小调 90 BPM。",
+    "sfx": {
+      "draw": "roller",
+      "mark": "tick",
+      "enter": "thock",
+      "card": "thock",
+      "deal": "thock",
+      "stamp": "taiko-soft",
+      "type": "typing",
+      "count": "counter",
+      "transition": "swoosh",
+      "slide": "air",
+      "hit": "taiko-soft",
+      "key": "bell",
+      "reveal": "cascade",
+      "scan": "air",
+      "shot": "shutter",
+      "warn": "alert",
+      "check": "thock"
+    },
+    "bgm": {
+      "style": "taiko-ambient",
+      "bpm": 90,
+      "key": "Dm",
+      "progression": [
+        "Dm",
+        "Dm",
+        "Bb",
+        "A"
+      ],
+      "energy": 0.5,
+      "drums": "taiko"
+    },
+    "levels": {
+      "bgm_lufs": -24,
+      "sfx_lufs": -20.5,
+      "below_voice_db": 16,
+      "ceiling_dbfs": -14
+    }
+  }
+}

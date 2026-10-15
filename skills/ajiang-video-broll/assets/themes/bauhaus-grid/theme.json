@@ -1,0 +1,204 @@
+{
+ "id": "bauhaus-grid",
+ "name": "包豪斯几何",
+ "en": "Bauhaus Grid",
+ "group": "kept",
+ "rank": 15,
+ "status": "prompt-motion.com #227 改编（Type, form, space showreel），未进成片",
+ "source": {
+  "url": "https://prompt-motion.com/web3wesley-7bb108",
+  "title": "Type, form, space showreel"
+ },
+ "fits": "适合讲结构和方法：拆模块、列原则、“一个系统由几部分组成”、设计 / 架构 / 工作流类话题；条目 2–5 个、名字短。不适合情绪化的吐槽、强烈对比冲突，或需要大量文字说明的内容（版面是网格，字多就挤）。",
+ "concept": "设计学院作品集取景器：米白纸 + 150px 细网格 + 四角十字 + 底部刻度尺；内容切进格子（图裁成圆 / 拱 / 四分圆，条目高低错落），其余格子用蓝黄红黑几何填满并按节拍 90° 翻转；聚焦页是一张履历卡（左图右清单，清单上方剩余高度用几何格补满），数字页是整屏橙红 + 立体衬线斜体大数。",
+ "design": {
+  "w": 1920,
+  "h": 1080,
+  "scale4k": 2,
+  "content": [
+   90,
+   110,
+   1830,
+   920
+  ]
+ },
+ "vars": {
+  "--bg": "#F2EEE5",
+  "--fg": "#1A1715",
+  "--muted": "#8A8378",
+  "--accent": "#FF4A1B",
+  "--accent2": "#2F5BEA",
+  "--card": "#FFFFFF",
+  "--card-fg": "#1A1715",
+  "--line": "rgba(26,23,21,.16)",
+  "--shadow": "rgba(26,23,21,.15)",
+  "--grid": "rgba(26,23,21,.06)",
+  "--grid2": "#F9B72B",
+  "--ok": "#F9B72B",
+  "--invert": "0",
+  "--vign": "rgba(14,10,8,0)",
+  "--bh-blue": "#2D4BD8",
+  "--bh-yellow": "#F4B62C",
+  "--bh-red": "#F04A1E",
+  "--bh-black": "#161414",
+  "--bh-cream": "#F1EDE4",
+  "--bh-orange": "#FF4F1F",
+  "--bh-deep": "#2A0E05",
+  "--bh-char": "#131112",
+  "--bh-line": "rgba(22,20,20,.14)"
+ },
+ "variants": {
+  "cream": {
+   "name": "米白",
+   "default": true,
+   "vars": {}
+  },
+  "charcoal": {
+   "name": "炭黑舞台",
+   "vars": {
+    "--bh-cream": "#E9E3D6",
+    "--bh-char": "#0B0A0A",
+    "--bh-orange": "#E8401A"
+   }
+  }
+ },
+ "fonts": {
+  "--title": {
+   "family": "DM Serif Display",
+   "weights": [
+    400
+   ],
+   "fallback": "\"Noto Serif SC\",serif",
+   "italic": true
+  },
+  "--sans": {
+   "family": "Noto Sans SC",
+   "weights": [
+    400,
+    500,
+    700
+   ],
+   "fallback": "\"PingFang SC\",sans-serif"
+  },
+  "--mono": {
+   "family": "IBM Plex Mono",
+   "weights": [
+    400,
+    500
+   ],
+   "fallback": "ui-monospace,monospace"
+  },
+  "--hand": {
+   "family": "Instrument Serif",
+   "weights": [
+    400
+   ],
+   "fallback": "\"Noto Serif SC\",serif",
+   "italic": true
+  },
+  "--num": {
+   "family": "Archivo Black",
+   "weights": [
+    400
+   ],
+   "fallback": "\"Noto Sans SC\",sans-serif"
+  },
+  "--serifsc": {
+   "family": "Noto Serif SC",
+   "weights": [
+    900
+   ],
+   "fallback": "serif"
+  }
+ },
+ "chrome": "<div class=\"bh-paper\"></div>",
+ "motion": {
+  "summary": "几何拼装：网格线先画出来，形状沿对角线波浪回弹进场，之后按节拍 90° 翻转一直持续；图片转着落进圆 / 拱格，条目一高一低错开；履历卡从下面滑上，清单逐行落字划线；数字砸下后立体厚度慢慢长出，背景空心字跑马灯缓慢横移；底部刻度尺播放头一直走。",
+  "ease": "back",
+  "dur": 0.5,
+  "stagger": 0.08,
+  "params": {
+   "up": {
+    "dist": 40,
+    "blur": 0
+   },
+   "slam": {
+    "from": 1.4,
+    "blur": 0
+   },
+   "pop": {
+    "from": 0.2,
+    "overshoot": 3.0
+   },
+   "stamp": {
+    "from": 2.0,
+    "rot": -20
+   },
+   "drop": {
+    "dist": 160
+   },
+   "lift": {
+    "dist": 70
+   }
+  },
+  "signature": [
+   "grid-draw",
+   "shape-beat-flip",
+   "spin",
+   "extrude",
+   "marquee-outline"
+  ],
+  "transition": {
+   "type": "wipe",
+   "dur": 0.4
+  },
+  "roles": {
+   "title": "slam",
+   "card": "spin",
+   "photo": "pop",
+   "number": "slam",
+   "item": "pop"
+  }
+ },
+ "sound": {
+  "summary": "金属 click、胶片咔哒、木块拼合“嗒”、清脆 glock；配轻电子 funk，A 小调 128 BPM 的半速律动。",
+  "sfx": {
+   "draw": "tick",
+   "mark": "tick",
+   "enter": "glock",
+   "card": "thock",
+   "deal": "thock",
+   "stamp": "clap",
+   "type": "typing",
+   "count": "counter",
+   "transition": "swoosh",
+   "slide": "air",
+   "hit": "thock",
+   "key": "glock",
+   "reveal": "arp-up",
+   "scan": "air",
+   "shot": "shutter",
+   "warn": "alert",
+   "check": "chime"
+  },
+  "bgm": {
+   "style": "funk-pluck",
+   "bpm": 128,
+   "key": "Am",
+   "progression": [
+    "Am7",
+    "Dm7",
+    "Fmaj7",
+    "E7"
+   ],
+   "energy": 0.5,
+   "drums": "click"
+  },
+  "levels": {
+   "bgm_lufs": -24,
+   "sfx_lufs": -20.5,
+   "below_voice_db": 16,
+   "ceiling_dbfs": -14
+  }
+ }
+}
