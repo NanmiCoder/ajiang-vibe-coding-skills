@@ -58,7 +58,7 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill '*' --agent codex
 | Skill | 用途 |
 |---|---|
 | [ajiang-debug](skills/ajiang-debug/SKILL.md) | 排查和修复 bug：先复现、验证原因，修复后按原操作流程复测 |
-| [ajiang-review](skills/ajiang-review/SKILL.md) | 审查代码：找出真实缺陷和回归风险，给出位置、触发条件与证据 |
+| [ajiang-review](skills/ajiang-review/SKILL.md) | 审查代码：梳理需求后交给独立 Agent，支持按用户要求并行审查，核实发现并汇总 |
 | [ajiang-feature](skills/ajiang-feature/SKILL.md) | 开发新功能：实现用户要完成的操作，从实际入口验证结果 |
 | [ajiang-ablation](skills/ajiang-ablation/SKILL.md) | 做消融实验：每次移除或替换一个机制，对比效果与成本，判断是否保留 |
 | [ajiang-git-commit-pr](skills/ajiang-git-commit-pr/SKILL.md) | 提交代码、创建 PR；创建前同步最新上游，检查文本与业务冲突 |
