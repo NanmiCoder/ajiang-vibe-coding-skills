@@ -1,0 +1,4 @@
+interface:
+  display_name: "阿江口播精剪"
+  short_description: "结合口播视频、剪映字幕和逐字稿，剪掉重录与多余停顿并交付成片"
+  default_prompt: "使用 $ajiang-koubo-cut，按口播视频、剪映 SRT 和逐字稿精剪，直接输出 MP4 和同步字幕。"

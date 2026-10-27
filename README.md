@@ -4,11 +4,12 @@
 
 # Ajiang Vibe Coding Skills
 
-**程序员阿江日常 vibe coding 习惯的蒸馏。五个常用 skill：排查 bug、审查代码、开发功能、消融实验、提交代码；另附一个做口播视频 B-roll 的 skill，带 10 套动画模板。**
+**程序员阿江日常 vibe coding 习惯的蒸馏。五个开发协作 skill：排查 bug、审查代码、开发功能、消融实验、提交代码；另有口播精剪和 B-roll 制作，附 10 套动画模板。**
 
 <p align="center">
   <a href="#快速开始">安装</a> ·
   <a href="#按问题选-skill">Skill 目录</a> ·
+  <a href="#口播精剪">口播精剪</a> ·
   <a href="#视频-b-roll-模板">B-roll 模板</a> ·
   <a href="#我常用的其他-skills">其他常用 Skills</a> ·
   <a href="#这些-skill-从哪里来">来源</a> ·
@@ -62,7 +63,26 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill '*' --agent codex
 | [ajiang-feature](skills/ajiang-feature/SKILL.md) | 开发新功能：实现用户要完成的操作，从实际入口验证结果 |
 | [ajiang-ablation](skills/ajiang-ablation/SKILL.md) | 做消融实验：每次移除或替换一个机制，对比效果与成本，判断是否保留 |
 | [ajiang-git-commit-pr](skills/ajiang-git-commit-pr/SKILL.md) | 提交代码、创建 PR；创建前同步最新上游，检查文本与业务冲突 |
+| [ajiang-koubo-cut](skills/ajiang-koubo-cut/SKILL.md) | 输入口播视频、剪映 SRT 和逐字稿，剪掉重录、断句和多余气口，交付 MP4 与同步字幕 |
 | [ajiang-video-broll](skills/ajiang-video-broll/SKILL.md) | 给口播视频做整屏 B-roll / MG 包装：按字幕选段，套 10 套模板之一，预览确认后用 Remotion 渲染 4K |
+
+## 口播精剪
+
+`ajiang-koubo-cut` 用录音、剪映字幕和逐字稿判断每一段该保留哪次完整表达，保留相关的即兴内容，再按同一份时间线剪切音画并重建字幕。默认保留原片，直接交付 MP4 和同名 SRT。
+
+```sh
+npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill ajiang-koubo-cut
+```
+
+安装后提供三份材料即可：
+
+```text
+用 ajiang-koubo-cut 精剪这段初稿。
+输入：口播.mp4、剪映.srt、逐字稿.md。
+剪掉重复、断句、磕巴和多余停顿，直接交付 MP4 和配套字幕。
+```
+
+执行脚本需要 Python 3.10+、FFmpeg 和 ffprobe。字幕不准或重录多时，使用本地 ASR；相应 Python 依赖和模型按需加载并缓存，不需要模型 API Key。转写和局部对齐接口见 [执行说明](skills/ajiang-koubo-cut/references/workflow.md)。
 
 ## 视频 B-roll 模板
 
