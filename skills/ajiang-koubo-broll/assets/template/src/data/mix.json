@@ -1,0 +1,7 @@
+{
+  "_doc": "音效混音参数。sfxGain=全局音效增益；trim=按段再乘（音效密的段压低）；base=各类音效默认音量；pre=音源峰值滞后秒数（提前播放，让峰落在事件时间上，sfx_prep.py 会按实际音源重写）。改完只需 reaudio，不用重渲画面。sfxGain 默认 0.3：第 4 期 0.45 时带配乐版只比口播低 13.0–13.5 LU，调到 0.3 后是 14.2–15.1 LU。BRIEF 不要给音效写 v 的范围（如“音量 0.35–0.6”，章节 agent 会照抄成偏大的 v），用 base：sfx 条目一般不写 v，个别要强调再写。",
+  "sfxGain": 0.3,
+  "trim": {},
+  "base": { "whoosh": 0.32, "swish": 0.28, "click": 0.42, "type": 0.22, "pop": 0.3, "tick": 0.25, "chime": 0.3, "alert": 0.34, "paper": 0.3, "shutter": 0.32 },
+  "pre": { "whoosh": 0.32, "swish": 0.13, "click": 0.0, "type": 0, "pop": 0, "tick": 0, "chime": 0, "alert": 0.01, "paper": 0.08, "shutter": 0.15 }
+}

@@ -4,14 +4,16 @@
 
 # Ajiang Vibe Coding Skills
 
-**程序员阿江日常 vibe coding 习惯的蒸馏。五个开发协作 skill：排查 bug、审查代码、开发功能、消融实验、提交代码；另有口播精剪和 B-roll 制作，附 10 套动画模板。**
+**程序员阿江日常 vibe coding 习惯的蒸馏。五个开发协作 skill：排查 bug、审查代码、开发功能、消融实验、提交代码；另有口播精剪、整片 B-roll，以及附 10 套动画模板的局部 B-roll。**
 
 <p align="center">
   <a href="#快速开始">安装</a> ·
   <a href="#按问题选-skill">Skill 目录</a> ·
   <a href="#口播精剪">口播精剪</a> ·
+  <a href="#口播整片-b-roll">整片 B-roll</a> ·
   <a href="#视频-b-roll-模板">B-roll 模板</a> ·
   <a href="#我常用的其他-skills">其他常用 Skills</a> ·
+  <a href="#致谢">致谢</a> ·
   <a href="#这些-skill-从哪里来">来源</a> ·
   <a href="./LICENSE">MIT</a>
 </p>
@@ -50,7 +52,7 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill ajiang-debug
 npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill '*' --agent codex
 ```
 
-默认安装到当前项目；添加 `--global` 可安装到用户范围。需要 Node.js/npm 和能访问仓库的网络。技能内容本身不要求模型 API Key、MCP 或作者的其他 skill。
+默认安装到当前项目；添加 `--global` 可安装到用户范围。需要 Node.js/npm 和能访问仓库的网络。技能内容本身不要求模型 API Key 或 MCP；除 `ajiang-koubo-broll` 要搭配 `ajiang-koubo-cut` 外，也不要求作者的其他 skill。
 
 安装后，在 Codex 中可用 `$ajiang-debug`，在 Claude Code 中可用 `/ajiang-debug`；也可以在任务中直接写“使用 ajiang-debug”。实际调用遵循你所用客户端的配置与权限。
 
@@ -65,6 +67,7 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill '*' --agent codex
 | [ajiang-git-commit-pr](skills/ajiang-git-commit-pr/SKILL.md) | 提交代码、创建 PR；创建前同步最新上游，检查文本与业务冲突 |
 | [ajiang-koubo-cut](skills/ajiang-koubo-cut/SKILL.md) | 输入口播视频、剪映 SRT 和逐字稿，剪掉重录、断句和多余气口，交付 MP4 与同步字幕 |
 | [ajiang-video-broll](skills/ajiang-video-broll/SKILL.md) | 给口播视频做整屏 B-roll / MG 包装：按字幕选段，套 10 套模板之一，预览确认后用 Remotion 渲染 4K |
+| [ajiang-koubo-broll](skills/ajiang-koubo-broll/SKILL.md) | 把一整期口播做成盖满时间线的 4K B-roll：真实产品画面当主角，第一章确认后多 Agent 并行做完，交付分段 MP4 和全片 |
 
 ## 口播精剪
 
@@ -83,6 +86,17 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill ajiang-koubo-cut
 ```
 
 执行脚本需要 Python 3.10+、FFmpeg 和 ffprobe。字幕不准或重录多时，使用本地 ASR；相应 Python 依赖和模型按需加载并缓存，不需要模型 API Key。转写和局部对齐接口见 [执行说明](skills/ajiang-koubo-cut/references/workflow.md)。
+
+## 口播整片 B-roll
+
+`ajiang-koubo-broll` 把一整期口播做成从头盖到尾的画面层：真实产品画面当主角，主题取自产品自己的美术。主控先做第一章给你确认一次，之后每章一个子 Agent 并行做，独立审片后排队渲 4K，交付分段 MP4、一整条 4K 全片和带口播的 1080p 预览。和下面的 `ajiang-video-broll` 不同，它覆盖整条时间线，不套固定模板。
+
+```sh
+npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill ajiang-koubo-broll --skill ajiang-koubo-cut
+git clone --depth 1 https://github.com/Vincentwei1021/video-shotcraft ~/.claude/skills/video-shotcraft
+```
+
+原始录音先用 `ajiang-koubo-cut` 精剪；镜头卡来自 video-shotcraft，需要单独安装。需要 macOS、Node.js、FFmpeg、Python 和 uv，以及能并行派子 Agent 的 coding agent（在 Claude Code 上实测）。渲染用 Remotion，公司使用前请先看它的[许可证](https://www.remotion.dev/license)。依赖、第 4 期实例和致谢见 [skill 说明](skills/ajiang-koubo-broll/README.md)。
 
 ## 视频 B-roll 模板
 
@@ -140,6 +154,20 @@ python3 skills/ajiang-video-broll/assets/gallery/serve.py
 | [web-video-presentation](https://github.com/NanmiCoder/creator-pipeline/tree/main/skills/web-video-presentation) | 把口播与字幕做成网页视频演示，导出 MP4 | 阿江改造维护 |
 
 后两个可以配合使用：先生成配音与字幕，再按声音节奏制作画面。
+
+## 致谢
+
+视频相关的 skill 用到了这些开源项目和免费素材：
+
+- [video-shotcraft](https://github.com/Vincentwei1021/video-shotcraft)（Vincentwei1021，Apache-2.0）：ajiang-koubo-broll 借用它镜头卡的动作语法、审美准则和终检方法
+- [lobe-icons](https://github.com/lobehub/lobe-icons)（LobeHub）：模型和厂商 logo
+- [Remotion](https://www.remotion.dev)：B-roll 渲染引擎，有自己的[许可证](https://www.remotion.dev/license)
+- [faster-whisper](https://github.com/SYSTRAN/faster-whisper)（SYSTRAN）：口播逐词转写
+- [Freesound](https://freesound.org) 的 CC0 音效，[Mixkit](https://mixkit.co) 的免费配乐
+- [Ego Lite / ego-browser](https://lite.ego.app/)：截真实网页、录真实操作
+- [FFmpeg](https://ffmpeg.org)、[OpenCV](https://github.com/opencv/opencv)：抽帧、拼接、混音、扫二维码
+
+打包进 skill 的第三方资源和许可写在各自目录里，例如 [ajiang-koubo-broll 的 NOTICE](skills/ajiang-koubo-broll/NOTICE.md)。
 
 ## 这些 Skill 从哪里来
 

@@ -1,0 +1,10 @@
+{
+ "st/home.jpg": {"w": 1585, "h": 4000, "url": "modeldial.com", "note": "首页（访问量、新模型、榜单）"},
+ "st/det-api.jpg": {"w": 1585, "h": 3239, "url": "modeldial.com/model-detector", "note": "模型检测 · API 自动检测（空表单）"},
+ "st/det-filled.jpg": {"w": 1585, "h": 3250, "url": "modeldial.com/model-detector", "note": "同上，已填 API 地址 / Key / 待测型号（隐藏了临时 HTTP 530 报错）"},
+ "st/det-manual.jpg": {"w": 1585, "h": 2690, "url": "modeldial.com/model-detector", "note": "手动检测模式"},
+ "st/det-manual-prompts.jpg": {"w": 1585, "h": 2962, "url": "modeldial.com/model-detector", "note": "手动模式展开提示词"},
+ "st/det-allmodels.jpg": {"w": 1600, "h": 1000, "url": "modeldial.com/model-detector", "note": "「已收录的模型」弹窗（视口截图）", "viewport": true},
+ "st/det-group.jpg": {"w": 1600, "h": 1000, "url": "modeldial.com/model-detector", "note": "右上角交流群弹层（视口截图，二维码已打码）", "viewport": true},
+ "st/aa-home.jpg": {"w": 1585, "h": 3400, "url": "artificialanalysis.ai", "note": "AA 榜单首页"}
+}
