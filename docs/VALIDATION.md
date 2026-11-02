@@ -53,6 +53,20 @@
 
 通用脚本烟测可运行 `python3 skills/ajiang-koubo-cut/scripts/smoke_test.py`，只依赖 Python 标准库、FFmpeg 与 ffprobe。真实演练采用转写、对齐、波形及抽帧复核，没有声称完整人耳试听。
 
+## ajiang-koubo-broll（2026-11-02 加入）
+
+从作者本机在用的口播整片 B-roll skill 整理，第 3、4 期的视频就是用它做的。本机绝对路径、私人工程路径，以及两份移植自产品非公开源码的范例文件（`Sokoban.tsx`、`seg3/Board.tsx`）没有放进仓库。
+
+| 检查 | 结果 |
+|---|---|
+| validate_skills.py | 八个 skill 全部通过（元数据、MIT 许可证、本地链接、无个人路径） |
+| CLI 发现与安装 | `npx skills@1.7.2 add . --list` 列出八个 skill；在临时项目里用一条命令同时装上 ajiang-koubo-broll 和 ajiang-koubo-cut，安装副本与仓库文件一致，`init_project.py` 能找到同级 skill 里的 `speech.py` |
+| 建工程烟测 | 用合成的 20 秒口播、4 条字幕和逐字转写跑 `init_project.py`：按模板 lockfile `npm ci`、依赖清单和 tsc 通过；渲出两张静帧和一段 10 秒带口播预览（600 帧 @ 60fps） |
+| 隐私 | grep 无本机路径、邮箱和 Key；`mosaic.py --scan` 扫 10 张范例拼图，没有二维码；人眼看过全部拼图 |
+| 许可 | 字体、音效、范例拼图和运行时依赖的出处与许可写在 `skills/ajiang-koubo-broll/NOTICE.md`；与 video-shotcraft 的代码和文字逐行对比，没有照搬 |
+
+没有验证：从 GitHub 远程安装；仓库副本没有跑一期完整流程（截图、子 Agent 并行、4K 渲染、交付）；Claude Code 以外的 coding agent。README 里第 4 期的数字来自作者本机的实际制作，不是这次重跑的结果。
+
 ## 旧版记录
 
 2026-10-11 的八技能版本曾通过本地与公开远程安装、模板文本审查，以及 GitHub README 预览。教学 Taskboard 夹具原始结果为 3 项通过 / 2 项失败，隔离修复后为 5 项通过。

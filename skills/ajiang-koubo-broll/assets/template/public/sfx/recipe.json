@@ -1,0 +1,89 @@
+{
+ "_doc": "语义音效 → 素材。src = public/sfx/src/ 下的 Freesound 文件（sfx-source.py get 下载，CC0），t0/len 裁剪秒数，fade 尾部淡出，peak 峰值 dBFS，lowpass 可选。chime/alert 的音调部分是本地合成（synth）。第 3 期定稿用的就是这一套。 pre = 音源峰值滞后（秒，第 3 期逐个听过定的）；新素材不写 pre 时 sfx_prep.py 按「包络第一次到 70% 峰值」自动量（快门这类双击声要人工核）。",
+ "whoosh": {
+  "src": "fs-71852.mp3",
+  "t0": 0.05,
+  "len": 0.9,
+  "fade": 0.15,
+  "peak": -3,
+  "use": "镜头推拉 / 大转场",
+  "pre": 0.32
+ },
+ "swish": {
+  "src": "fs-667419.mp3",
+  "t0": 0.0,
+  "len": 0.44,
+  "fade": 0.08,
+  "peak": -4,
+  "use": "元素滑入",
+  "pre": 0.13
+ },
+ "click": {
+  "src": "fs-687107.mp3",
+  "t0": 0.02,
+  "len": 0.22,
+  "fade": 0.04,
+  "peak": -3,
+  "use": "鼠标点击",
+  "pre": 0.0
+ },
+ "type": {
+  "src": "fs-718673.mp3",
+  "t0": 0.3,
+  "len": 7.0,
+  "fade": 0.1,
+  "peak": -6,
+  "use": "打字（循环铺满 dur）",
+  "pre": 0
+ },
+ "pop": {
+  "src": "fs-517095.mp3",
+  "t0": 0.0,
+  "len": 0.25,
+  "fade": 0.08,
+  "peak": -4,
+  "lowpass": 6000,
+  "use": "卡片/胶囊落位",
+  "pre": 0
+ },
+ "tick": {
+  "src": "fs-528561.mp3",
+  "t0": 0.0,
+  "len": 0.12,
+  "fade": 0.04,
+  "peak": -8,
+  "use": "计数 / 逐项",
+  "pre": 0
+ },
+ "paper": {
+  "src": "fs-615337.mp3",
+  "t0": 0.0,
+  "len": 0.8,
+  "fade": 0.12,
+  "peak": -4,
+  "use": "翻牌",
+  "pre": 0.08
+ },
+ "shutter": {
+  "src": "fs-661279.mp3",
+  "t0": 0.1,
+  "len": 0.42,
+  "fade": 0.08,
+  "peak": -4,
+  "use": "截图 / 报告生成",
+  "pre": 0.15
+ },
+ "chime": {
+  "synth": "chime",
+  "peak": -7,
+  "use": "结论出现（正向/中性）",
+  "pre": 0
+ },
+ "alert": {
+  "synth": "alert",
+  "src": "fs-653910.mp3",
+  "peak": -5,
+  "use": "不一致 / 掉包（低沉，不刺耳）",
+  "pre": 0.01
+ }
+}
