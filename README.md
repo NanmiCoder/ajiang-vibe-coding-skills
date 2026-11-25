@@ -4,7 +4,7 @@
 
 # Ajiang Vibe Coding Skills
 
-**程序员阿江日常 vibe coding 习惯的蒸馏。五个开发协作 skill：排查 bug、审查代码、开发功能、消融实验、提交代码；另有口播精剪、整片 B-roll，以及附 10 套动画模板的局部 B-roll。**
+**程序员阿江日常 vibe coding 习惯的蒸馏。六个开发协作 skill：排查 bug、审查代码、开发功能、消融实验、双 Agent 博弈、提交代码；另有口播精剪、整片 B-roll，以及附 10 套动画模板的局部 B-roll。**
 
 <p align="center">
   <a href="#快速开始">安装</a> ·
@@ -64,6 +64,7 @@ npx skills add NanmiCoder/ajiang-vibe-coding-skills --skill '*' --agent codex
 | [ajiang-review](skills/ajiang-review/SKILL.md) | 审查代码：梳理需求后交给独立 Agent，支持按用户要求并行审查，核实发现并汇总 |
 | [ajiang-feature](skills/ajiang-feature/SKILL.md) | 开发新功能：实现用户要完成的操作，从实际入口验证结果 |
 | [ajiang-ablation](skills/ajiang-ablation/SKILL.md) | 做消融实验：每次移除或替换一个机制，对比效果与成本，判断是否保留 |
+| [ajiang-agent-debate](skills/ajiang-agent-debate/SKILL.md) | 双 Agent 博弈：正方立论、独立上下文反方最多提 3 条致命挑刺、裁判 2 轮内按实证拍板 |
 | [ajiang-git-commit-pr](skills/ajiang-git-commit-pr/SKILL.md) | 提交代码、创建 PR；创建前同步最新上游，检查文本与业务冲突 |
 | [ajiang-koubo-cut](skills/ajiang-koubo-cut/SKILL.md) | 输入口播视频、剪映 SRT 和逐字稿，剪掉重录、断句和多余气口，交付 MP4 与同步字幕 |
 | [ajiang-video-broll](skills/ajiang-video-broll/SKILL.md) | 给口播视频做整屏 B-roll / MG 包装：按字幕选段，套 10 套模板之一，预览确认后用 Remotion 渲染 4K |
