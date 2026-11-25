@@ -11,7 +11,7 @@ from pathlib import Path
 
 EXPECTED = {
     "ajiang-debug", "ajiang-review", "ajiang-feature", "ajiang-ablation", "ajiang-git-commit-pr",
-    "ajiang-agent-debate", "ajiang-video-broll", "ajiang-koubo-cut", "ajiang-koubo-broll",
+    "ajiang-multi-agent", "ajiang-video-broll", "ajiang-koubo-cut", "ajiang-koubo-broll",
 }
 
 
