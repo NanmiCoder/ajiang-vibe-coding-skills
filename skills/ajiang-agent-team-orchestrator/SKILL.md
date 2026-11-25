@@ -1,10 +1,10 @@
 ---
-name: ajiang-multi-agent
-description: 判断任务该用单会话 Sub-agent 还是 Agent Teams / 蜂群模式：用三问决策分清两者的适用边界，避免简单任务硬上蜂群烧 Token，也避免复杂协作只靠主会话硬扛，并给出防冲突的角色拆分与收尾守则。
+name: ajiang-agent-team-orchestrator
+description: Agent Teams 协调器：用三问决策判断任务该用单会话 Sub-agent 还是 Agent Teams / 蜂群模式，避免简单任务硬上蜂群烧 Token，也避免复杂协作只靠主会话硬扛，并给出防冲突的角色拆分与收尾守则。
 license: MIT
 ---
 
-# 多 Agent 模式选择：Sub-agent vs Agent Teams / 蜂群
+# Agent Teams 协调器：Sub-agent vs Agent Teams / 蜂群
 
 核心原则：**默认用单会话 Sub-agent；只有横向协作或独立深挖的收益明显大于协调与 Token 成本时，才上 Agent Teams / 蜂群。**
 
