@@ -25,7 +25,7 @@ for (const id of list) {
   if (composition.durationInFrames !== s.frames) throw new Error(`${id} 帧数不符`);
   const out = path.join(root, 'out/final', `${s.outName}.mp4`);
   let last = -1;
-  await renderMedia({serveUrl, composition, inputProps: ip, codec: 'h264', crf: 16, x264Preset: 'medium', pixelFormat: 'yuv420p', colorSpace: 'bt709', audioCodec: 'aac', audioBitrate: '320k', imageFormat: 'jpeg', jpegQuality: 95, scale: META.output?.scale ?? 2, concurrency: Number(opt.conc ?? 10), outputLocation: out,
+  await renderMedia({serveUrl, composition, inputProps: ip, codec: 'h264', crf: Number(opt.crf ?? 16), x264Preset: opt.preset ?? 'medium', pixelFormat: 'yuv420p', colorSpace: 'bt709', audioCodec: 'aac', audioBitrate: '320k', imageFormat: 'jpeg', jpegQuality: 95, scale: META.output?.scale ?? 2, concurrency: Number(opt.conc ?? 10), outputLocation: out,
     onProgress: ({progress}) => { const p = Math.floor(progress * 10); if (p !== last) { last = p; console.log(`${id} ${p * 10}% ${((Date.now() - t0) / 1000).toFixed(0)}s`); } }});
   // 无配乐版：只重渲音频，再和画面合并
   const ipn = {audio: true, voice: false, bgm: false};

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""交付检查：python3 check.py --project <工程> [seg0 seg3 ...] [--fix-peak] [--no-ends]
+"""交付检查：python3 check.py --project <工程> [seg0 seg3 ...] [--fix-peak] [--no-ends] [--workers 8]
 
-逐段核对 out/final 与 out/final-nobgm：
+逐段并行核对 out/final 与 out/final-nobgm：
   - 文件名 = timing.json 的 outName（SRT 毫秒时间 + 字幕条号），分辨率 = meta.output，帧率 = meta.fps，帧数 = 区间帧数
   - 带配乐版：积分响度比口播低 14–18 LU（目标 16）；两版真峰值 ≤ −14 dBTP（--fix-peak：超标的用 alimiter 限幅重封装，画面不动）
   - 段尾干净：每段最后一帧应该是「空舞台」（同一张背景）。以各段首帧 + 末帧的中位图为空舞台参照，残留内容的段会被标出来
@@ -11,6 +11,7 @@
 脚本只能证明这些；画面好不好看、声音大小合不合适，要看拼图、要人听。没试听就说没试听。
 """
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 import re
@@ -20,6 +21,10 @@ import sys
 import numpy as np
 
 SEAM_DY = 3  # 段首接缝：首帧与上一段末帧的平均亮度差上限（0–255）
+
+
+def _default_workers():
+    return max(1, min(8, (os.cpu_count() or 4) // 2))
 
 
 def probe(p):
@@ -63,12 +68,52 @@ def suggest_trim(P, k, voice, M):
     return f'建议 mix.json trim.{k} ≈ {cur * g:.2f}（再 reaudio）'
 
 
+def _check_one(args):
+    P, d, with_bgm, k, s, M, voice, ow, oh, fps, fix_peak, no_ends = args
+    p = os.path.join(P, d, f"{s['outName']}.mp4")
+    if not os.path.exists(p):
+        return k, False, f'  ✗ {k} 缺文件 {os.path.basename(p)}', None
+    v = probe(p)
+    n = int(v['nb_read_packets'])
+    I, tp = loud(p)
+    if tp > -14 and fix_peak:
+        tmp = p + '.tmp.mp4'
+        subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', p, '-c:v', 'copy', '-af', 'alimiter=limit=0.18:attack=2:release=60:level=disabled', '-c:a', 'aac', '-b:a', '320k', tmp], check=True)
+        os.replace(tmp, p)
+        I, tp = loud(p)
+    below = voice - I
+    problems = []
+    if (v['width'], v['height']) != (ow, oh):
+        problems.append(f"尺寸 {v['width']}x{v['height']}")
+    if v['r_frame_rate'] != f'{fps}/1':
+        problems.append(f"帧率 {v['r_frame_rate']}")
+    if n != s['frames']:
+        problems.append(f"帧数 {n}≠{s['frames']}")
+    if tp > -14:
+        problems.append(f'真峰值 {tp:.1f}>-14')
+    if with_bgm and not (14 <= below <= 18):
+        problems.append(f'比口播低 {below:.1f} LU（要 14–18）')
+    if with_bgm and problems and any('LU' in x or '峰值' in x for x in problems):
+        sug = suggest_trim(P, k, voice, M)
+        if sug:
+            problems.append(sug)
+    flag = '✓' if not problems else '✗'
+    line = f"  {flag} {k} {v['width']}x{v['height']} {v['r_frame_rate']} 帧 {n}/{s['frames']}  {I:.1f} LUFS（低于口播 {below:.1f} LU）峰 {tp:.1f} dBTP  {'；'.join(problems)}"
+    end_pair = None
+    if with_bgm and not no_ends:
+        f0, f1 = grab(p, False), grab(p, True)
+        if f0 is not None and f1 is not None:
+            end_pair = (f0, f1)
+    return k, not problems, line, end_pair
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--project', default='.')
     ap.add_argument('segs', nargs='*')
     ap.add_argument('--fix-peak', action='store_true')
     ap.add_argument('--no-ends', action='store_true', help='跳过段尾空舞台和段首接缝亮度两项（只看规格和响度）')
+    ap.add_argument('--workers', type=int, default=_default_workers(), help='并行线程数（默认核数/2，上限 8）')
     a = ap.parse_args()
     P = os.path.abspath(a.project)
     T = json.load(open(os.path.join(P, 'src', 'data', 'timing.json')))['segments']
@@ -77,46 +122,20 @@ def main():
     keys = a.segs or list(T)
     ok = True
     ends = {}
+    w = min(max(1, a.workers), max(1, len(keys)))
     for d, with_bgm in (('out/final', True), ('out/final-nobgm', False)):
         print(f'== {d}')
-        for k in keys:
-            s = T[k]
-            p = os.path.join(P, d, f"{s['outName']}.mp4")
-            if not os.path.exists(p):
-                print(f'  ✗ {k} 缺文件 {os.path.basename(p)}')
-                ok = False
-                continue
-            v = probe(p)
-            n = int(v['nb_read_packets'])
-            I, tp = loud(p)
-            if tp > -14 and a.fix_peak:
-                tmp = p + '.tmp.mp4'
-                subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', p, '-c:v', 'copy', '-af', 'alimiter=limit=0.18:attack=2:release=60:level=disabled', '-c:a', 'aac', '-b:a', '320k', tmp], check=True)
-                os.replace(tmp, p)
-                I, tp = loud(p)
-            below = voice - I
-            problems = []
-            if (v['width'], v['height']) != (ow, oh):
-                problems.append(f"尺寸 {v['width']}x{v['height']}")
-            if v['r_frame_rate'] != f'{fps}/1':
-                problems.append(f"帧率 {v['r_frame_rate']}")
-            if n != s['frames']:
-                problems.append(f"帧数 {n}≠{s['frames']}")
-            if tp > -14:
-                problems.append(f'真峰值 {tp:.1f}>-14')
-            if with_bgm and not (14 <= below <= 18):
-                problems.append(f'比口播低 {below:.1f} LU（要 14–18）')
-            if with_bgm and problems and any('LU' in x or '峰值' in x for x in problems):
-                sug = suggest_trim(P, k, voice, M)
-                if sug:
-                    problems.append(sug)
-            flag = '✓' if not problems else '✗'
-            ok &= not problems
-            print(f"  {flag} {k} {v['width']}x{v['height']} {v['r_frame_rate']} 帧 {n}/{s['frames']}  {I:.1f} LUFS（低于口播 {below:.1f} LU）峰 {tp:.1f} dBTP  {'；'.join(problems)}")
-            if with_bgm and not a.no_ends:
-                f0, f1 = grab(p, False), grab(p, True)
-                if f0 is not None and f1 is not None:
-                    ends[k] = (f0, f1)
+        jobs = [(P, d, with_bgm, k, T[k], M, voice, ow, oh, fps, a.fix_peak, a.no_ends) for k in keys]
+        if w == 1 or len(jobs) <= 1:
+            rows = [_check_one(j) for j in jobs]
+        else:
+            with ThreadPoolExecutor(max_workers=w) as ex:
+                rows = list(ex.map(_check_one, jobs))
+        for k, seg_ok, line, end_pair in rows:
+            ok &= seg_ok
+            print(line)
+            if end_pair is not None:
+                ends[k] = end_pair
     if ends:
         # 空舞台参照 = 所有段首帧 + 末帧的逐像素中位数（段首 0.3s 内容才入场，首帧本该是空舞台，所以多数帧是干净的）。
         # 判据：末帧里和参照差 >24 灰阶的像素占比 >0.05% 就算有残留（合稿实测：残留一行 96px 标题 ≈ 1%，干净段 0%）。

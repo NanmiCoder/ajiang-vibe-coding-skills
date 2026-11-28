@@ -90,15 +90,18 @@ def main():
     ap.add_argument('--project', default='.')
     ap.add_argument('--to', required=True)
     ap.add_argument('--skip-check', action='store_true')
+    ap.add_argument('--already-checked', action='store_true', help='上游刚跑过 check.py 且全部通过时，跳过重复执行 check.py（帧数与文件完整性照查）')
     ap.add_argument('--dry-run', action='store_true', help='只写三个说明文件，不拷视频（先看文字对不对）')
     ap.add_argument('--overwrite', action='store_true', help='交付目录里已有 mp4 时允许覆盖（必须先问过用户）')
     ap.add_argument('--no-full', action='store_true', help=f'不生成 {FULL} 和 {PREVIEW}')
     a = ap.parse_args()
     P = os.path.abspath(a.project)
-    if not a.skip_check and not a.dry_run:
+    if not a.skip_check and not a.dry_run and not a.already_checked:
         r = subprocess.run(['python3', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'check.py'), '--project', P])
         if r.returncode != 0:
             raise SystemExit('check.py 没通过，先修（或确认后 --skip-check）')
+    elif a.already_checked and not a.dry_run:
+        print('（--already-checked：跳过重复执行 check.py，全片帧数与文件完整性仍照查）')
     T = json.load(open(os.path.join(P, 'src', 'data', 'timing.json')))
     M = json.load(open(os.path.join(P, 'src', 'data', 'meta.json')))
     segs = list(T['segments'].values())

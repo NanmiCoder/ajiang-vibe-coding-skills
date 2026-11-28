@@ -13,9 +13,10 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const id = args[0];
 const opt = Object.fromEntries(args.filter((a) => a.startsWith('--')).map((a) => { const [k, v] = a.slice(2).split('='); return [k, v ?? true]; }));
-const times = args.slice(1).filter((a) => !a.startsWith('--')).map(Number);
+const times = args.slice(1).filter((a) => !a.startsWith('--')).flatMap((a) => a.split(/[\s,]+/)).filter(Boolean).map(Number);
 const tag = opt.tag ?? 'qa';
 const scale = Number(opt.scale ?? 0.5);
+const conc = Math.max(1, Math.min(Number(opt.conc ?? 4), Math.max(1, times.length)));
 const outDir = path.join(root, 'out/qa', id);
 try {
   const tok = JSON.parse(fs.readFileSync(path.join(root, 'src/data/tokens.json'), 'utf8'));
@@ -27,13 +28,19 @@ const serveUrl = await bundle({entryPoint: path.join(root, `src/entries/${id}.ts
 const inputProps = {audio: false, guides: !!opt.guides};
 const browser = await openBrowser('chrome');
 const composition = await selectComposition({serveUrl, id, inputProps, puppeteerInstance: browser});
-const files = [];
-for (const s of times) {
-  const frame = Math.min(composition.durationInFrames - 1, Math.round(s * composition.fps));
-  const output = path.join(outDir, `${tag}-${s.toFixed(2)}.png`);
-  await renderStill({serveUrl, composition, frame, output, inputProps, scale, puppeteerInstance: browser, overwrite: true});
-  files.push(output);
-}
+const files = new Array(times.length);
+let cursor = 0;
+const worker = async () => {
+  while (cursor < times.length) {
+    const idx = cursor++;
+    const s = times[idx];
+    const frame = Math.min(composition.durationInFrames - 1, Math.round(s * composition.fps));
+    const output = path.join(outDir, `${tag}-${s.toFixed(2)}.png`);
+    await renderStill({serveUrl, composition, frame, output, inputProps, scale, puppeteerInstance: browser, overwrite: true});
+    files[idx] = output;
+  }
+};
+await Promise.all(Array.from({length: conc}, worker));
 await browser.close({silent: true});
 execFileSync('python3', [path.join(root, 'scripts/sheet.py'), path.join(outDir, `${tag}-sheet.jpg`), ...files], {stdio: 'inherit'});
 console.log('stills:', files.length, '→', path.join(outDir, `${tag}-sheet.jpg`));

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """审片用联系表：从预览/成片 mp4 每隔 N 秒抽一帧，拼成带时间戳和安全区框的大图（给独立审片 agent 和总控看）。
 
-  python3 contact.py --project <工程> out/preview/seg3.mp4 [--every 1.5] [--extra 12.4,25.6] [--cols 4]
+  python3 contact.py --project <工程> out/preview/seg3.mp4 [--every 1.5] [--extra 12.4,25.6] [--cols 4] [--workers 8]
 输出 out/qa/contact-<文件名>.jpg（每张 480 宽）。帧太多会自动分成多张（每张最多 24 帧）。
 """
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import json
 import os
 import subprocess
@@ -12,8 +13,25 @@ import subprocess
 from PIL import Image, ImageDraw, ImageFont
 
 
+def _default_workers():
+    return max(1, min(8, (os.cpu_count() or 4) // 2))
+
+
 def dur(p):
     return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', p], capture_output=True, text=True).stdout)
+
+
+def _grab_tile(args):
+    v, t, W, H, safe, k = args
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', f'{t:.3f}', '-i', v, '-frames:v', '1',
+                          '-vf', f'scale={W}:{H}', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], capture_output=True).stdout
+    im = Image.frombytes('RGB', (W, H), raw) if len(raw) == W * H * 3 else Image.new('RGB', (W, H))
+    if safe:
+        d = ImageDraw.Draw(im)
+        av, sb = safe['avatar'], safe['subtitle']
+        d.ellipse([av['x'] * k, av['y'] * k, (av['x'] + av['w']) * k, (av['y'] + av['h']) * k], outline=(230, 60, 60))
+        d.rectangle([sb['x'] * k, sb['y'] * k, (sb['x'] + sb['w']) * k, (sb['y'] + sb['h']) * k], outline=(230, 60, 60))
+    return t, im
 
 
 def main():
@@ -23,6 +41,7 @@ def main():
     ap.add_argument('--every', type=float, default=1.5)
     ap.add_argument('--extra', default='')
     ap.add_argument('--cols', type=int, default=4)
+    ap.add_argument('--workers', type=int, default=_default_workers())
     a = ap.parse_args()
     P = os.path.abspath(a.project)
     v = a.video if os.path.isabs(a.video) else os.path.join(P, a.video)
@@ -34,33 +53,29 @@ def main():
     except Exception:
         safe = None
     W = 480
+    H = int(W * 9 / 16)
     k = W / 1920
-    font = None
     try:
         font = ImageFont.truetype('/System/Library/Fonts/Helvetica.ttc', 18)
     except Exception:
         font = ImageFont.load_default()
+    jobs = [(v, t, W, H, safe, k) for t in ts]
+    w = min(max(1, a.workers), max(1, len(jobs)))
+    if w == 1 or len(jobs) <= 1:
+        all_tiles = [_grab_tile(j) for j in jobs]
+    else:
+        with ThreadPoolExecutor(max_workers=w) as ex:
+            all_tiles = list(ex.map(_grab_tile, jobs))
     outs = []
-    for page in range(0, len(ts), 24):
-        chunk = ts[page:page + 24]
-        tiles = []
-        for t in chunk:
-            raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', f'{t:.3f}', '-i', v, '-frames:v', '1', '-vf', f'scale={W}:{int(W * 9 / 16)}', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], capture_output=True).stdout
-            im = Image.frombytes('RGB', (W, int(W * 9 / 16)), raw) if len(raw) == W * int(W * 9 / 16) * 3 else Image.new('RGB', (W, int(W * 9 / 16)))
-            d = ImageDraw.Draw(im)
-            if safe:
-                av, sb = safe['avatar'], safe['subtitle']
-                d.ellipse([av['x'] * k, av['y'] * k, (av['x'] + av['w']) * k, (av['y'] + av['h']) * k], outline=(230, 60, 60))
-                d.rectangle([sb['x'] * k, sb['y'] * k, (sb['x'] + sb['w']) * k, (sb['y'] + sb['h']) * k], outline=(230, 60, 60))
-            tiles.append((t, im))
+    os.makedirs(os.path.join(P, 'out', 'qa'), exist_ok=True)
+    for page in range(0, len(all_tiles), 24):
+        tiles = all_tiles[page:page + 24]
         rows = (len(tiles) + a.cols - 1) // a.cols
-        h = int(W * 9 / 16)
-        sheet = Image.new('RGB', (a.cols * (W + 8) + 8, rows * (h + 30) + 8), (36, 38, 44))
+        sheet = Image.new('RGB', (a.cols * (W + 8) + 8, rows * (H + 30) + 8), (36, 38, 44))
         for i, (t, im) in enumerate(tiles):
-            x, y = 8 + (i % a.cols) * (W + 8), 8 + (i // a.cols) * (h + 30)
+            x, y = 8 + (i % a.cols) * (W + 8), 8 + (i // a.cols) * (H + 30)
             sheet.paste(im, (x, y + 24))
             ImageDraw.Draw(sheet).text((x, y + 2), f'{t:.2f}s', fill=(235, 235, 235), font=font)
-        os.makedirs(os.path.join(P, 'out', 'qa'), exist_ok=True)
         o = os.path.join(P, 'out', 'qa', f'contact-{os.path.splitext(os.path.basename(v))[0]}-{page // 24}.jpg')
         sheet.save(o, quality=85)
         outs.append(o)
