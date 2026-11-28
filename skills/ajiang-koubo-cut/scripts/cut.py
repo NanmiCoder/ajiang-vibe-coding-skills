@@ -355,11 +355,14 @@ def render(args):
     if width%2 or height%2:
         raise ValueError("Odd source dimensions need an explicit padding/cropping decision for H.264.")
     encoder = args.encoder
-    if encoder in ["auto", "apple"]:
-        available = apple_available(work)
-        if encoder == "apple" and not available:
+    if encoder == "auto":
+        if (os.cpu_count() or 0) >= 12:
+            encoder = "cpu"
+        else:
+            encoder = "apple" if apple_available(work) else "cpu"
+    elif encoder == "apple":
+        if not apple_available(work):
             raise ValueError("Apple encoder unavailable; see encoder-preflight.log, or choose --encoder cpu.")
-        encoder = "apple" if available else "cpu"
     output.parent.mkdir(parents=True, exist_ok=True)
     temp = output.with_name(f".{output.stem}.{os.getpid()}.partial.mp4")
     srt_temp = output.with_name(f".{output.stem}.{os.getpid()}.partial.srt")
@@ -374,7 +377,7 @@ def render(args):
         bitrate = int(width*height*float(Fraction(timeline["fps"]))*0.045+4000000)
         cmd += ["-c:v", "h264_videotoolbox", "-b:v", str(bitrate), "-profile:v", "high"]
     else:
-        cmd += ["-c:v", "libx264", "-crf", "18", "-preset", "fast"]
+        cmd += ["-c:v", "libx264", "-crf", "18", "-preset", "veryfast"]
     cmd += ["-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k" if info["channels"] == 1 else "256k",
             "-ar", str(info["audio_rate"]), "-movflags", "+faststart", "-progress", str(work/"render-progress.txt"),
             "-y", str(temp)]

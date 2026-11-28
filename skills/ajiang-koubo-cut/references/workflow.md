@@ -39,7 +39,7 @@ python3 "$SKILL_DIR/scripts/speech.py" transcribe "/path/口播.mp4" \
   --out "/path/交付/work/asr.json" --prompt "简体中文。<本次稿子的实际专名词表>"
 ```
 
-输出保留词时间和原音转写。先用缓存模型，缺模型才下载；用 FFmpeg 解码后传数组，避免 PyAV 版本不兼容。ASR 与原字幕交叉核对，不把转写自动整理后的流畅句当作没有磕巴的证据。
+输出保留词时间和原音转写。先用缓存模型，缺模型才下载；用 FFmpeg 解码后传数组，避免 PyAV 版本不兼容；长音频默认按静音谷底分块多进程并行转写（`--workers` 可控并发数，默认 `beam_size=1`）。ASR 与原字幕交叉核对，不把转写自动整理后的流畅句当作没有磕巴的证据。
 
 仅在字词边界有争议时做短片段强制对齐，`cases.json` 里的文字必须包含原音实际说出的磕巴和重复：
 
@@ -68,8 +68,25 @@ python3 "$SKILL_DIR/scripts/cut.py" verify \
 
 `prepare` 默认只按保留段剪；确认长气口可缩短时增加 `--shorten-pauses`。先看 `--help` 获取参数；`-33dB / 0.30s / 留0.17s` 是干净口播的起点，不是对所有录音的固定标准。保留语尾和下一字起声；语气停顿不一律压成零。
 
-剪后音频、字幕和映射可以先复核；确需画面预览时，`render --preview` 生成临时低分辨率预览。正式导出逐帧重编码，用单次 select/setpts，避免只按关键帧复制、音频按编码包边界粗切，或 split 多路导致大内存缓存。Apple 硬件编码不可用才回退 CPU。
+剪后音频、字幕和映射可以先复核；确需画面预览时，`render --preview` 生成临时低分辨率预览。正式导出逐帧重编码，用单次 select/setpts，避免只按关键帧复制、音频按编码包边界粗切，或 split 多路导致大内存缓存。`--encoder auto` 在 12 核及以上设备默认优先 `libx264 -crf 18 -preset veryfast`（4K60 吞吐高于单路硬件编码且体积更可控），其余 macOS 设备优先 Apple 硬件编码；也可显式传 `--encoder apple` 或 `--encoder cpu`。
 
 帧率从源媒体读取，支持 25/30/60 和 30000/1001 等有理数帧率。若识别为可变帧率，先建立保持时长和音画同步的 CFR 工作副本，并确认字幕时轴，再按该副本工作，不静默把 VFR 当 CFR。
 
 技术验证通过后仍要核对编辑判断：所有主要内容完整、相邻句接得上、没有重录残留、数字与所选录次一致、字幕没有带回被剪掉的文字。稿子有但未录出的内容若影响核心信息，交付说明简短注明即可，不生成不存在的口播。
+
+## 交付前重复复检（多核并行）
+
+整段 ASR 容易自动吞掉“说了半截又重说”的短重复（如“第二/第二”“比如/比如”）。`prepare` 生成 `work/edited.wav` 后或 `render` 交付前，运行自带的两道多核复检脚本（均自动复用本机 HuggingFace 缓存模型）：
+
+```sh
+python3 "$SKILL_DIR/scripts/phrases.py" "/path/交付/work/edited.wav" "/path/交付/work/qa/phrases.json"
+python3 "$SKILL_DIR/scripts/dupscan.py" "/path/交付/work/edited.wav" "/path/交付/work/qa/dupscan.json"
+```
+
+- `phrases.py`：按 10ms 能量停顿切短语，多进程并行跑 `large-v3-turbo`，排查相邻短语首尾重复或 ≤0.8s 的同音半句残片。
+- `dupscan.py`：两阶段多进程交叉解码（`small` 全量 3s/1.5s 滑窗 × 有/无提示词 + `large-v3-turbo` 12s/6s 无提示词滑窗，仅对命中窗口补算词时间；加 `--exhaustive` 可跑全量 3s `large`）。常见误报如正常叠词、品牌双音节、模型听错同音字核对后可忽略。
+- `slices.py`：对疑点批量一次传入多个区间（只加载一次模型、只解码对应区间音频），按能量谷底拆音节并用双模型对照确认切点：
+
+```sh
+python3 "$SKILL_DIR/scripts/slices.py" "/path/口播.mp4" 141:145 154:160 283:295
+```

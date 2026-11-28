@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Cached source-audio transcription and optional short forced alignment."""
+"""Cached source-audio transcription (parallel silence-chunked) and optional short forced alignment."""
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import hashlib
 import json
 import os
@@ -36,7 +37,7 @@ def cache_matches(out: Path, key: dict, force: bool) -> bool:
         return False
 
 
-def pcm_array(video: Path, directory: Path, start=0.0, end=None):
+def pcm_path_and_array(video: Path, directory: Path, start=0.0, end=None):
     import numpy as np
     if start < 0 or (end is not None and end <= start):
         raise ValueError('Range must satisfy 0 <= start < end.')
@@ -51,37 +52,100 @@ def pcm_array(video: Path, directory: Path, start=0.0, end=None):
             command += ['-ss', str(start)]
         command += ['-i', str(video), '-map', '0:a:0', '-vn']
         if end is not None:
-            command += ['-t', str(end-start)]
+            command += ['-t', str(end - start)]
         command += ['-ac', '1', '-ar', '16000', '-f', 'f32le', '-y', str(temporary)]
         subprocess.run(command, check=True)
         if temporary.stat().st_size == 0:
             raise ValueError('No audio samples decoded.')
         temporary.replace(raw)
     # Decode with FFmpeg rather than PyAV: avoids backend-version API mismatch.
-    return np.memmap(raw, dtype=np.float32, mode='r')
+    return raw, np.memmap(raw, dtype=np.float32, mode='r')
+
+
+def pcm_array(video: Path, directory: Path, start=0.0, end=None):
+    return pcm_path_and_array(video, directory, start, end)[1]
 
 
 def cached_model(request: str) -> str:
     if request != 'auto':
         return str(Path(request).expanduser()) if Path(request).expanduser().exists() else request
     root = Path(os.environ.get('HF_HUB_CACHE', os.environ.get('HUGGINGFACE_HUB_CACHE',
-        str(Path(os.environ.get('HF_HOME', str(Path.home()/'.cache/huggingface')))/'hub'))))
+        str(Path(os.environ.get('HF_HOME', str(Path.home() / '.cache/huggingface'))) / 'hub'))))
     names = ['mobiuslabsgmbh/faster-whisper-large-v3-turbo',
              'Systran/faster-whisper-large-v3-turbo', 'Systran/faster-whisper-small',
              'Systran/faster-whisper-medium', 'Systran/faster-whisper-base']
     for name in names:
         repo = root / ('models--' + name.replace('/', '--'))
         candidates = []
-        ref = repo/'refs/main'
+        ref = repo / 'refs/main'
         if ref.exists():
-            candidates.append(repo/'snapshots'/ref.read_text().strip())
-        if (repo/'snapshots').exists():
-            candidates += sorted((repo/'snapshots').iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
+            candidates.append(repo / 'snapshots' / ref.read_text().strip())
+        if (repo / 'snapshots').exists():
+            candidates += sorted((repo / 'snapshots').iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)
         for candidate in candidates:
-            if (candidate/'model.bin').is_file() and (candidate/'config.json').is_file():
+            if (candidate / 'model.bin').is_file() and (candidate / 'config.json').is_file():
                 return str(candidate)
     log('No cached faster-whisper model found; the small model will be downloaded once.')
     return 'small'
+
+
+def find_silence_chunks(samples, n_chunks: int, sr: int = 16000):
+    import numpy as np
+    total_sec = len(samples) / sr
+    if n_chunks <= 1 or total_sec < 60.0:
+        return [(0.0, total_sec)]
+    hop = sr // 100  # 10ms
+    n_frames = len(samples) // hop
+    frames = np.asarray(samples[:n_frames * hop]).reshape(n_frames, hop)
+    db = 20.0 * np.log10(np.sqrt(np.mean(frames * frames, axis=1) + 1e-12))
+    # Smooth over 150ms to find real inter-sentence valleys
+    kernel = np.ones(15, dtype=np.float32) / 15.0
+    smooth = np.convolve(db, kernel, mode='same')
+    cuts = [0.0]
+    for k in range(1, n_chunks):
+        target = total_sec * k / n_chunks
+        lo = max(int((target - 10.0) * 100), int((cuts[-1] + 15.0) * 100))
+        hi = min(int((target + 10.0) * 100), n_frames - 1500)
+        if hi <= lo:
+            continue
+        best = lo + int(np.argmin(smooth[lo:hi]))
+        cuts.append(round(best / 100.0, 3))
+    cuts.append(total_sec)
+    return [(cuts[i], cuts[i + 1]) for i in range(len(cuts) - 1) if cuts[i + 1] > cuts[i] + 0.5]
+
+
+def _transcribe_chunk(task):
+    import numpy as np
+    from faster_whisper import WhisperModel
+    raw_path, chunk_start, chunk_end, base_start, model_name, language, prompt, beam_size, cpu_threads = task
+    sr = 16000
+    mm = np.memmap(raw_path, dtype=np.float32, mode='r')
+    audio = np.asarray(mm[int(chunk_start * sr):int(chunk_end * sr)], dtype=np.float32)
+    model = WhisperModel(model_name, device='cpu', compute_type='int8', cpu_threads=cpu_threads)
+    segments, info = model.transcribe(
+        audio,
+        language=language,
+        beam_size=beam_size,
+        word_timestamps=True,
+        condition_on_previous_text=False,
+        vad_filter=False,
+        initial_prompt=prompt,
+    )
+    offset = base_start + chunk_start
+    rows = []
+    for segment in segments:
+        rows.append({
+            'start': round(offset + segment.start, 4),
+            'end': round(offset + segment.end, 4),
+            'text': segment.text,
+            'words': [{
+                'start': round(offset + w.start, 4),
+                'end': round(offset + w.end, 4),
+                'word': w.word,
+                'probability': round(w.probability, 5),
+            } for w in (segment.words or [])],
+        })
+    return info.language, rows
 
 
 def transcribe(args) -> None:
@@ -104,25 +168,50 @@ def transcribe(args) -> None:
     except ImportError as error:
         raise SystemExit('Missing ASR dependencies. Reuse an existing environment or run:\n'
             'uv run --with faster-whisper --with numpy python speech.py transcribe ...') from error
-    log(f'Transcribing {source.name} using {model_name}')
-    model = WhisperModel(model_name, device='cpu', compute_type='int8', cpu_threads=args.threads)
-    samples = pcm_array(source, out.parent, args.start, args.end)
-    segments, info = model.transcribe(np.asarray(samples), language=args.language,
-        beam_size=3, word_timestamps=True, condition_on_previous_text=False,
-        vad_filter=False, initial_prompt=prompt)
-    rows = []
-    for segment in segments:
-        rows.append({'start': round(args.start+segment.start, 4),
-                     'end': round(args.start+segment.end, 4), 'text': segment.text,
-                     'words': [{'start': round(args.start+w.start, 4),
-                                'end': round(args.start+w.end, 4), 'word': w.word,
-                                'probability': round(w.probability, 5)} for w in (segment.words or [])]})
-        log(f'{rows[-1]["start"]:.2f}-{rows[-1]["end"]:.2f} {segment.text}')
-    result = {'cache_key': key, 'source': str(source), 'model_used': model_name, 'language': info.language,
+
+    raw_path, samples = pcm_path_and_array(source, out.parent, args.start, args.end)
+    total_sec = len(samples) / 16000.0
+    ncpu = os.cpu_count() or 4
+    workers = args.workers if args.workers > 0 else min(6, max(1, ncpu // 2), max(1, int(total_sec // 45)))
+    chunks = find_silence_chunks(samples, workers)
+    log(f'Transcribing {source.name} ({total_sec:.1f}s) using {model_name} [{len(chunks)} chunk(s), beam={args.beam_size}]')
+
+    if len(chunks) <= 1:
+        model = WhisperModel(model_name, device='cpu', compute_type='int8', cpu_threads=args.threads)
+        segments, info = model.transcribe(
+            np.asarray(samples), language=args.language,
+            beam_size=args.beam_size, word_timestamps=True, condition_on_previous_text=False,
+            vad_filter=False, initial_prompt=prompt)
+        detected_lang = info.language
+        rows = []
+        for segment in segments:
+            rows.append({'start': round(args.start + segment.start, 4),
+                         'end': round(args.start + segment.end, 4), 'text': segment.text,
+                         'words': [{'start': round(args.start + w.start, 4),
+                                    'end': round(args.start + w.end, 4), 'word': w.word,
+                                    'probability': round(w.probability, 5)} for w in (segment.words or [])]})
+            log(f'{rows[-1]["start"]:.2f}-{rows[-1]["end"]:.2f} {segment.text}')
+    else:
+        per_worker_threads = max(1, min(4, ncpu // len(chunks)))
+        tasks = [
+            (str(raw_path), c0, c1, args.start, model_name, args.language, prompt, args.beam_size, per_worker_threads)
+            for c0, c1 in chunks
+        ]
+        detected_lang = args.language
+        rows = []
+        with concurrent.futures.ProcessPoolExecutor(max_workers=len(chunks)) as ex:
+            for lang, chunk_rows in ex.map(_transcribe_chunk, tasks):
+                detected_lang = lang or detected_lang
+                rows.extend(chunk_rows)
+        rows.sort(key=lambda r: r['start'])
+        for row in rows:
+            log(f'{row["start"]:.2f}-{row["end"]:.2f} {row["text"]}')
+
+    result = {'cache_key': key, 'source': str(source), 'model_used': model_name, 'language': detected_lang,
               'segments': rows, 'note': 'Recognition and word times are clues, not verified cuts.'}
     atomic_json(out, result)
     out.with_suffix('.txt').write_text('\n'.join(
-        f'{row["start"]:09.3f} - {row["end"]:09.3f} {row["text"]}' for row in rows)+'\n', encoding='utf-8')
+        f'{row["start"]:09.3f} - {row["end"]:09.3f} {row["text"]}' for row in rows) + '\n', encoding='utf-8')
     print(json.dumps({'cached': False, 'segments': len(rows), 'output': str(out)}, ensure_ascii=False))
 
 
@@ -133,7 +222,7 @@ def align(args) -> None:
     if not isinstance(cases, list) or not cases:
         raise ValueError('cases must be a non-empty JSON list.')
     for case in cases:
-        if not (0 <= case['start'] < case['end'] and case['end']-case['start'] <= 30 and case['text'].strip()):
+        if not (0 <= case['start'] < case['end'] and case['end'] - case['start'] <= 30 and case['text'].strip()):
             raise ValueError('Each alignment case needs actual text and an audio range of 0-30 seconds.')
     out = Path(args.out).expanduser().resolve()
     if out.suffix.lower() != '.json' or out in [source, cases_path]:
@@ -160,9 +249,9 @@ def align(args) -> None:
     for case in cases:
         audio = np.asarray(pcm_array(source, out.parent, case['start'], case['end'])).copy()
         mel = whisper.log_mel_spectrogram(whisper.pad_or_trim(audio), n_mels=model.dims.n_mels)
-        words = find_alignment(model, tokenizer, tokenizer.encode(case['text']), mel, len(audio)//160)
-        row = {**case, 'words': [{'word': w.word, 'start': round(case['start']+w.start, 4),
-                                 'end': round(case['start']+w.end, 4),
+        words = find_alignment(model, tokenizer, tokenizer.encode(case['text']), mel, len(audio) // 160)
+        row = {**case, 'words': [{'word': w.word, 'start': round(case['start'] + w.start, 4),
+                                 'end': round(case['start'] + w.end, 4),
                                  'probability': round(float(w.probability), 5)} for w in words]}
         rows.append(row)
         log(f'Aligned {case["start"]:.2f}-{case["end"]:.2f}')
@@ -185,6 +274,8 @@ def main() -> None:
     t.add_argument('--start', type=float, default=0.0)
     t.add_argument('--end', type=float)
     t.add_argument('--threads', type=int, default=min(8, os.cpu_count() or 1))
+    t.add_argument('--workers', type=int, default=0, help='Parallel silence-split workers (0=auto)')
+    t.add_argument('--beam-size', type=int, default=1)
     t.add_argument('--force', action='store_true')
     t.set_defaults(function=transcribe)
     a = commands.add_parser('align', help='Optional forced alignment for a few <=30-second disputed seams')
